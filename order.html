@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodMart - Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="assets/style/order-page-style.css">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="FoodMart Logo" class="me-2" width="53px">
+            <span>FOOD</span><span>MART</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="customer.html">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="item.html">Items</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="place-order.html">Place Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Orders</a>
+                </li>
+                <li class="nav-item ms-2">
+                    <div class="user-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <!-- Orders Header Section -->
+        <div class="orders-header" data-aos="fade-down">
+            <h2 class="orders-title">Orders</h2>
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <div class="date-picker">
+                <input type="text" value="2025-04-12" readonly>
+                <i class="far fa-calendar calendar-icon"></i>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="orders-table" data-aos="fade-up">
+            <table>
+                <thead>
+                <tr>
+                    <th>ORDER ID</th>
+                    <th>CUSTOMER ID</th>
+                    <th>DATE</th>
+                    <th>ITEMS COUNT</th>
+                    <th>TOTAL</th>
+                    <th>ACTIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="order-row" data-aos="fade-up" data-aos-delay="100">
+                    <td>ORD-00001</td>
+                    <td>C-00001</td>
+                    <td>2025-02-22</td>
+                    <td>3</td>
+                    <td>2300.00</td>
+                    <td>
+                        <button class="view-btn">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="order-row" data-aos="fade-up" data-aos-delay="200">
+                    <td>ORD-00001</td>
+                    <td>C-00001</td>
+                    <td>2025-02-22</td>
+                    <td>3</td>
+                    <td>2300.00</td>
+                    <td>
+                        <button class="view-btn">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="order-row" data-aos="fade-up" data-aos-delay="300">
+                    <td>ORD-00001</td>
+                    <td>C-00001</td>
+                    <td>2025-02-22</td>
+                    <td>3</td>
+                    <td>2300.00</td>
+                    <td>
+                        <button class="view-btn">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="order-row" data-aos="fade-up" data-aos-delay="400">
+                    <td>ORD-00001</td>
+                    <td>C-00001</td>
+                    <td>2025-02-22</td>
+                    <td>3</td>
+                    <td>2300.00</td>
+                    <td>
+                        <button class="view-btn">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container" data-aos="fade-up">
+            <div class="pagination-info">1-10 / 100</div>
+            <button class="pagination-btn disabled">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="pagination-btn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-logo">
+            <span>FOOD</span><span>MART</span>
+        </div>
+        <div class="social-icons">
+            <a href="#" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-icon">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+        <div class="row footer-links">
+            <div class="col-md-3 footer-column">
+                <a href="#" class="footer-link">Home</a>
+            </div>
+            <div class="col-md-3 footer-column">
+                <a href="#" class="footer-link">Place Orders</a>
+            </div>
+            <div class="col-md-3 footer-column">
+                <a href="#" class="footer-link">Customers</a>
+            </div>
+            <div class="col-md-3 footer-column">
+                <a href="#" class="footer-link">Orders</a>
+            </div>
+            <div class="col-md-3 footer-column">
+                <a href="#" class="footer-link">Items</a>
+            </div>
+        </div>
+        <div class="copyright">
+            ©2024 Thenuri Nanayakkara All Right Reserved.
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="assets/js/order-page-script.js"></script>
+</body>
+</html>
