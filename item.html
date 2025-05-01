@@ -4,154 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodMart - Items</title>
+    <link rel="icon" type="image/ico" href="assets/image/vegitable-bucket-09-removebg-preview.ico">
+    <meta name="author" content="Thenuri Nethangi">
+    <meta name="keywords" content="html, css, javascript, pos web, supermarket point of sale website, web development, software engineering, computer science">
+    <meta name="description" content="This website is a Supermarket Point of Sale (POS) system designed to manage customers, items, and orders efficiently. It streamlines daily sales operations, tracks inventory in real-time, and improves customer service with a user-friendly interface.">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style/item-page-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style/newStyles/home-page-style.css">
+    <link rel="stylesheet" href="assets/style/newStyles/customer-page-style.css">
+    <link rel="stylesheet" href="assets/style/newStyles/item-page-style.css">
 </head>
 <body>
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light sticky-top">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="#" data-aos="fade-right">
-            <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="FoodMart Logo" class="me-2" width="53px">
-            <span>FOOD</span><span>MART</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+    <div class="container-fluid navbar-container-custom">
+
+        <div class="superMart-logo">
+            <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="logo of the SuperMart" height="30px">
+            <p>FOOD<span>MART</span></p>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item" data-aos="fade-down" data-aos-delay="100">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item" data-aos="fade-down" data-aos-delay="200">
-                    <a class="nav-link" href="customer.html">Customers</a>
-                </li>
-                <li class="nav-item" data-aos="fade-down" data-aos-delay="300">
-                    <a class="nav-link active" href="#">Items</a>
-                </li>
-                <li class="nav-item" data-aos="fade-down" data-aos-delay="400">
-                    <a class="nav-link" href="place-order.html">Place Order</a>
-                </li>
-                <li class="nav-item" data-aos="fade-down" data-aos-delay="500">
-                    <a class="nav-link" href="order.html">Orders</a>
-                </li>
-                <li class="nav-item" data-aos="fade-down" data-aos-delay="600">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-user-circle fs-5"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-item-custom">
+            <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="customer.html">Customers</a></li>
+            <li class="nav-item dropdown"><a class="nav-link active page-link-custom" aria-current="page" href="item.html">Items</a></li>
+            <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="place-order.html">Place Order</a></li>
+            <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="order.html">Orders</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#"><i class="fas fa-user"></i></a></li>
+        </ul>
     </div>
 </nav>
 
-<!-- Main Content -->
-<div class="container my-4">
-    <!-- Items Header -->
-    <div class="items-header" data-aos="fade-up">
-        <h3 class="mb-0">Items</h3>
-        <div class="search-container">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search..." class="form-control">
+<div class="container-lg table-header">
+    <div class="row table-header-custom-row" id="item-header">
+        <div class="col-3 table-header-custom-col">
+            <div class="page-title">
+                <h1>Items</h1>
+            </div>
         </div>
-        <button class="add-btn" id="addItemBtn">
-            <i class="fas fa-plus"></i> Add
-        </button>
+        <div class="col-7">
+            <div class="search-field" id="item-page-search-field">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="table-header-btn">
+                <button class="add-btn" id="addItemBtn">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- Items Table -->
-    <div class="items-table" data-aos="fade-up" data-aos-delay="100">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
+<div class="container-lg table-container">
+    <div class="row custom-row">
+        <div class="col-12 custom-col">
+            <table class="customer-tbl" id="item-tbl">
+                <thead class="table-head">
                 <tr>
                     <th>ITEM ID</th>
                     <th>DESCRIPTION</th>
                     <th>PRICE</th>
                     <th>QTY</th>
-                    <th>ACTIONS</th>
+                    <th>ACTION</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr class="table-row" data-aos="fade-up" data-aos-delay="150">
-                    <td>I0001</td>
-                    <td>Dove Shampoo 100ml</td>
-                    <td class="price-cell">270.00</td>
-                    <td class="qty-cell">130</td>
+
+                <tbody class="table-body">
+                <tr class="tbl-row item-page-rows">
+                    <td>I-00001</td>
+                    <td>Dove Shampoo 250ml</td>
+                    <td>470.00</td>
+                    <td>120</td>
                     <td>
-                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                        <div class="tbl-action-icons">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash"></i>
+                        </div>
                     </td>
                 </tr>
-                <tr class="table-row" data-aos="fade-up" data-aos-delay="200">
-                    <td>I0002</td>
-                    <td>Anchor Milk Powder 400g</td>
-                    <td class="price-cell">960.00</td>
-                    <td class="qty-cell">1000</td>
+
+                <tr class="tbl-row item-page-rows">
+                    <td>I-00001</td>
+                    <td>Dove Shampoo 250ml</td>
+                    <td>470.00</td>
+                    <td>120</td>
                     <td>
-                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                        <div class="tbl-action-icons">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash"></i>
+                        </div>
                     </td>
                 </tr>
-                <tr class="table-row" data-aos="fade-up" data-aos-delay="250">
-                    <td>I0003</td>
-                    <td>Dove Shampoo 100ml</td>
-                    <td class="price-cell">320.00</td>
-                    <td class="qty-cell">350</td>
+
+                <tr class="tbl-row item-page-rows">
+                    <td>I-00001</td>
+                    <td>Dove Shampoo 250ml</td>
+                    <td>470.00</td>
+                    <td>120</td>
                     <td>
-                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                        <div class="tbl-action-icons">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash"></i>
+                        </div>
                     </td>
                 </tr>
-                <tr class="table-row" data-aos="fade-up" data-aos-delay="300">
-                    <td>I0004</td>
-                    <td>Dove Shampoo 100ml</td>
-                    <td class="price-cell">500.00</td>
-                    <td class="qty-cell">280</td>
+
+                <tr class="tbl-row item-page-rows">
+                    <td>I-00001</td>
+                    <td>Dove Shampoo 250ml</td>
+                    <td>470.00</td>
+                    <td>120</td>
                     <td>
-                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                        <div class="tbl-action-icons">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash"></i>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="pagination-container">
-            <div class="pagination-text">1-10 / 100</div>
-            <button class="pagination-arrow prev-page"><i class="fas fa-chevron-left"></i></button>
-            <button class="pagination-arrow next-page"><i class="fas fa-chevron-right"></i></button>
+    </div>
+</div>
+
+<div class="container-lg load-more-data-container">
+    <div class="row">
+        <div class="col">
+            <div class="table-arrows" id="item-page-table-arrow">
+                <i class="fas fa-chevron-left"></i>
+                <p>1</p>
+                <i class="fas fa-chevron-right"></i>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
 <footer>
     <div class="container">
-        <div class="footer-logo" data-aos="fade-up">
+        <div class="footer-logo">
             <h2><span>FOOD</span><span>MART</span></h2>
             <div class="social-icons">
-                <a href="#" data-aos="fade-up" data-aos-delay="100"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" data-aos="fade-up" data-aos-delay="200"><i class="fab fa-instagram"></i></a>
-                <a href="#" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-envelope"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
-        <div class="footer-links" data-aos="fade-up">
-            <a href="#">Home</a>
-            <a href="#">Customers</a>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="customer.html">Customers</a>
             <a href="#">Items</a>
             <a href="#">Place Orders</a>
             <a href="#">Orders</a>
         </div>
-        <div class="copyright" data-aos="fade-up">
+        <div class="copyright">
             &copy;2024 Thenuri Nanayakkara All Rights Reserved.
         </div>
     </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="assets/js/item-page-script.js"></script>
 </body>
 </html>

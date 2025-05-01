@@ -104,9 +104,7 @@ body {
 
 .add-btn {
     border: none;
-    color: #8bc34a;
     border-radius: 20px;
-    background-color: #FFFFFF;
     padding: 8px 20px;
     font-weight: 500;
     transition: all var(--transition-speed) ease;
@@ -115,7 +113,14 @@ body {
     z-index: 1;
 }
 
-.add-btn:hover {
+#addCustomerBtn{
+
+    color: #8bc34a;
+    background-color: #FFFFFF;
+    transition: all var(--transition-speed) ease;
+}
+
+#addCustomerBtn:hover {
     color: #FFFFFF;
     background-color: #ffcc00;
     transform: translateY(-3px);
@@ -136,7 +141,7 @@ body {
     overflow-x: visible;
 }
 
-#customer-tbl {
+.customer-tbl {
     width: 100%;
     min-width: 800px;
     border-collapse: collapse;
@@ -156,13 +161,13 @@ body {
     }
 }
 
-#customer-tbl tr {
+.customer-tbl tr {
     display: flex;
     width: 100%;
     align-items: center;
 }
 
-#customer-tbl tr > th {
+.customer-tbl tr > th {
     flex: 1;
     min-width: 120px;
     color: #333;
@@ -172,16 +177,16 @@ body {
     transition: all var(--transition-speed) ease;
 }
 
-#customer-tbl tr > th::after {
+.customer-tbl tr > th::after {
     background-color: var(--primary);
     transition: width var(--transition-speed) ease;
 }
 
-#customer-tbl tr > th:hover {
+.customer-tbl tr > th:hover {
     color: var(--primary);
 }
 
-#customer-tbl tr > th:hover::after {
+.customer-tbl tr > th:hover::after {
     width: calc(100% - 30px);
 }
 
@@ -196,8 +201,8 @@ body {
 }
 
 
-#customer-tbl tr > th:last-child,
-#customer-tbl tr > td:last-child {
+.customer-tbl tr > th:last-child,
+.customer-tbl tr > td:last-child {
     flex: 0.7;
     min-width: 100px;
 }
@@ -634,13 +639,13 @@ footer {
 
 @media all and (max-width: 550px) {
 
-    #customer-tbl tr th{
+    .customer-tbl tr th{
 
         font-size: 16px;
         padding: 10px;
     }
 
-    #customer-tbl tr td{
+    .customer-tbl tr td{
 
         font-size: 15px;
         padding: 10px;

@@ -1,0 +1,102 @@
+:root {
+    --primary: #8bc34a;
+    --secondary: #ffcc00;
+    --dark: #333;
+    --light: #f8f9fa;
+    --gray: #f2f2f2;
+    --white: #ffffff;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    opacity: 0;
+    animation: fadeInPage 0.8s ease forwards;
+}
+
+#addItemBtn{
+
+    color: #ffcc00;
+    background-color: #FFFFFF;
+    transition: all var(--transition-speed) ease;
+}
+
+#addItemBtn:hover {
+
+    color: #FFFFFF;
+    background-color: #8bc34a;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#item-header{
+
+    background-color: #ffcc00;
+}
+
+#item-tbl tr > th::after{
+
+    background-color: #ffcc00;
+    transition: width var(--transition-speed) ease;
+}
+
+#item-tbl tr > th:hover {
+    color: #ffcc00;
+}
+
+#item-tbl tr > th:hover::after {
+    width: calc(100% - 30px);
+}
+
+#item-page-search-field>i:hover{
+    color: #ffcc00;
+}
+
+.item-page-rows{
+
+    position: relative;
+    z-index: 100;
+}
+
+.item-page-rows::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background-color: rgba(255, 236, 179, 0.17);
+    transition: width var(--transition-speed) ease;
+    z-index: 1;
+}
+
+.item-page-rows:hover {
+    transform: translateX(5px);
+}
+
+.item-page-rows:hover::before {
+    width: 100%;
+}
+
+#item-page-table-arrow>i{
+
+    color: #ffcc00;
+}
+
+#item-page-table-arrow > i:hover {
+    color: #8bc34a;
+    transform: scale(1.2);
+}
+
+
+
+
+
+
