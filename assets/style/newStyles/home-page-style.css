@@ -519,7 +519,7 @@ body{
     }
 }
 
-@media all and (max-width: 991px) {
+@media all and (max-width: 992px) {
     #hero-image-side{
         display: flex;
         justify-content: flex-end;
