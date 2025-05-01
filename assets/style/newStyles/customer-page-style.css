@@ -317,7 +317,7 @@ body {
 footer {
     background-color: var(--white);
     padding: 40px 0 20px;
-    margin-top: 40px;
+    margin-top: 20px;
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
     animation: fadeIn 0.8s forwards;
     animation-delay: 0.7s;
