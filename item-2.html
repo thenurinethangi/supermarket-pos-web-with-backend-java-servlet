@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodMart - Customers</title>
+    <title>FoodMart - Items</title>
     <link rel="icon" type="image/ico" href="assets/image/vegitable-bucket-09-removebg-preview.ico">
     <meta name="author" content="Thenuri Nethangi">
     <meta name="keywords" content="html, css, javascript, pos web, supermarket point of sale website, web development, software engineering, computer science">
@@ -17,6 +17,164 @@
     <link rel="stylesheet" href="assets/style/newStyles/item-page-style.css">
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+    <div class="container-fluid navbar-container-custom">
+
+        <div class="superMart-logo">
+            <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="logo of the SuperMart" height="30px">
+            <p>FOOD<span>MART</span></p>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-item-custom">
+            <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="customer.html">Customers</a></li>
+            <li class="nav-item dropdown"><a class="nav-link active page-link-custom" aria-current="page" href="item.html">Items</a></li>
+            <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="place-order.html">Place Order</a></li>
+            <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="order.html">Orders</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#"><i class="fas fa-user"></i></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-lg table-header">
+    <div class="row table-header-custom-row">
+        <div class="col-3 table-header-custom-col">
+            <div class="page-title">
+                <h1>Customers</h1>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="search-field">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="table-header-btn">
+                <button class="add-btn" id="addCustomerBtn">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-lg table-container">
+    <div class="row custom-row">
+        <div class="col-12 custom-col">
+            <table id="customer-tbl">
+                <thead class="table-head">
+                <tr>
+                    <th>CUSTOMER ID</th>
+                    <th>NAME</th>
+                    <th>ADDRESS</th>
+                    <th>NIC</th>
+                    <th>PHONE NO</th>
+                    <th>ACTION</th>
+                </tr>
+                </thead>
+
+                <tbody class="table-body">
+                <tr class="tbl-row">
+                    <td>C-000001</td>
+                    <td>Thenuri Nanayakkara</td>
+                    <td>Matara</td>
+                    <td>200212345678</td>
+                    <td>071908765</td>
+                    <td>
+                        <div class="tbl-action-icons">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="tbl-row">
+                    <td>C-000001</td>
+                    <td>Thenuri Nanayakkara</td>
+                    <td>Matara</td>
+                    <td>200212345678</td>
+                    <td>071908765</td>
+                    <td>
+                        <div class="tbl-action-icons">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="tbl-row">
+                    <td>C-000001</td>
+                    <td>Thenuri Nanayakkara</td>
+                    <td>Matara</td>
+                    <td>200212345678</td>
+                    <td>071908765</td>
+                    <td>
+                        <div class="tbl-action-icons">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="tbl-row">
+                    <td>C-000001</td>
+                    <td>Thenuri Nanayakkara</td>
+                    <td>Matara</td>
+                    <td>200212345678</td>
+                    <td>071908765</td>
+                    <td>
+                        <div class="tbl-action-icons">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container-lg load-more-data-container">
+    <div class="row">
+        <div class="col">
+            <div class="table-arrows">
+                <i class="fas fa-chevron-left"></i>
+                <p>1</p>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-logo">
+            <h2><span>FOOD</span><span>MART</span></h2>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="customer.html">Customers</a>
+            <a href="#">Items</a>
+            <a href="#">Place Orders</a>
+            <a href="#">Orders</a>
+        </div>
+        <div class="copyright">
+            &copy;2024 Thenuri Nanayakkara All Rights Reserved.
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
