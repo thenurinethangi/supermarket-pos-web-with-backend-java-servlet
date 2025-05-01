@@ -57,20 +57,6 @@ body {
     position: relative;
 }
 
-.page-title > h1::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background-color: white;
-    transition: width var(--transition-speed) ease;
-}
-
-.page-title > h1:hover::after {
-    width: 100%;
-}
 
 .search-field > input {
     background-color: white;
@@ -187,12 +173,6 @@ body {
 }
 
 #customer-tbl tr > th::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 5px;
-    left: 15px;
     background-color: var(--primary);
     transition: width var(--transition-speed) ease;
 }
