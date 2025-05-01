@@ -62,7 +62,7 @@ body {
     background-color: white;
     border: none;
     width: 80%;
-    padding: 15px 20px;
+    padding: 15px 41px;
     height: 40px;
     border-radius: 20px;
     transition: all var(--transition-speed) ease;
@@ -75,9 +75,9 @@ body {
     width: 85%;
 }
 
-.search-field > input::placeholder {
-    padding-left: 20px;
-}
+/*.search-field > input::placeholder {*/
+/*    padding-left: 20px;*/
+/*}*/
 
 .search-field {
     display: flex;
