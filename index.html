@@ -1,132 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FoodMart - Healthy Living</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style/home-page-style.css">
-  <style></style>
+    <meta charset="UTF-8">
+    <title>FoodMart - Healthy Living</title>
+    <link rel="icon" type="image/ico" href="assets/image/vegitable-bucket-09-removebg-preview.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Thenuri Nethangi">
+    <meta name="keywords" content="html, css, javascript, pos web, supermarket point of sale website, web development, software engineering, computer science">
+    <meta name="description" content="This website is a Supermarket Point of Sale (POS) system designed to manage customers, items, and orders efficiently. It streamlines daily sales operations, tracks inventory in real-time, and improves customer service with a user-friendly interface.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style/newStyles/home-page-style.css">
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="FoodMart Logo" class="me-2" width="53px">
-      <span>FOOD</span><span>MART</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="customer.html">Customers</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="item.html">Items</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="place-order.html">Place Order</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="order.html">Orders</a>
-        </li>
-        <li class="nav-item ms-3">
-          <a class="user-icon" href="#">
-            <i class="fas fa-user"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+    <div class="container-fluid navbar-container-custom">
+
+            <div class="superMart-logo">
+                <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="logo of the SuperMart" height="30px">
+                <p>FOOD<span>MART</span></p>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-item-custom">
+                <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="customer.html">Customers</a></li>
+                <li class="nav-item dropdown"><a class="nav-link active page-link-custom" aria-current="page" href="item.html">Items</a></li>
+                <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="place-order.html">Place Order</a></li>
+                <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="order.html">Orders</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#"><i class="fas fa-user"></i></a></li>
+            </ul>
+        </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="hero-section">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <div class="fade-in">
-          <h1 class="hero-title">FoodMart</h1>
-          <h2 class="hero-subtitle">
-            <span class="green">HEATHLY</span><br>
-            <span class="yellow">LIVING</span>
-          </h2>
-          <p id="hero-description">We offer a wide range of fresh produce, household essentials, and quality products to serve your everyday needs</p>
+<div class="container hero-content-container">
+    <div class="row">
+        <div class="col hero-text-side-col">
+            <div id="hero-text-side">
+                <h1>FoodMart</h1>
+                <h2 id="hero-headline-text-one">HEALTHY</h2>
+                <h2 id="hero-headline-text-two">LIVING</h2>
+                <p>We offer a wide range of fresh produce, household essentials, and quality products to serve your everyday needs.</p>
+            </div>
         </div>
-      </div>
-      <div class="col-lg-6">
-        <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="Grocery Bag" class="hero-image fade-in">
-      </div>
+        <div class="col hero-image-side-col">
+            <div id="hero-image-side">
+                <img src="assets/image/home-page-image/veg-basket-10.png" alt="food bucket" width="400">
+            </div>
+        </div>
     </div>
-  </div>
-</section>
-
-<!-- Organic Logo -->
-<div class="container text-center">
-  <img src="assets/image/organic-01.jpg" alt="Organic Logo" class="organic-logo fade-in">
 </div>
 
-<!-- Stats Section -->
-<section class="stat-section">
-  <div class="container">
+<div class="container middle-line">
     <div class="row">
-      <div class="col-md-4">
-        <div class="stat-card customer fade-in">
-          <i class="fas fa-users stat-icon"></i>
-          <h3 class="stat-title">Customers</h3>
-          <p class="stat-value customer-value">570</p>
+        <div class="col">
+            <div id="middle-line-content">
+                <img src="assets/image/organic-01.jpg" alt="organic label" width="150px">
+            </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="stat-card items fade-in">
-          <i class="fas fa-shopping-bag stat-icon"></i>
-          <h3 class="stat-title">Items</h3>
-          <p class="stat-value items-value">230</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="stat-card orders fade-in">
-          <i class="fas fa-shopping-cart stat-icon"></i>
-          <h3 class="stat-title">Orders</h3>
-          <p class="stat-value orders-value">5003</p>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
+</div>
 
-<!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="footer-logo">
-      <span>FOOD</span><span>MART</span>
+<div class="container home-page-box-container">
+    <div class="row">
+        <div class="col">
+            <div id="box-one">
+                <i class="fas fa-users stat-icon box-icons"></i>
+                <p class="box-names">CUSTOMERS</p>
+                <p class="box-calculations">370</p>
+            </div>
+        </div>
+        <div class="col">
+            <div id="box-two">
+                <i class="fas fa-shopping-bag stat-icon box-icons"></i>
+                <p class="box-names">ITEMS</p>
+                <p class="box-calculations">290</p>
+            </div>
+        </div>
+        <div class="col">
+            <div id="box-three">
+                <i class="fas fa-shopping-cart stat-icon box-icons"></i>
+                <p class="box-names">ORDERS</p>
+                <p class="box-calculations">5003</p>
+            </div>
+        </div>
     </div>
-    <div class="social-icons">
-      <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-      <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-      <a href="#" class="social-icon"><i class="far fa-envelope"></i></a>
-    </div>
-    <div class="footer-links">
-      <a href="#" class="footer-link">Home</a>
-      <a href="#" class="footer-link">Customers</a>
-      <a href="#" class="footer-link">Items</a>
-      <a href="#" class="footer-link">Place Orders</a>
-      <a href="#" class="footer-link">Orders</a>
-    </div>
-    <p class="copyright">@2024 Thenuri Nanayakkara All Right Reserved.</p>
-  </div>
-</footer>
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/home-page-script.js"></script>
+<div class="container footer">
+    <div class="row">
+        <div class="col">
+            <div id="company-name">
+                <p>FOOD<span>MART</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div id="social-icons">
+                <a href="#" class="social-icon" style="padding: 10px 17px"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="far fa-envelope"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col footer-navigation-link-col">
+            <div id="page-navigation">
+                <a href="">Home</a>
+                <a href="">Customers</a>
+                <a href="">Items</a>
+                <a href="">Place Orders</a>
+                <a href="">Orders</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div id="copy-right-text">
+                <p class="copyright">@2024 Thenuri Nanayakkara All Right Reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>
