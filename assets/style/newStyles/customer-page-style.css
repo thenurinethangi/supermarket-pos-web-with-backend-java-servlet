@@ -661,6 +661,10 @@ footer {
         margin-inline: 0.3em;
     }
 
+    .table-header-custom-row {
+        margin-top: 1.5em;
+    }
+
 }
 
 
