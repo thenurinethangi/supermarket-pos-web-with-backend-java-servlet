@@ -459,7 +459,7 @@ body {
     margin-left: auto;
 }
 
-/* Fix for offcanvas in place-order page */
+
 .offcanvas {
     position: fixed;
     bottom: 0;
@@ -468,7 +468,7 @@ body {
     flex-direction: column;
     max-width: 100%;
     visibility: hidden;
-    background-color: #fff !important; /* Force white background */
+    background-color: #fff !important;
     background-clip: padding-box;
     outline: 0;
     transition: transform .3s ease-in-out;
@@ -476,7 +476,7 @@ body {
     margin-right: 0;
 }
 
-/* Ensure the offcanvas header is visible */
+
 .offcanvas-header {
     display: flex !important;
     align-items: center;
@@ -486,7 +486,7 @@ body {
     background-color: #fff;
 }
 
-/* Fix for close button */
+
 .btn-close {
     box-sizing: content-box;
     width: 1em;
