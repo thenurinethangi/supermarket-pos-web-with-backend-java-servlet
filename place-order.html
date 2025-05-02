@@ -4,46 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FoodMart - Place Order</title>
+  <link rel="icon" type="image/ico" href="assets/image/vegitable-bucket-09-removebg-preview.ico">
+  <meta name="author" content="Thenuri Nethangi">
+  <meta name="keywords" content="html, css, javascript, pos web, supermarket point of sale website, web development, software engineering, computer science">
+  <meta name="description" content="This website is a Supermarket Point of Sale (POS) system designed to manage customers, items, and orders efficiently. It streamlines daily sales operations, tracks inventory in real-time, and improves customer service with a user-friendly interface.">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="assets/style/newStyles/home-page-style.css">
+  <link rel="stylesheet" href="assets/style/newStyles/customer-page-style.css">
   <link rel="stylesheet" href="assets/style/place-order-page-style.css">
 </head>
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="FoodMart Logo" class="me-2" width="53px">
-      <span>FOOD</span><span>MART</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+  <div class="container-fluid navbar-container-custom">
+
+    <div class="superMart-logo">
+      <img src="assets/image/vegetable-bucket-15-removebg-preview.png" alt="logo of the SuperMart" height="30px">
+      <p>FOOD<span>MART</span></p>
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="index.html">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="customer.html">Customers</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="item.html">Items</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Place Order</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="order.html">Orders</a>
-        </li>
-        <li class="nav-item ms-2">
-          <div class="user-icon">
-            <i class="fas fa-user"></i>
-          </div>
-        </li>
-      </ul>
-    </div>
+
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-item-custom">
+      <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="index.html">Home</a></li>
+      <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="customer.html">Customers</a></li>
+      <li class="nav-item dropdown"><a class="nav-link active page-link-custom" aria-current="page" href="item.html">Items</a></li>
+      <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="place-order.html">Place Order</a></li>
+      <li class="nav-item"><a class="nav-link active page-link-custom" aria-current="page" href="order.html">Orders</a></li>
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="#"><i class="fas fa-user"></i></a></li>
+    </ul>
   </div>
 </nav>
 
@@ -66,10 +59,7 @@
               <div class="col-md-6">
                 <label for="orderDate" class="form-label">Date</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="orderDate" placeholder="Select date">
-                  <span class="input-group-text">
-                                            <i class="far fa-calendar"></i>
-                                        </span>
+                  <input type="date" class="form-control" id="orderDate" value="2025-05-02">
                 </div>
               </div>
             </div>
@@ -77,16 +67,16 @@
             <div class="mb-3">
               <label for="customerSelect" class="form-label">Select Customer</label>
               <select class="form-select" id="customerSelect">
-                <option value="C-00001" selected>C-00001</option>
-                <option value="C-00002">C-00002</option>
-                <option value="C-00003">C-00003</option>
+                <option value="C-000001" selected>C-000001</option>
+                <option value="C-000002">C-000002</option>
+                <option value="C-000003">C-000003</option>
               </select>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Customer Details</label>
               <div class="customer-details">
-                <p class="mb-1">C-00001</p>
+                <p class="mb-1">C-000001</p>
                 <p class="mb-1">Thenuri Nanayakkara</p>
                 <p class="mb-0">0712345678</p>
               </div>
@@ -116,21 +106,15 @@
               <div class="customer-details">
                 <p class="mb-1">ID: I-00001</p>
                 <p class="mb-1">Description: Dove Shampoo 100ml</p>
-                <p class="mb-1">Price: 270.00</p>
-                <p class="mb-0">Qty: 130</p>
+                <p class="mb-1">Price: 470.00</p>
+                <p class="mb-0">Qty: 120</p>
               </div>
             </div>
 
             <div class="row mb-3">
               <div class="col-8">
                 <label for="selectQty" class="form-label">Select Qty Need</label>
-                <select class="form-select" id="selectQty">
-                  <option value="1" selected>1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
+                <input type="number" class="form-select" id="selectQty" min="1" max="1000" step="1" value="1">
               </div>
               <div class="col-4 d-flex align-items-end">
                 <button class="btn btn-primary w-100" id="addItemBtn">
@@ -162,13 +146,13 @@
           <tbody>
           <tr>
             <td>I0001</td>
-            <td>270.00</td>
+            <td>470.00</td>
             <td>2</td>
-            <td>540.00</td>
+            <td>940.00</td>
             <td>
-                                    <span class="delete-btn">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </span>
+              <span class="delete-btn">
+                <i class="fas fa-trash-alt"></i>
+              </span>
             </td>
           </tr>
           <tr>
@@ -177,9 +161,9 @@
             <td>2</td>
             <td>540.00</td>
             <td>
-                                    <span class="delete-btn">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </span>
+              <span class="delete-btn">
+                <i class="fas fa-trash-alt"></i>
+              </span>
             </td>
           </tr>
           </tbody>
@@ -226,32 +210,25 @@
   </div>
 </div>
 
-<!-- Footer -->
 <footer>
   <div class="container">
     <div class="footer-logo">
-      <span>FOOD</span><span>MART</span>
-    </div>
-    <div class="social-icons">
-      <a href="#" class="social-icon">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="#" class="social-icon">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="#" class="social-icon">
-        <i class="fas fa-envelope"></i>
-      </a>
+      <h2><span>FOOD</span><span>MART</span></h2>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fas fa-envelope"></i></a>
+      </div>
     </div>
     <div class="footer-links">
-      <a href="#" class="footer-link">Home</a>
-      <a href="#" class="footer-link">Place Orders</a>
-      <a href="#" class="footer-link">Customers</a>
-      <a href="#" class="footer-link">Orders</a>
-      <a href="#" class="footer-link">Items</a>
+      <a href="index.html">Home</a>
+      <a href="customer.html">Customers</a>
+      <a href="item.html">Items</a>
+      <a href="place-order.html">Place Orders</a>
+      <a href="order.html">Orders</a>
     </div>
     <div class="copyright">
-      ©2024 Thenuri Nanayakkara All Right Reserved.
+      &copy;2024 Thenuri Nanayakkara All Rights Reserved.
     </div>
   </div>
 </footer>
