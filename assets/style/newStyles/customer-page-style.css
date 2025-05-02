@@ -642,14 +642,25 @@ footer {
     .customer-tbl tr th{
 
         font-size: 16px;
-        padding: 15px;
+        padding: 12px;
     }
 
     .customer-tbl tr td{
 
         font-size: 15px;
-        padding: 15px;
+        padding: 12px;
     }
+
+    .table-header-custom-row{
+
+        margin-inline: 0.3em;
+    }
+
+    .custom-row{
+
+        margin-inline: 0.3em;
+    }
+
 }
 
 
