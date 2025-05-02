@@ -1,0 +1,89 @@
+:root {
+    --primary: #8bc34a;
+    --secondary: #ffcc00;
+    --dark: #333;
+    --light: #f8f9fa;
+    --gray: #f2f2f2;
+    --white: #ffffff;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    opacity: 0;
+    animation: fadeInPage 0.8s ease forwards;
+}
+
+#order-header{
+
+    background-color: #ffcc00;
+}
+
+.table-header-date-picker>input{
+
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #333;
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+.table-header-date-picker>input:focus{
+
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.19);
+}
+
+#order-tbl-arrows>i{
+
+    color: #ffcc00;
+}
+
+#order-tbl-arrows>i:hover{
+
+    color: #8bc34a;
+}
+
+#order-tbl tr > th::after{
+
+    background-color: #ffcc00;
+}
+
+#order-tbl tr > th:hover {
+    color: #ffcc00;
+}
+
+#order-tbl tbody > tr::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background-color: rgba(255, 236, 179, 0.17);
+    transition: width var(--transition-speed) ease;
+    z-index: 1;
+}
+
+#order-tbl tbody > tr:hover {
+    transform: translateX(5px);
+}
+
+#order-tbl tbody > tr:hover::before {
+    width: 100%;
+}
+
+#order-search-field>input:focus #order-search-field>i{
+
+    color: #ffcc00; !important;
+}

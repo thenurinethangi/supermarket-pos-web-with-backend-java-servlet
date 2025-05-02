@@ -44,15 +44,10 @@ body {
 #item-tbl tr > th::after{
 
     background-color: #ffcc00;
-    transition: width var(--transition-speed) ease;
 }
 
 #item-tbl tr > th:hover {
     color: #ffcc00;
-}
-
-#item-tbl tr > th:hover::after {
-    width: calc(100% - 30px);
 }
 
 #item-page-search-field>i:hover{
