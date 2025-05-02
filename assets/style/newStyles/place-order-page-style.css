@@ -358,10 +358,10 @@ body {
 }
 
 .btn-secondary:hover {
-    background-color: #3498db;
-    border-color: #3498db;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    /*background-color: #3498db;*/
+    /*border-color: #3498db;*/
+    /*transform: translateY(-2px);*/
+    /*box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);*/
 }
 
 .btn-secondary::after {
@@ -409,7 +409,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
+    /*border-bottom: 1px solid var(--border-color);*/
     background-color: #fff;
 }
 
