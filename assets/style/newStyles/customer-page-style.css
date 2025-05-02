@@ -556,6 +556,44 @@ footer {
 }
 
 
+.offcanvas {
+    height: 100vh !important;
+    margin-right: -1em;
+}
+
+#navigation-side-bar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 40px;
+    padding-top: 4.5em;
+    visibility: visible !important;
+}
+
+#navigation-side-bar > a {
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    display: block;
+    visibility: visible !important;
+}
+
+
+.offcanvas-body {
+    overflow-y: auto;
+    display: block !important;
+}
+
+
+.offcanvas-body {
+    padding: 1rem 1rem;
+    overflow-y: auto;
+}
+
+
 @media all and (max-width: 992px) {
 
     .table-header-custom-row{
@@ -571,6 +609,14 @@ footer {
     .table-arrows{
 
         margin-right: 1.2em;
+    }
+
+    #menu-btn {
+        display: inline-block !important;
+    }
+
+    .nav-item-custom > li {
+        display: none;
     }
 
 }
