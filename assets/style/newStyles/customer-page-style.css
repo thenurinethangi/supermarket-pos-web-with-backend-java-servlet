@@ -311,12 +311,12 @@ body {
 
 .tbl-action-icons i.fa-edit:hover {
     color: var(--primary);
-    transform: scale(1.2) rotate(5deg);
+    transform: scale(1.3) rotate(5deg);
 }
 
 .tbl-action-icons i.fa-trash:hover {
     color: #e53935;
-    transform: scale(1.2) rotate(-5deg);
+    transform: scale(1.3) rotate(-5deg);
 }
 
 footer {
@@ -714,14 +714,14 @@ footer {
 
 #delete-customer-modal-header{
 
-    background-color: #F44336;
+    background-color: #EF5350;
     color: #FFFFFF;
 }
 
 .delete-btn{
 
     border: none;
-    background-color: #F44336;
+    background-color: #EF5350;
     border-radius: 5px;
     padding: 7px 15px;
     box-shadow: 0.5px 0.5px 15px rgba(169, 169, 169, 0.40);
