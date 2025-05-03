@@ -224,6 +224,8 @@ body {
 }
 
 .delete-btn {
+    background-color: transparent;
+    box-shadow: none;
     color: #dc3545;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -386,6 +388,36 @@ body {
     margin-left: auto;
 }
 
+#update-order-modal-header{
+
+    background-color: #8bc34a;
+    color: #FFFFFF;
+}
+
+#update-order-modal-body{
+
+    padding: 2em 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+#update-order-modal-body>input{
+
+    height: 35px;
+    border-radius: 5px;
+    border: 1.4px solid rgba(169, 169, 169, 0.4);
+    padding-inline: 8px;
+    outline: none;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 0.57);
+}
+
+#update-order-modal-body>label{
+
+    font-weight: 400;
+}
 
 .offcanvas {
     position: fixed;
