@@ -571,6 +571,11 @@ footer {
     visibility: visible !important;
 }
 
+#nav-close{
+
+    margin-right: 1em;
+}
+
 #navigation-side-bar > a {
     text-decoration: none;
     font-size: 1rem;

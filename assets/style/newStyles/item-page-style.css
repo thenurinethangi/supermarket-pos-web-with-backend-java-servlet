@@ -92,7 +92,7 @@ body {
 
 .offcanvas {
     height: 100vh !important;
-    margin-right: -1em;
+    /*margin-right: -1em;*/
 }
 
 #navigation-side-bar {
@@ -104,6 +104,11 @@ body {
     gap: 40px;
     padding-top: 4.5em;
     visibility: visible !important;
+}
+
+#nav-close{
+
+    margin-right: 1em;
 }
 
 #navigation-side-bar > a {
