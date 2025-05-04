@@ -111,8 +111,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary clear-btn" data-bs-dismiss="modal">Clear</button>
-                <button type="button" class="btn btn-primary add-new-btn">Add</button>
+                <button type="button" class="btn btn-secondary clear-btn" id="item-form-clear">Clear</button>
+                <button type="button" class="btn btn-primary add-new-btn" id="item-form-add-btn">Add</button>
             </div>
         </div>
     </div>
@@ -132,7 +132,7 @@
                 </tr>
                 </thead>
 
-                <tbody class="table-body">
+                <tbody class="table-body" id="item-table-body">
 <!--                <tr class="tbl-row item-page-rows">-->
 <!--                    <td>I-00001</td>-->
 <!--                    <td>Dove Shampoo 250ml</td>-->
@@ -261,7 +261,7 @@
         <div class="col">
             <div class="table-arrows" id="item-page-table-arrow">
                 <i class="fas fa-chevron-left"></i>
-                <p>1</p>
+                <p id="item-tbl-long">0/0</p>
                 <i class="fas fa-chevron-right"></i>
             </div>
         </div>

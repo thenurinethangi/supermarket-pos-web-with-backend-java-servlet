@@ -18,7 +18,7 @@ customerDB.push(new CustomerModel('C-000012','Saman Perera','Galle','20001234567
 export let itemDB = [];
 itemDB.push(new ItemModel('I-00001','Dove Shampoo 250ml','470.00','120'));
 itemDB.push(new ItemModel('I-00002','Anchor 1kg Milk Powder','2200.00','200'));
-itemDB.push(new ItemModel('I-00003','Magic Chocolate 400ml Ice Cream','950.00','60'));
+itemDB.push(new ItemModel('I-00003','Penut Butter 100g','950.00','60'));
 itemDB.push(new ItemModel('I-00004','Coca cola 150ml','170.00','350'));
 itemDB.push(new ItemModel('I-00005','Popit 100g','420.00','80'));
 

@@ -138,7 +138,7 @@ addNewCustomerBtn.addEventListener('click',(event)=>{
 
         Swal.fire({
             title: 'Success!',
-            text: 'Successfully Added A New Customer.',
+            text: 'Successfully Added A New Customer',
             icon: 'success',
             confirmButtonText: 'Ok'
         })
