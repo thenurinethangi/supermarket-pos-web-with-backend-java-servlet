@@ -29,10 +29,10 @@ function loadCustomerTable() {
                           <td>
                                <div class="tbl-action-icons">
                                     <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-edit customer-edit-icon"></i>
                                     </button>
                                     <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash"></i>
+                                        <i class="fas fa-trash customer-delete-icon"></i>
                                     </button>
                                </div>
                         </td>
@@ -107,7 +107,7 @@ addNewCustomerBtn.addEventListener('click',(event)=>{
         return;
     }
 
-    const nameRegex = /^[A-Za-z\s]{2,}$/;
+    const nameRegex = /^([A-Z]\.)+\s[A-Z][a-zA-Z]*$/;
     let nameValidation = nameRegex.test(name);
 
     const addressRegex = /^[A-Za-z0-9\s,\/\-]{5,}$/;
@@ -154,23 +154,93 @@ addNewCustomerBtn.addEventListener('click',(event)=>{
 });
 
 
+//customer delete icon
+var selectedCustomerIdTodelete = null;
+
+$(document).on('click', '.customer-delete-icon', function () {
+
+    let parentRow = $(this).closest('tr');
+    let childrens = parentRow[0].childNodes;
+    let customerId = childrens[1].innerHTML;
+    selectedCustomerIdTodelete = customerId;
+});
+
+
+// cancel delete customer button
+let cancelDeletCustomerBtn = $('#cancel-customer-delete')[0];
+cancelDeletCustomerBtn.addEventListener('click',()=>{
+
+    selectedCustomerIdTodelete = null;
+});
+
 
 // delete customer
-
 let deletCustomerBtn = $('#delete-customer-btn')[0];
 deletCustomerBtn.addEventListener('click',()=>{
 
-    let customerId = $('#customer-id');
+    if(selectedCustomerIdTodelete===null){
+        return;
+    }
 
-    let lastCustomerId = customerDB[customerDB.length-1].id;
-    let numberPart = lastCustomerId.split("-")[1];
-    numberPart = Number(numberPart)+1;
-    let formattedNumber = String(numberPart).padStart(6, '0');
-    let newId = lastCustomerId.split("-")[0]+'-' + formattedNumber;
-    // console.log(newId);
+    for (let i = 0; i < customerDB.length; i++) {
+        let id = customerDB[i].id;
 
-    customerId.val(newId);
+        if(id===selectedCustomerIdTodelete){
+            customerDB.splice(i, 1);
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Successfully Deleted Customer ID: '+selectedCustomerIdTodelete,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
+            break;
+        }
+    }
+
+    console.log(customerDB);
+    selectedCustomerIdTodelete = null;
+    loadCustomerTable();
+
 });
+
+
+
+//customer edit icon
+var selectedCustomerIdToEdit = null;
+
+$(document).on('click', '.customer-edit-icon', function () {
+
+    let parentRow = $(this).closest('tr');
+    let childrens = parentRow[0].childNodes;
+    let customerId = childrens[1].innerHTML;
+    selectedCustomerIdToEdit = customerId;
+    let selectedCustomer = null;
+
+    for (let i = 0; i < customerDB.length; i++) {
+        let id = customerDB[i].id;
+
+        if(id===selectedCustomerIdToEdit){
+            selectedCustomer = customerDB[i];
+            break;
+        }
+    }
+
+    let editCustomerFormInputFields = $('#update-customer-modal-body>input');
+
+    if(selectedCustomer!=null) {
+        editCustomerFormInputFields[0].value = selectedCustomer.id;
+        editCustomerFormInputFields[1].value = selectedCustomer.name;
+        editCustomerFormInputFields[2].value = selectedCustomer.address;
+        editCustomerFormInputFields[3].value = selectedCustomer.nic;
+        editCustomerFormInputFields[4].value = selectedCustomer.phoneNo;
+    }
+});
+
+
+
+
+
+
 
 
 
@@ -180,3 +250,9 @@ deletCustomerBtn.addEventListener('click',()=>{
 
 loadCustomerTable();
 generateNewCustomerId();
+
+
+
+
+
+
