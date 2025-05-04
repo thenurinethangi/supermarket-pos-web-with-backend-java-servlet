@@ -113,8 +113,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary clear-btn" data-bs-dismiss="modal">Clear</button>
-                <button type="button" class="btn btn-primary add-new-btn">Add</button>
+                <button type="button" class="btn btn-secondary clear-btn" id="customer-form-clear">Clear</button>
+                <button type="button" class="btn btn-primary add-new-btn" id="customer-form-add-btn">Add</button>
             </div>
         </div>
     </div>
@@ -135,78 +135,78 @@
                 </tr>
                 </thead>
 
-                <tbody class="table-body">
-                <tr class="tbl-row">
-                    <td>C-000001</td>
-                    <td>Thenuri Nanayakkara</td>
-                    <td>Matara</td>
-                    <td>200212345678</td>
-                    <td>071908765</td>
-                    <td>
-                        <div class="tbl-action-icons">
-                            <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                <tbody class="table-body" id="customer-table-body">
+<!--                <tr class="tbl-row">-->
+<!--                    <td>C-000001</td>-->
+<!--                    <td>Thenuri Nanayakkara</td>-->
+<!--                    <td>Matara</td>-->
+<!--                    <td>200212345678</td>-->
+<!--                    <td>071908765</td>-->
+<!--                    <td>-->
+<!--                        <div class="tbl-action-icons">-->
+<!--                            <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">-->
+<!--                                <i class="fas fa-edit"></i>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">-->
+<!--                                <i class="fas fa-trash"></i>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
 
-                <tr class="tbl-row">
-                    <td>C-000001</td>
-                    <td>Thenuri Nanayakkara</td>
-                    <td>Matara</td>
-                    <td>200212345678</td>
-                    <td>071908765</td>
-                    <td>
-                        <div class="tbl-action-icons">
-                            <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+<!--                <tr class="tbl-row">-->
+<!--                    <td>C-000001</td>-->
+<!--                    <td>Thenuri Nanayakkara</td>-->
+<!--                    <td>Matara</td>-->
+<!--                    <td>200212345678</td>-->
+<!--                    <td>071908765</td>-->
+<!--                    <td>-->
+<!--                        <div class="tbl-action-icons">-->
+<!--                            <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">-->
+<!--                                <i class="fas fa-edit"></i>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">-->
+<!--                                <i class="fas fa-trash"></i>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
 
-                <tr class="tbl-row">
-                    <td>C-000001</td>
-                    <td>Thenuri Nanayakkara</td>
-                    <td>Matara</td>
-                    <td>200212345678</td>
-                    <td>071908765</td>
-                    <td>
-                        <div class="tbl-action-icons">
-                            <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+<!--                <tr class="tbl-row">-->
+<!--                    <td>C-000001</td>-->
+<!--                    <td>Thenuri Nanayakkara</td>-->
+<!--                    <td>Matara</td>-->
+<!--                    <td>200212345678</td>-->
+<!--                    <td>071908765</td>-->
+<!--                    <td>-->
+<!--                        <div class="tbl-action-icons">-->
+<!--                            <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">-->
+<!--                                <i class="fas fa-edit"></i>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">-->
+<!--                                <i class="fas fa-trash"></i>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
 
-                <tr class="tbl-row">
-                    <td>C-000001</td>
-                    <td>Thenuri Nanayakkara</td>
-                    <td>Matara</td>
-                    <td>200212345678</td>
-                    <td>071908765</td>
-                    <td>
-                        <div class="tbl-action-icons">
-                            <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+<!--                <tr class="tbl-row">-->
+<!--                    <td>C-000001</td>-->
+<!--                    <td>Thenuri Nanayakkara</td>-->
+<!--                    <td>Matara</td>-->
+<!--                    <td>200212345678</td>-->
+<!--                    <td>071908765</td>-->
+<!--                    <td>-->
+<!--                        <div class="tbl-action-icons">-->
+<!--                            <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">-->
+<!--                                <i class="fas fa-edit"></i>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">-->
+<!--                                <i class="fas fa-trash"></i>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
                 </tbody>
             </table>
         </div>
@@ -260,7 +260,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary cancel-btn" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary delete-btn">Delete</button>
+                <button type="button" class="btn btn-primary delete-btn" id="delete-customer-btn">Delete</button>
             </div>
         </div>
     </div>
@@ -271,7 +271,7 @@
         <div class="col">
             <div class="table-arrows">
                 <i class="fas fa-chevron-left"></i>
-                <p>1</p>
+                <p id="customer-tbl-long">0/0</p>
                 <i class="fas fa-chevron-right"></i>
             </div>
         </div>
@@ -301,9 +301,12 @@
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="lib/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script type="module" src="assets/js/db/db.js"></script>
+<script type="module" src="assets/js/model/CustomerModel.js"></script>
 <script type="module" src="assets/js/controller/CustomerController.js"></script>
 </body>
 </html>
