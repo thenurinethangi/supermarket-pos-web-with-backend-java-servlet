@@ -150,8 +150,25 @@ addNewCustomerBtn.addEventListener('click',(event)=>{
         generateNewCustomerId();
         loadCustomerTable();
     }
+    else{
+
+        Swal.fire({
+            title: 'Fail!',
+            text: 'Failed To Add A New Customer',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+
+        inputFileds[1].value = '';
+        inputFileds[2].value = '';
+        inputFileds[3].value = '';
+        inputFileds[4].value = '';
+        generateNewCustomerId();
+        loadCustomerTable();
+    }
 
 });
+
 
 
 //customer delete icon
@@ -174,18 +191,27 @@ cancelDeletCustomerBtn.addEventListener('click',()=>{
 });
 
 
+
 // delete customer
 let deletCustomerBtn = $('#delete-customer-btn')[0];
 deletCustomerBtn.addEventListener('click',()=>{
 
     if(selectedCustomerIdTodelete===null){
+        Swal.fire({
+            title: 'Fail!',
+            text: 'Failed To Delete Selected Customer',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
         return;
     }
 
+    let bool = false;
     for (let i = 0; i < customerDB.length; i++) {
         let id = customerDB[i].id;
 
         if(id===selectedCustomerIdTodelete){
+            bool = true;
             customerDB.splice(i, 1);
             Swal.fire({
                 title: 'Deleted!',
@@ -197,7 +223,16 @@ deletCustomerBtn.addEventListener('click',()=>{
         }
     }
 
-    console.log(customerDB);
+    if(bool===false){
+        Swal.fire({
+            title: 'Fail!',
+            text: 'Failed To Delete Customer ID: '+selectedCustomerIdTodelete,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+    }
+
+    // console.log(customerDB);
     selectedCustomerIdTodelete = null;
     loadCustomerTable();
 
