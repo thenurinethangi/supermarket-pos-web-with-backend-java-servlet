@@ -238,6 +238,159 @@ $(document).on('click', '.customer-edit-icon', function () {
 
 
 
+// edit customer
+let updateCustomerBtn = $('#customer-edit-btn')[0];
+updateCustomerBtn.addEventListener('click',()=>{
+
+    let inputFileds = $('#update-customer-modal-body>input');
+
+    let customerId = inputFileds[0].value;
+    let name = inputFileds[1].value;
+    let address = inputFileds[2].value;
+    let nic = inputFileds[3].value;
+    let phoneNo = inputFileds[4].value;
+
+    if(customerId==='' || name==='' || address==='' || nic==='' || phoneNo==''){
+
+        Swal.fire({
+            title: 'Error!',
+            text: 'All fields required',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+
+        return;
+    }
+
+    const nameRegex = /^(([A-Z]\.)+\s)?[A-Z][a-zA-Z]*$/;
+    let nameValidation = nameRegex.test(name);
+
+    const addressRegex = /^[A-Za-z0-9\s,\/\-]{5,}$/;
+    let addressValidation = addressRegex.test(address);
+
+    const nicRegex = /^(\d{9}[vVxX]|\d{12})$/;
+    let nicValidation = nicRegex.test(nic);
+
+    const phoneRegex = /^(?:0|\+94)(7[01245678])\d{7}$/;
+    let phoneNoValidation = phoneRegex.test(phoneNo);
+
+    if(!nameValidation || !addressValidation || !nicValidation || !phoneNoValidation){
+
+        Swal.fire({
+            title: 'Error!',
+            text: 'Invalid Inputs',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+
+        return;
+    }
+
+    let selectedCustomer = null;
+
+    for (let i = 0; i < customerDB.length; i++) {
+        let id = customerDB[i].id;
+
+        if(id===customerId){
+            selectedCustomer = customerDB[i];
+            break;
+        }
+    }
+
+    if(selectedCustomer!=null){
+
+        selectedCustomer.name = name;
+        selectedCustomer.address = address;
+        selectedCustomer.nic = nic;
+        selectedCustomer.phoneNo = phoneNo;
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Successfully Updated Customer ID: '+customerId,
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        })
+    }
+    else{
+
+        Swal.fire({
+            title: 'Error!',
+            text: 'Failed To Update Customer ID: '+customerId,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+        return;
+    }
+
+    // console.log(selectedCustomer);
+    // console.log(customerDB);
+    loadCustomerTable();
+
+});
+
+
+
+//load more table data right
+let rightIcon = $('#load-more-tbl-data-right-icon')[0];
+rightIcon.addEventListener('click',()=>{
+
+    let values = rightIcon.closest('div').children;
+    let value = values[1].innerHTML;
+
+    let str = value.split('/');
+
+    if(str[0]===str[1]){
+        return;
+    }
+
+    let no = parseInt(str[0]);
+    let x = no*4;
+    let y = (no+1)*4;
+
+    console.log(x);
+    console.log(y);
+
+    let customerTbl = $('#customer-table-body');
+    customerTbl.empty();
+
+    for (let i = x; i < y; i++) {
+        if(i>=customerDB.length){
+            break;
+        }
+
+        let id = customerDB[i].id;
+        let name = customerDB[i].name;
+        let address = customerDB[i].address;
+        let nic = customerDB[i].nic;
+        let phoneNo = customerDB[i].phoneNo;
+
+        let data = `<tr class="tbl-row">
+                          <td>${id}</td>
+                          <td>${name}</td>
+                          <td>${address}</td>
+                          <td>${nic}</td>
+                          <td>${phoneNo}</td>
+                          <td>
+                               <div class="tbl-action-icons">
+                                    <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
+                                        <i class="fas fa-edit customer-edit-icon"></i>
+                                    </button>
+                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
+                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                    </button>
+                               </div>
+                        </td>
+                    </tr>`
+
+        customerTbl.append(data);
+    }
+
+    let tableLong = Math.round(customerDB.length/4);
+
+    let customerTblTag = $('#customer-tbl-long');
+    customerTblTag[0].innerHTML = (no+1)+'/'+tableLong;
+
+});
 
 
 
