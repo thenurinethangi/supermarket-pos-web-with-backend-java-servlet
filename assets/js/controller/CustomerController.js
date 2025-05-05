@@ -610,9 +610,9 @@ customerSearchBar.addEventListener('keydown',(event)=> {
 
             for (let i = 0; i < customer.length; i++) {
 
-                if(i>=4){
-                    break;
-                }
+                // if(i>=4){
+                //     break;
+                // }
                 let id = customer[i].id;
                 let name = customer[i].name;
                 let address = customer[i].address;
@@ -640,10 +640,10 @@ customerSearchBar.addEventListener('keydown',(event)=> {
                 customerTbl.append(data);
             }
 
-            let tableLong = Math.ceil(customer.length/4);
+            // let tableLong = Math.ceil(customer.length/4);
 
             let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+tableLong;
+            customerTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
 
@@ -669,9 +669,9 @@ customerSearchBar.addEventListener('keydown',(event)=> {
 
             for (let i = 0; i < customer.length; i++) {
 
-                if(i>=4){
-                    break;
-                }
+                // if(i>=4){
+                //     break;
+                // }
                 let id = customer[i].id;
                 let name = customer[i].name;
                 let address = customer[i].address;
@@ -699,10 +699,10 @@ customerSearchBar.addEventListener('keydown',(event)=> {
                 customerTbl.append(data);
             }
 
-            let tableLong = Math.ceil(customer.length/4);
+            // let tableLong = Math.ceil(customer.length/4);
 
             let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+tableLong;
+            customerTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
     }
