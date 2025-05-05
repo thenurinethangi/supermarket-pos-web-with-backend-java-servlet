@@ -297,7 +297,7 @@ updateCustomerBtn.addEventListener('click',()=>{
         return;
     }
 
-    const nameRegex = /^(([A-Z]\.)+\s)?[A-Z][a-zA-Z]*$/;
+    const nameRegex = /^(([A-Z]\.)+\s)?([a-zA-Z]+)(\s[a-zA-Z]+)*$/;
     let nameValidation = nameRegex.test(name);
 
     const addressRegex = /^[A-Za-z0-9\s,\/\-]{5,}$/;
@@ -579,14 +579,26 @@ customerSearchBar.addEventListener('keydown',(event)=> {
 
         let customer = [];
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let name = customerDB[i].name;
-            let arr = name.split(' ');
+        if(inputText.split(' ').length>1){
 
-            for (let j = 0; j < arr.length; j++) {
-                if(arr[j].toLowerCase()===inputText){
+            for (let i = 0; i < customerDB.length; i++) {
+                let name = customerDB[i].name;
+
+                if(name.toLowerCase()===inputText){
                     customer.push(customerDB[i]);
-                    break;
+                }
+            }
+        }
+        else if(inputText.split(' ').length===1){
+            for (let i = 0; i < customerDB.length; i++) {
+                let name = customerDB[i].name;
+                let arr = name.split(' ');
+
+                for (let j = 0; j < arr.length; j++) {
+                    if (arr[j].toLowerCase() === inputText) {
+                        customer.push(customerDB[i]);
+                        break;
+                    }
                 }
             }
         }
