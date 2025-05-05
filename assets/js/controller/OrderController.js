@@ -42,6 +42,9 @@ function loadOrderTable() {
 
     let orderTblTag = $('#order-tbl-long');
     orderTblTag[0].innerHTML = '1/'+tableLong;
+
+    let orderSearchBar = $('#order-search-bar')[0];
+    orderSearchBar.value = '';
 }
 
 
@@ -253,7 +256,7 @@ orderSearchBar.addEventListener('keydown',(event)=> {
 
     if(orderIdValidation){
 
-        console.log('order id validate');
+        // console.log('order id validate');
 
         let order = null;
 
@@ -302,7 +305,7 @@ orderSearchBar.addEventListener('keydown',(event)=> {
     }
     if(customerIdValidation){
 
-        console.log("customer id valid");
+        // console.log("customer id valid");
 
         let order = [];
 
@@ -358,7 +361,7 @@ orderSearchBar.addEventListener('keydown',(event)=> {
     }
     if(dateValidation){
 
-        console.log('date validate');
+        // console.log('date validate');
 
         let order = [];
 
@@ -413,7 +416,7 @@ orderSearchBar.addEventListener('keydown',(event)=> {
     }
     if(qtyValidation){
 
-        console.log('qty validate');
+        // console.log('qty validate');
 
         let order = [];
 
@@ -468,7 +471,7 @@ orderSearchBar.addEventListener('keydown',(event)=> {
     }
     if(totalValidation){
 
-        console.log('total validate');
+        // console.log('total validate');
 
         let order = [];
 
@@ -526,6 +529,75 @@ orderSearchBar.addEventListener('keydown',(event)=> {
         loadOrderTable();
     }
 
+
+});
+
+
+
+//search by date
+let dateInput = $('#date-input-in-order')[0];
+
+dateInput.addEventListener('input',function () {
+
+    if(!this.value){
+        loadOrderTable();
+    }
+});
+
+
+dateInput.addEventListener("change", function () {
+
+    let selectedDate = this.value;
+    let order = [];
+
+    for (let i = 0; i < orderDB.length; i++) {
+        let date = orderDB[i].date;
+
+        if(date===selectedDate){
+            order.push(orderDB[i]);
+        }
+    }
+
+    if(order.length!=0) {
+
+        let orderTbl = $('#order-table-body');
+        orderTbl.empty();
+
+        for (let i = 0; i < order.length; i++) {
+
+            // if(i>=4){
+            //     break;
+            // }
+            let orderId = order[i].orderId;
+            let customerId = order[i].customerId;
+            let date = order[i].date;
+            let itemCount = order[i].itemCount;
+            let total = order[i].total;
+
+            let data = `<tr class="tbl-row">
+                          <td>${orderId}</td>
+                          <td>${customerId}</td>
+                          <td>${date}</td>
+                          <td>${itemCount}</td>
+                          <td>${total}</td>
+                          <td>
+                               <div class="tbl-action-icons">
+                                    <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
+                                        <i class="fas fa-eye view-order-icon"></i>
+                                    </button>
+                               </div>
+                          </td>
+                    </tr>`
+
+            orderTbl.append(data);
+        }
+
+        // let tableLong = Math.ceil(order.length/4);
+
+        let orderTblTag = $('#order-tbl-long');
+        orderTblTag[0].innerHTML = 1+'/'+1;
+        return;
+    }
 
 });
 

@@ -22,6 +22,7 @@ itemDB.push(new ItemModel('I-00002','Anchor 1kg Milk Powder','2200.00','200'));
 itemDB.push(new ItemModel('I-00003','Penut Butter 100g','950.00','60'));
 itemDB.push(new ItemModel('I-00004','Coca cola 150ml','170.00','350'));
 itemDB.push(new ItemModel('I-00005','Popit 100g','420.00','80'));
+itemDB.push(new ItemModel('I-00006','Coca cola 500ml','350.00','100'));
 
 export let orderDB = [];
 let arr1 = ['I-00001','I-00002'];

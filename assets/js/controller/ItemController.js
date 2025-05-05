@@ -105,7 +105,7 @@ addNewItemBtn.addEventListener('click',(event)=>{
         return;
     }
 
-    const descriptionRegex = /^[A-Za-z ]*\d+(ml|g|kg|L)[A-Za-z ]*$/i;
+    const descriptionRegex = /^[A-Za-z ]+( \d+(\.\d+)?(ml|g|kg|L))?( [A-Za-z ]+)?$/i;
     let descriptionValidation = descriptionRegex.test(description);
 
     const priceRegex = /^\d+\.\d{2}$/;
@@ -488,7 +488,7 @@ itemSearchBar.addEventListener('keydown',(event)=> {
     const idRegex = /^[iI]-\d{5}$/;
     let itemIdValidation = idRegex.test(inputText);
 
-    const descriptionRegex = /^[A-Za-z ]*\d+(ml|g|kg|L)[A-Za-z ]*$/i;
+    const descriptionRegex = /^[A-Za-z ]+( \d+(\.\d+)?(ml|g|kg|L))?( [A-Za-z ]+)?$/i;
     let descriptionValidation = descriptionRegex.test(inputText);
 
     const priceRegex = /^\d+\.\d{2}$/;
@@ -560,9 +560,9 @@ itemSearchBar.addEventListener('keydown',(event)=> {
         for (let i = 0; i < itemDB.length; i++) {
             let description = itemDB[i].description;
 
-            if(description.toLowerCase()===inputText){
+            if(description.toLowerCase().includes(inputText)){
+                // console.log('contain');
                 item.push(itemDB[i]);
-                break;
             }
 
         }
@@ -574,9 +574,9 @@ itemSearchBar.addEventListener('keydown',(event)=> {
 
             for (let i = 0; i < item.length; i++) {
 
-                if(i>=4){
-                    break;
-                }
+                // if(i>=4){
+                //     break;
+                // }
                 let id = item[i].id;
                 let description = item[i].description;
                 let price = item[i].price;
@@ -602,10 +602,10 @@ itemSearchBar.addEventListener('keydown',(event)=> {
                 itemTbl.append(data);
             }
 
-            let tableLong = Math.ceil(item.length/4);
+            // let tableLong = Math.ceil(item.length/4);
 
             let itemTblTag = $('#item-tbl-long');
-            itemTblTag[0].innerHTML = 1+'/'+tableLong;
+            itemTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
 
@@ -631,9 +631,9 @@ itemSearchBar.addEventListener('keydown',(event)=> {
 
             for (let i = 0; i < item.length; i++) {
 
-                if(i>=4){
-                    break;
-                }
+                // if(i>=4){
+                //     break;
+                // }
                 let id = item[i].id;
                 let description = item[i].description;
                 let price = item[i].price;
@@ -659,10 +659,10 @@ itemSearchBar.addEventListener('keydown',(event)=> {
                 itemTbl.append(data);
             }
 
-            let tableLong = Math.ceil(item.length/4);
+            // let tableLong = Math.ceil(item.length/4);
 
             let itemTblTag = $('#item-tbl-long');
-            itemTblTag[0].innerHTML = 1+'/'+tableLong;
+            itemTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
     }
@@ -687,9 +687,9 @@ itemSearchBar.addEventListener('keydown',(event)=> {
 
             for (let i = 0; i < item.length; i++) {
 
-                if(i>=4){
-                    break;
-                }
+                // if(i>=4){
+                //     break;
+                // }
                 let id = item[i].id;
                 let description = item[i].description;
                 let price = item[i].price;
@@ -715,10 +715,10 @@ itemSearchBar.addEventListener('keydown',(event)=> {
                 itemTbl.append(data);
             }
 
-            let tableLong = Math.ceil(item.length/4);
+            // let tableLong = Math.ceil(item.length/4);
 
             let itemTblTag = $('#item-tbl-long');
-            itemTblTag[0].innerHTML = 1+'/'+tableLong;
+            itemTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
     }
