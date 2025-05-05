@@ -72,7 +72,7 @@ body {
     width: 0;
     background-color: rgba(255, 236, 179, 0.17);
     transition: width var(--transition-speed) ease;
-    z-index: 1;
+    z-index: 0;
 }
 
 #order-tbl tbody > tr:hover {
@@ -83,7 +83,53 @@ body {
     width: 100%;
 }
 
+.fa-eye:hover{
+
+    transform: scale(1.3) rotate(10deg);
+    color: #ffcc00;
+}
+
 #order-search-field>input:focus #order-search-field>i{
 
     color: #ffcc00; !important;
 }
+
+#order-details-modal-header{
+
+    background-color: #616161;
+    color: #FFFFFF;
+}
+
+#order-details-modal-body{
+
+    padding: 2em 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /*align-items: flex-start;*/
+    gap: 5px;
+}
+
+#order-details-modal-body>textarea{
+
+    border-radius: 5px;
+    border: 1.4px solid rgba(169, 169, 169, 0.4);
+    padding: 8px;
+    outline: none;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 0.77);
+    font-size: 0.9rem;
+}
+
+.close-btn{
+
+    background-color: #5C6BC0;
+    border: none;
+
+}
+
+
+
+
+
+
