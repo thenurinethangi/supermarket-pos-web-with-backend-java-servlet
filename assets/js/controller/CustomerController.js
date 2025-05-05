@@ -45,6 +45,9 @@ function loadCustomerTable() {
 
     let customerTblTag = $('#customer-tbl-long');
     customerTblTag[0].innerHTML = '1/'+tableLong;
+
+    let customerSearchBar = $('#customer-search-bar')[0];
+    customerSearchBar.value = '';
 }
 
 

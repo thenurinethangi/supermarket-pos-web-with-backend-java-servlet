@@ -43,6 +43,9 @@ function loadItemTable() {
 
     let itemTblTag = $('#item-tbl-long');
     itemTblTag[0].innerHTML = '1/'+tableLong;
+
+    let itemSearchBar = $('#item-search-bar')[0];
+    itemSearchBar.value = '';
 }
 
 
