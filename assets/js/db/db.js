@@ -25,19 +25,22 @@ itemDB.push(new ItemModel('I-00005','Popit 100g','420.00','80'));
 
 export let orderDB = [];
 let arr1 = ['I-00001','I-00002'];
-orderDB.push(new OrderModel('ORD-000001','C-000001','2025-05-02','2','2700.00',arr1));
+orderDB.push(new OrderModel('ORD-000001','C-000001','2025-05-02','3','1000.00',arr1));
 
 let arr2 = ['I-00001','I-00003'];
-orderDB.push(new OrderModel('ORD-000002','C-000002','2025-05-02','2','4000.00',arr2));
+orderDB.push(new OrderModel('ORD-000002','C-000002','2025-05-02','3','1000.00',arr2));
 
 let arr3 = ['I-00002','I-00003'];
-orderDB.push(new OrderModel('ORD-000003','C-000005','2025-05-03','2','3900.00',arr3));
+orderDB.push(new OrderModel('ORD-000003','C-000005','2025-05-03','3','1000.00',arr3));
 
 let arr4 = ['I-00004','I-00005'];
-orderDB.push(new OrderModel('ORD-000004','C-000007','2025-05-03','2','1300.00',arr4));
+orderDB.push(new OrderModel('ORD-000004','C-000007','2025-05-03','2','1000.00',arr4));
 
 let arr5 = ['I-00001','I-00002'];
-orderDB.push(new OrderModel('ORD-000005','C-000003','2025-05-03','2','5000.00',arr5));
+orderDB.push(new OrderModel('ORD-000005','C-000003','2025-05-03','3','1000.00',arr5));
+
+let arr6 = ['I-00001','I-00002'];
+orderDB.push(new OrderModel('ORD-000006','C-000003','2025-05-04','3','1000.00',arr6));
 
 
 

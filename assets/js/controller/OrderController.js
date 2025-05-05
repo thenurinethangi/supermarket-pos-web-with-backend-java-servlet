@@ -214,333 +214,316 @@ leftIcon.addEventListener('click',()=>{
 
 
 
-//customer search
-let customerSearchBar = $('#customer-search-bar')[0];
+//order search
+let orderSearchBar = $('#order-search-bar')[0];
 
-customerSearchBar.addEventListener('keydown',(event)=> {
+orderSearchBar.addEventListener('keydown',(event)=> {
 
-    let text = customerSearchBar.value.length;
+    let text = orderSearchBar.value.length;
     if((text===1 && event.key == 'Backspace') || (text>0 && event.key == 'Delete')){
-        loadCustomerTable();
+        loadOrderTable();
     }
 
     if (event.key !== 'Enter') {
         return;
     }
 
-    let inputText = customerSearchBar.value;
+    let inputText = orderSearchBar.value;
     inputText = inputText.toLowerCase();
-    // console.log(inputText);
+    console.log(inputText);
 
-    const idRegex = /^C-0*[1-9][0-9]{0,5}$/i;
-    let customerIdValidation = idRegex.test(inputText);
+    const orderIdregex = /^ord-\d{6}$/i;
+    let orderIdValidation = orderIdregex.test(inputText);
 
-    const nameRegex = /^(([A-Z]\.)+\s)?([a-zA-Z]+)(\s[a-zA-Z]+)*$/;
-    let nameValidation = nameRegex.test(inputText);
+    const customerIdRegex = /^C-0*[1-9][0-9]{0,5}$/i;
+    let customerIdValidation = customerIdRegex.test(inputText);
 
-    const addressRegex = /^[A-Za-z0-9\s,\/\-]{5,}$/;
-    let addressValidation = addressRegex.test(inputText);
+    const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+    let dateValidation = dateRegex.test(inputText);
 
-    const nicRegex = /^(\d{9}[vVxX]|\d{12})$/;
-    let nicValidation = nicRegex.test(inputText);
+    const qtyRegex = /^\d+$/;
+    let qtyValidation = qtyRegex.test(inputText);
 
-    const phoneRegex = /^(?:0|\+94)(7[01245678])\d{7}$/;
-    let phoneNoValidation = phoneRegex.test(inputText);
+    const totalRegex = /^\d+\.\d{2}$/;
+    let totalValidation = totalRegex.test(inputText);
 
-    if(!customerIdValidation && !nameValidation && !addressValidation && !nicValidation && !phoneNoValidation){
+    if(!orderIdValidation && !customerIdValidation && !dateValidation && !qtyValidation && !totalValidation){
         return;
     }
 
-    if(customerIdValidation){
+    if(orderIdValidation){
 
-        // console.log('customer id validate');
+        console.log('order id validate');
 
-        let customer = null;
+        let order = null;
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let id = customerDB[i].id;
+        for (let i = 0; i < orderDB.length; i++) {
+            let id = orderDB[i].orderId;
             id = id.toLowerCase();
 
             if(id===inputText){
-                customer = customerDB[i];
+                order = orderDB[i];
                 break;
             }
         }
 
-        if(customer!==null) {
+        if(order!==null) {
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+            let orderTbl = $('#order-table-body');
+            orderTbl.empty();
 
-            let id = customer.id;
-            let name = customer.name;
-            let address = customer.address;
-            let nic = customer.nic;
-            let phoneNo = customer.phoneNo;
+            let orderId = order.orderId;
+            let customerId = order.customerId;
+            let date = order.date;
+            let itemCount = order.itemCount;
+            let total = order.total;
 
             let data = `<tr class="tbl-row">
-                          <td>${id}</td>
-                          <td>${name}</td>
-                          <td>${address}</td>
-                          <td>${nic}</td>
-                          <td>${phoneNo}</td>
+                          <td>${orderId}</td>
+                          <td>${customerId}</td>
+                          <td>${date}</td>
+                          <td>${itemCount}</td>
+                          <td>${total}</td>
                           <td>
                                <div class="tbl-action-icons">
                                     <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit customer-edit-icon"></i>
-                                    </button>
-                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                        <i class="fas fa-eye view-order-icon"></i>
                                     </button>
                                </div>
-                        </td>
+                          </td>
                     </tr>`
 
-            customerTbl.append(data);
+            orderTbl.append(data);
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+1;
+            let orderTblTag = $('#order-tbl-long');
+            orderTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
     }
-    if(nameValidation){
+    if(customerIdValidation){
 
-        // console.log("name valid");
+        console.log("customer id valid");
 
-        let customer = [];
+        let order = [];
 
-        if(inputText.split(' ').length>1){
+        for (let i = 0; i < orderDB.length; i++) {
+            let customerId = orderDB[i].customerId;
 
-            for (let i = 0; i < customerDB.length; i++) {
-                let name = customerDB[i].name;
-
-                if(name.toLowerCase()===inputText){
-                    customer.push(customerDB[i]);
-                }
-            }
-        }
-        else if(inputText.split(' ').length===1){
-            for (let i = 0; i < customerDB.length; i++) {
-                let name = customerDB[i].name;
-                let arr = name.split(' ');
-
-                for (let j = 0; j < arr.length; j++) {
-                    if (arr[j].toLowerCase() === inputText) {
-                        customer.push(customerDB[i]);
-                        break;
-                    }
-                }
+            if (customerId.toLowerCase() === inputText) {
+                order.push(orderDB[i]);
             }
         }
 
-        if(customer.length!=0) {
+        if(order.length!=0) {
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+            let orderTbl = $('#order-table-body');
+            orderTbl.empty();
 
-            for (let i = 0; i < customer.length; i++) {
+            for (let i = 0; i < order.length; i++) {
 
-                if(i>=4){
-                    break;
-                }
-                let id = customer[i].id;
-                let name = customer[i].name;
-                let address = customer[i].address;
-                let nic = customer[i].nic;
-                let phoneNo = customer[i].phoneNo;
+                // if(i>=4){
+                //     break;
+                // }
+                let orderId = order[i].orderId;
+                let customerId = order[i].customerId;
+                let date = order[i].date;
+                let itemCount = order[i].itemCount;
+                let total = order[i].total;
 
                 let data = `<tr class="tbl-row">
-                          <td>${id}</td>
-                          <td>${name}</td>
-                          <td>${address}</td>
-                          <td>${nic}</td>
-                          <td>${phoneNo}</td>
+                          <td>${orderId}</td>
+                          <td>${customerId}</td>
+                          <td>${date}</td>
+                          <td>${itemCount}</td>
+                          <td>${total}</td>
                           <td>
                                <div class="tbl-action-icons">
                                     <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit customer-edit-icon"></i>
-                                    </button>
-                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                        <i class="fas fa-eye view-order-icon"></i>
                                     </button>
                                </div>
-                        </td>
+                          </td>
                     </tr>`
 
-                customerTbl.append(data);
+                orderTbl.append(data);
             }
 
-            let tableLong = Math.ceil(customer.length/4);
+            let tableLong = Math.ceil(order.length/4);
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+tableLong;
+            let orderTblTag = $('#order-tbl-long');
+            orderTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
 
     }
-    if(addressValidation){
+    if(dateValidation){
 
-        // console.log('address validate');
+        console.log('date validate');
 
-        let customer = [];
+        let order = [];
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let address = customerDB[i].address;
+        for (let i = 0; i < orderDB.length; i++) {
+            let date = orderDB[i].date;
 
-            if(address.toLowerCase()===inputText){
-                customer.push(customerDB[i]);
+            if(date===inputText){
+                order.push(orderDB[i]);
             }
         }
 
-        if(customer.length!=0) {
+        if(order.length!=0) {
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+            let orderTbl = $('#order-table-body');
+            orderTbl.empty();
 
-            for (let i = 0; i < customer.length; i++) {
+            for (let i = 0; i < order.length; i++) {
 
-                if(i>=4){
-                    break;
-                }
-                let id = customer[i].id;
-                let name = customer[i].name;
-                let address = customer[i].address;
-                let nic = customer[i].nic;
-                let phoneNo = customer[i].phoneNo;
+                // if(i>=4){
+                //     break;
+                // }
+                let orderId = order[i].orderId;
+                let customerId = order[i].customerId;
+                let date = order[i].date;
+                let itemCount = order[i].itemCount;
+                let total = order[i].total;
 
                 let data = `<tr class="tbl-row">
-                          <td>${id}</td>
-                          <td>${name}</td>
-                          <td>${address}</td>
-                          <td>${nic}</td>
-                          <td>${phoneNo}</td>
+                          <td>${orderId}</td>
+                          <td>${customerId}</td>
+                          <td>${date}</td>
+                          <td>${itemCount}</td>
+                          <td>${total}</td>
                           <td>
                                <div class="tbl-action-icons">
                                     <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit customer-edit-icon"></i>
-                                    </button>
-                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                        <i class="fas fa-eye view-order-icon"></i>
                                     </button>
                                </div>
-                        </td>
+                          </td>
                     </tr>`
 
-                customerTbl.append(data);
+                orderTbl.append(data);
             }
 
-            let tableLong = Math.ceil(customer.length/4);
+            // let tableLong = Math.ceil(order.length/4);
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+tableLong;
+            let orderTblTag = $('#order-tbl-long');
+            orderTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
     }
-    if(nicValidation){
+    if(qtyValidation){
 
-        // console.log('nic validate');
+        console.log('qty validate');
 
-        let customer = null;
+        let order = [];
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let nic = customerDB[i].nic;
+        for (let i = 0; i < orderDB.length; i++) {
+            let qty = orderDB[i].itemCount;
 
-            if(nic===inputText){
-                customer = customerDB[i];
-                break;
+            if(qty===inputText){
+                order.push(orderDB[i]);
             }
         }
 
-        if(customer!=null) {
+        if(order.length!=0) {
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+            let orderTbl = $('#order-table-body');
+            orderTbl.empty();
 
-            let id = customer.id;
-            let name = customer.name;
-            let address = customer.address;
-            let nic = customer.nic;
-            let phoneNo = customer.phoneNo;
+            for (let i = 0; i < order.length; i++) {
 
-            let data = `<tr class="tbl-row">
-                          <td>${id}</td>
-                          <td>${name}</td>
-                          <td>${address}</td>
-                          <td>${nic}</td>
-                          <td>${phoneNo}</td>
+                // if(i>=4){
+                //     break;
+                // }
+                let orderId = order[i].orderId;
+                let customerId = order[i].customerId;
+                let date = order[i].date;
+                let itemCount = order[i].itemCount;
+                let total = order[i].total;
+
+                let data = `<tr class="tbl-row">
+                          <td>${orderId}</td>
+                          <td>${customerId}</td>
+                          <td>${date}</td>
+                          <td>${itemCount}</td>
+                          <td>${total}</td>
                           <td>
                                <div class="tbl-action-icons">
                                     <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit customer-edit-icon"></i>
-                                    </button>
-                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                        <i class="fas fa-eye view-order-icon"></i>
                                     </button>
                                </div>
-                        </td>
+                          </td>
                     </tr>`
 
-            customerTbl.append(data);
+                orderTbl.append(data);
+            }
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+1;
+            // let tableLong = Math.ceil(order.length/4);
+
+            let orderTblTag = $('#order-tbl-long');
+            orderTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
     }
-    if(phoneNoValidation){
+    if(totalValidation){
 
-        // console.log('phone number validate');
+        console.log('total validate');
 
-        let customer = null;
+        let order = [];
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let phoneNo = customerDB[i].phoneNo;
+        for (let i = 0; i < orderDB.length; i++) {
+            let total = orderDB[i].total;
 
-            if(phoneNo===inputText){
-                customer = customerDB[i];
-                break;
+            if(total===inputText){
+                order.push(orderDB[i]);
             }
         }
 
-        if(customer!=null) {
+        if(order.length!=0) {
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+            let orderTbl = $('#order-table-body');
+            orderTbl.empty();
 
-            let id = customer.id;
-            let name = customer.name;
-            let address = customer.address;
-            let nic = customer.nic;
-            let phoneNo = customer.phoneNo;
+            for (let i = 0; i < order.length; i++) {
 
-            let data = `<tr class="tbl-row">
-                          <td>${id}</td>
-                          <td>${name}</td>
-                          <td>${address}</td>
-                          <td>${nic}</td>
-                          <td>${phoneNo}</td>
+                // if(i>=4){
+                //     break;
+                // }
+                let orderId = order[i].orderId;
+                let customerId = order[i].customerId;
+                let date = order[i].date;
+                let itemCount = order[i].itemCount;
+                let total = order[i].total;
+
+                let data = `<tr class="tbl-row">
+                          <td>${orderId}</td>
+                          <td>${customerId}</td>
+                          <td>${date}</td>
+                          <td>${itemCount}</td>
+                          <td>${total}</td>
                           <td>
                                <div class="tbl-action-icons">
                                     <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit customer-edit-icon"></i>
-                                    </button>
-                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                        <i class="fas fa-eye view-order-icon"></i>
                                     </button>
                                </div>
-                        </td>
+                          </td>
                     </tr>`
 
-            customerTbl.append(data);
+                orderTbl.append(data);
+            }
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+1;
+            // let tableLong = Math.ceil(order.length/4);
+
+            let orderTblTag = $('#order-tbl-long');
+            orderTblTag[0].innerHTML = 1+'/'+1;
             return;
         }
     }
     else{
 
-        loadCustomerTable();
+        loadOrderTable();
     }
 
 
