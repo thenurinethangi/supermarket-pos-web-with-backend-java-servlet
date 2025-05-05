@@ -27,7 +27,7 @@ export let orderDB = [];
 let arr1 = ['I-00001','I-00002'];
 orderDB.push(new OrderModel('ORD-000001','C-000001','2025-05-02','2','2700.00',arr1));
 
-let arr2 = ['I-00001','I-00003];
+let arr2 = ['I-00001','I-00003'];
 orderDB.push(new OrderModel('ORD-000002','C-000002','2025-05-02','2','4000.00',arr2));
 
 let arr3 = ['I-00002','I-00003'];

@@ -29,22 +29,19 @@ function loadOrderTable() {
                           <td>
                                <div class="tbl-action-icons">
                                     <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit customer-edit-icon"></i>
-                                    </button>
-                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                        <i class="fas fa-eye view-order-icon"></i>
                                     </button>
                                </div>
-                        </td>
+                          </td>
                     </tr>`
 
         orderTbl.append(data);
     }
 
-    let tableLong = Math.ceil(customerDB.length/4);
+    let tableLong = Math.ceil(itemDB.length/4);
 
-    let customerTblTag = $('#customer-tbl-long');
-    customerTblTag[0].innerHTML = '1/'+tableLong;
+    let orderTblTag = $('#order-tbl-long');
+    orderTblTag[0].innerHTML = '1/'+tableLong;
 }
 
 
