@@ -203,12 +203,15 @@ addCardBtn.addEventListener('click',function () {
 
         if(iId==itemId){
             cart[i].qty += Number(qty);
+            cart[i].total = cart[i].qty*cart[i].price;
+            loadCartTable();
             return;
         }
     }
 
     let cartItem = new CartModel(itemId,price,qty,total);
     cart.push(cartItem);
+    loadCartTable();
 
 });
 
@@ -220,27 +223,29 @@ function loadCartTable() {
     let cartTbl = $('#cart-tbl');
     cartTbl.empty();
 
+    let mainTotal = 0;
+
     for (let i = 0; i < cart.length; i++) {
+
+        mainTotal+=cart[i].total;
 
         let itemId = cart[i].itemId;
         let price = cart[i].price;
         let qty = cart[i].qty;
         let total = cart[i].total;
-        let phoneNo = cart[i].phoneNo;
 
-        let data = `<tr class="tbl-row">
-                          <td>${id}</td>
-                          <td>${name}</td>
-                          <td>${address}</td>
-                          <td>${nic}</td>
-                          <td>${phoneNo}</td>
+        let data = `<tr>
+                          <td>${itemId}</td>
+                          <td>${price}</td>
+                          <td>${qty}</td>
+                          <td>${total}</td>
                           <td>
                                <div class="tbl-action-icons">
                                     <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit customer-edit-icon"></i>
+                                        <i class="fas fa-edit cart-item-edit-icon"></i>
                                     </button>
-                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                    <button type="button" class="deleteCustomerBtn">
+                                        <i class="fas fa-trash cart-item-delete-icon"></i>
                                     </button>
                                </div>
                         </td>
@@ -249,14 +254,23 @@ function loadCartTable() {
         cartTbl.append(data);
     }
 
-    let tableLong = Math.ceil(customerDB.length/4);
-
-    let customerTblTag = $('#customer-tbl-long');
-    customerTblTag[0].innerHTML = '1/'+tableLong;
-
-    let customerSearchBar = $('#customer-search-bar')[0];
-    customerSearchBar.value = '';
+    let totalValuetext = $('.total-value')[0];
+    mainTotal = mainTotal.toFixed(2);
+    totalValuetext.innerHTML = mainTotal;
 }
+
+
+//customer delete icon
+var selectedCustomerIdTodelete = null;
+
+$(document).on('click', '.customer-delete-icon', function () {
+
+    let parentRow = $(this).closest('tr');
+    let childrens = parentRow[0].childNodes;
+    let customerId = childrens[1].innerHTML;
+    selectedCustomerIdTodelete = customerId;
+});
+
 
 
 
