@@ -82,7 +82,7 @@
               <div class="col-md-6">
                 <label for="orderDate" class="form-label">Date</label>
                 <div class="input-group">
-                  <input type="date" class="form-control" id="orderDate" value="2025-05-02">
+                  <input type="date" class="form-control" id="orderDate" readonly>
                 </div>
               </div>
             </div>
@@ -90,18 +90,18 @@
             <div class="mb-3">
               <label for="customerSelect" class="form-label">Select Customer</label>
               <select class="form-select" id="customerSelect">
-                <option value="C-000001" selected>C-000001</option>
-                <option value="C-000002">C-000002</option>
-                <option value="C-000003">C-000003</option>
+<!--                <option value="C-000001" selected>C-000001</option>-->
+<!--                <option value="C-000002">C-000002</option>-->
+<!--                <option value="C-000003">C-000003</option>-->
               </select>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Customer Details</label>
               <div class="customer-details">
-                <p class="mb-1">C-000001</p>
-                <p class="mb-1">Thenuri Nanayakkara</p>
-                <p class="mb-0">0712345678</p>
+<!--                <p class="mb-1">C-000001</p>-->
+<!--                <p class="mb-1">Thenuri Nanayakkara</p>-->
+<!--                <p class="mb-0">0712345678</p>-->
               </div>
             </div>
           </div>
@@ -118,19 +118,19 @@
             <div class="mb-3">
               <label for="itemSelect" class="form-label">Select Item</label>
               <select class="form-select" id="itemSelect">
-                <option value="I-00001" selected>I-00001</option>
-                <option value="I-00002">I-00002</option>
-                <option value="I-00003">I-00003</option>
+<!--                <option value="I-00001" selected>I-00001</option>-->
+<!--                <option value="I-00002">I-00002</option>-->
+<!--                <option value="I-00003">I-00003</option>-->
               </select>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Item Details</label>
-              <div class="customer-details">
-                <p class="mb-1">ID: I-00001</p>
-                <p class="mb-1">Description: Dove Shampoo 100ml</p>
-                <p class="mb-1">Price: 470.00</p>
-                <p class="mb-0">Qty: 120</p>
+              <div class="customer-details" id="item-details">
+<!--                <p class="mb-1">ID: I-00001</p>-->
+<!--                <p class="mb-1">Description: Dove Shampoo 100ml</p>-->
+<!--                <p class="mb-1">Price: 470.00</p>-->
+<!--                <p class="mb-0">Qty: 120</p>-->
               </div>
             </div>
 
@@ -167,38 +167,38 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>I0001</td>
-            <td>470.00</td>
-            <td>2</td>
-            <td>940.00</td>
-            <td>
-              <div class="tbl-action-icons">
-                <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button type="button" class="deleteCustomerBtn">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>I0001</td>
-            <td>270.00</td>
-            <td>2</td>
-            <td>540.00</td>
-            <td>
-              <div class="tbl-action-icons">
-                <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button type="button" class="deleteCustomerBtn">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
+<!--          <tr>-->
+<!--            <td>I0001</td>-->
+<!--            <td>470.00</td>-->
+<!--            <td>2</td>-->
+<!--            <td>940.00</td>-->
+<!--            <td>-->
+<!--              <div class="tbl-action-icons">-->
+<!--                <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">-->
+<!--                  <i class="fas fa-edit"></i>-->
+<!--                </button>-->
+<!--                <button type="button" class="deleteCustomerBtn">-->
+<!--                  <i class="fas fa-trash"></i>-->
+<!--                </button>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>I0001</td>-->
+<!--            <td>270.00</td>-->
+<!--            <td>2</td>-->
+<!--            <td>540.00</td>-->
+<!--            <td>-->
+<!--              <div class="tbl-action-icons">-->
+<!--                <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">-->
+<!--                  <i class="fas fa-edit"></i>-->
+<!--                </button>-->
+<!--                <button type="button" class="deleteCustomerBtn">-->
+<!--                  <i class="fas fa-trash"></i>-->
+<!--                </button>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--          </tr>-->
           </tbody>
         </table>
       </div>
@@ -291,9 +291,11 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="lib/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="assets/js/place-order-page-script.js"></script>
+<script type="module" src="assets/js/db/db.js"></script>
+<script type="module" src="assets/js/controller/PlaceOrderController.js"></script>
 </body>
 </html>
