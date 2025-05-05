@@ -260,15 +260,57 @@ function loadCartTable() {
 }
 
 
-//customer delete icon
-var selectedCustomerIdTodelete = null;
+//cart item delete
+$(document).on('click', '.cart-item-delete-icon', function () {
 
-$(document).on('click', '.customer-delete-icon', function () {
+    let parentRow = $(this).closest('tr');
+    let childrens = parentRow[0].childNodes;
+    let itemId = childrens[1].innerHTML;
+
+    for (let i = 0; i < cart.length; i++) {
+        let id = cart[i].itemId;
+
+        if(id==itemId){
+            cart.splice(i,1);
+            break;
+        }
+    }
+
+    loadCartTable();
+});
+
+
+
+
+//customer edit icon
+var selectedCustomerIdToEdit = null;
+
+$(document).on('click', '.customer-edit-icon', function () {
 
     let parentRow = $(this).closest('tr');
     let childrens = parentRow[0].childNodes;
     let customerId = childrens[1].innerHTML;
-    selectedCustomerIdTodelete = customerId;
+    selectedCustomerIdToEdit = customerId;
+    let selectedCustomer = null;
+
+    for (let i = 0; i < customerDB.length; i++) {
+        let id = customerDB[i].id;
+
+        if(id===selectedCustomerIdToEdit){
+            selectedCustomer = customerDB[i];
+            break;
+        }
+    }
+
+    let editCustomerFormInputFields = $('#update-customer-modal-body>input');
+
+    if(selectedCustomer!=null) {
+        editCustomerFormInputFields[0].value = selectedCustomer.id;
+        editCustomerFormInputFields[1].value = selectedCustomer.name;
+        editCustomerFormInputFields[2].value = selectedCustomer.address;
+        editCustomerFormInputFields[3].value = selectedCustomer.nic;
+        editCustomerFormInputFields[4].value = selectedCustomer.phoneNo;
+    }
 });
 
 
