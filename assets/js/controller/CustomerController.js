@@ -819,12 +819,5 @@ customerSearchBar.addEventListener('keydown',(event)=> {
 
 
 
-
-
-
-
-
-
-
 loadCustomerTable();
 generateNewCustomerId();
