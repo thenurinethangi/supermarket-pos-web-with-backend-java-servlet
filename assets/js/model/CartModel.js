@@ -7,3 +7,5 @@ class CartModel{
         this.total = total;
     }
 }
+
+export default CartModel;

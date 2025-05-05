@@ -2,6 +2,7 @@ import {customerDB,itemDB,orderDB} from "../db/db.js"
 import CustomerModel from "../model/CustomerModel.js"
 import OrderModel from "../model/OrderModel.js"
 import ItemModel from "../model/ItemModel.js"
+import CartModel from "../model/CartModel.js"
 
 
 // generate new order id
@@ -173,6 +174,89 @@ itemSelect.addEventListener('change',function () {
 
 });
 
+
+
+//add cart
+var cart = [];
+let addCardBtn = $('#add-to-cart-btn')[0];
+addCardBtn.addEventListener('click',function () {
+
+    let itemSelect = $('#itemSelect')[0];
+    let itemId = itemSelect.value;
+
+    let price = 0;
+    for (let i = 0; i < itemDB.length; i++) {
+        let id = itemDB[i].id;
+
+        if(id==itemId){
+            price = itemDB[i].price;
+        }
+    }
+
+    let qtySelect = $('#selectQty')[0];
+    let qty= Number(qtySelect.value);
+
+    let total = Number(price)*Number(qty);
+
+    for (let i = 0; i < cart.length; i++) {
+        let iId = cart[i].itemId;
+
+        if(iId==itemId){
+            cart[i].qty += Number(qty);
+            return;
+        }
+    }
+
+    let cartItem = new CartModel(itemId,price,qty,total);
+    cart.push(cartItem);
+
+});
+
+
+
+// load cart table
+function loadCartTable() {
+
+    let cartTbl = $('#cart-tbl');
+    cartTbl.empty();
+
+    for (let i = 0; i < cart.length; i++) {
+
+        let itemId = cart[i].itemId;
+        let price = cart[i].price;
+        let qty = cart[i].qty;
+        let total = cart[i].total;
+        let phoneNo = cart[i].phoneNo;
+
+        let data = `<tr class="tbl-row">
+                          <td>${id}</td>
+                          <td>${name}</td>
+                          <td>${address}</td>
+                          <td>${nic}</td>
+                          <td>${phoneNo}</td>
+                          <td>
+                               <div class="tbl-action-icons">
+                                    <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
+                                        <i class="fas fa-edit customer-edit-icon"></i>
+                                    </button>
+                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
+                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                    </button>
+                               </div>
+                        </td>
+                    </tr>`
+
+        cartTbl.append(data);
+    }
+
+    let tableLong = Math.ceil(customerDB.length/4);
+
+    let customerTblTag = $('#customer-tbl-long');
+    customerTblTag[0].innerHTML = '1/'+tableLong;
+
+    let customerSearchBar = $('#customer-search-bar')[0];
+    customerSearchBar.value = '';
+}
 
 
 
