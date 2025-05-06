@@ -36,6 +36,7 @@ function setTodayDate() {
 function setCustomersIds() {
 
     let customerSelect = $('#customerSelect');
+    customerSelect.empty();
 
     for (let i = 0; i < customerDB.length; i++) {
         let id = customerDB[i].id;
@@ -107,6 +108,7 @@ customerSelect.addEventListener('change',function () {
 function setItemIds() {
 
     let itemSelect = $('#itemSelect');
+    itemSelect.empty();
 
     for (let i = 0; i < itemDB.length; i++) {
         let id = itemDB[i].id;
@@ -257,6 +259,12 @@ function loadCartTable() {
     let totalValuetext = $('.total-value')[0];
     mainTotal = mainTotal.toFixed(2);
     totalValuetext.innerHTML = mainTotal;
+
+    let discountTag = $('#discount')[0];
+    discountTag.value = 0;
+
+    let finalPriceTag = $('.final-price')[0];
+    finalPriceTag.innerHTML = 'Rs '+mainTotal;
 }
 
 
@@ -377,7 +385,97 @@ cashTextField.addEventListener('keyup',function (event) {
 
 
 
+//place order
+let placeOrderBtn = $('#placeOrderBtn')[0];
+placeOrderBtn.addEventListener('click',function () {
 
+    let customerSelect = $('#customerSelect')[0];
+    if(!customerSelect.value){
+        Swal.fire({
+            title: 'Error!',
+            text: 'Enter Customer Details First',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+        return;
+    }
+    let customerId = customerSelect.value;
+
+    if(cart.length<=0){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Please add the item to the cart first',
+            icon: 'warning',
+            confirmButtonText: 'Ok'
+        });
+        return;
+    }
+
+    let cashField = $('#cash')[0];
+    if(!cashField.value || cashField.value===''){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Please enter cash amount to place the order',
+            icon: 'warning',
+            confirmButtonText: 'Ok'
+        });
+        return;
+    }
+    let cash = cashField.value;
+
+    let orderIdField = $('#orderID')[0];
+    let orderId = orderIdField.value;
+
+    let dateField = $('#orderDate')[0];
+    let date = dateField.value;
+
+    let itemCount = 0;
+    for (let i = 0; i < cart.length; i++) {
+        itemCount+=Number(cart[i].qty);
+    }
+
+    let finalPriceTag = $('.final-price')[0];
+    let finalPrice = Number(finalPriceTag.innerHTML.split(" ")[1]);
+    finalPrice = finalPrice.toFixed(2);
+
+    let itemsList = [];
+    for (let i = 0; i < cart.length; i++) {
+        itemsList.push(cart[i].itemId);
+    }
+
+    let order = new OrderModel(orderId,customerId,date,itemCount,finalPrice,itemsList);
+    orderDB.push(order);
+
+    Swal.fire({
+        title: 'Success!',
+        text: 'Order Placed Successfully',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+    })
+    clean();
+
+});
+
+
+//clean after place the order
+function clean() {
+
+    cart = [];
+    loadCartTable();
+    generateNewOrderId();
+    setTodayDate();
+    setCustomersIds();
+    setCustomersDetails();
+    setItemIds();
+    setItemsDetails();
+
+    let cashField = $('#cash')[0];
+    cashField.value = '';
+
+    let balance = $('#balance')[0];
+    balance.value = '';
+
+}
 
 
 
