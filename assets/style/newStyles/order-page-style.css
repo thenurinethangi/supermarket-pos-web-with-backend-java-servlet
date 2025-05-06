@@ -135,7 +135,23 @@ body {
 }
 
 
+@media all and (max-width: 768px) {
 
+    .page-title{
 
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.8em;
+    }
+
+    .table-header-date-picker{
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1em;
+    }
+}
 
 
