@@ -327,7 +327,53 @@ editCartItemBtn.addEventListener('click',function () {
 });
 
 
+//discount field js
+let discountTextField = $('#discount')[0];
+discountTextField.addEventListener('keyup',function (event) {
 
+    let value = this.value.toString();
+    const discountRegex = /^(100(?:\.0+)?|[1-9]?\d(?:\.\d+)?|0(?:\.0+)?)$/;
+    let discountValidation = discountRegex.test(value);
+    value = Number(value);
+
+    let finalPriceTag = $('.final-price')[0];
+    let subTotalTag = $('.total-value')[0];
+    if(discountValidation){
+
+        let subTotal = Number(subTotalTag.innerHTML);
+        let reduce = (subTotal*value)/100;
+        let finalTotal = subTotal - reduce;
+        finalTotal = finalTotal.toFixed(2);
+
+        finalPriceTag.innerHTML = "Rs "+finalTotal;
+    }
+
+});
+
+
+
+//cash field js
+let cashTextField = $('#cash')[0];
+cashTextField.addEventListener('keyup',function (event) {
+
+    let value = this.value.toString();
+    const cashRegex = /^\d+(\.\d{1,2})?$/;
+    let cashValidation = cashRegex.test(value);
+    value = Number(value);
+
+    let finalPriceTag = $('.final-price')[0];
+    let balanceTag = $('#balance')[0];
+    if(cashValidation){
+
+        let finalTotal = finalPriceTag.innerHTML;
+        finalTotal = Number(finalTotal.split(" ")[1]);
+
+        let balance = value - finalTotal;
+        balance = balance.toFixed(2);
+        balanceTag.value = balance;
+    }
+
+});
 
 
 
