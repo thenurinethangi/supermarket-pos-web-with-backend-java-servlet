@@ -281,37 +281,55 @@ $(document).on('click', '.cart-item-delete-icon', function () {
 
 
 
-
-//customer edit icon
-var selectedCustomerIdToEdit = null;
-
-$(document).on('click', '.customer-edit-icon', function () {
+//edit cart item icon
+$(document).on('click', '.cart-item-edit-icon', function () {
 
     let parentRow = $(this).closest('tr');
     let childrens = parentRow[0].childNodes;
-    let customerId = childrens[1].innerHTML;
-    selectedCustomerIdToEdit = customerId;
-    let selectedCustomer = null;
+    let itemId = childrens[1].innerHTML;
 
-    for (let i = 0; i < customerDB.length; i++) {
-        let id = customerDB[i].id;
+    let qty = childrens[5].innerHTML;
 
-        if(id===selectedCustomerIdToEdit){
-            selectedCustomer = customerDB[i];
+    let editCartFormInputFields = $('#update-order-modal-body>input');
+
+    editCartFormInputFields[0].value = itemId;
+    editCartFormInputFields[1].value = qty;
+
+});
+
+
+//edit cart item btn
+let editCartItemBtn = $('#cart-item-edit-btn')[0];
+editCartItemBtn.addEventListener('click',function () {
+
+    let editCartFormInputFields = $('#update-order-modal-body>input');
+
+    let itemId = editCartFormInputFields[0].value;
+    let qty = editCartFormInputFields[1].value;
+
+    for (let i = 0; i < cart.length; i++) {
+        let id = cart[i].itemId;
+
+        if(id==itemId){
+            cart[i].qty = Number(qty);
+            cart[i].total = Number(cart[i].price)*cart[i].qty;
+            Swal.fire({
+                title: 'Sucess!',
+                text: 'Successfully updated the item count in the cart for Item ID: '+itemId,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
             break;
         }
     }
 
-    let editCustomerFormInputFields = $('#update-customer-modal-body>input');
-
-    if(selectedCustomer!=null) {
-        editCustomerFormInputFields[0].value = selectedCustomer.id;
-        editCustomerFormInputFields[1].value = selectedCustomer.name;
-        editCustomerFormInputFields[2].value = selectedCustomer.address;
-        editCustomerFormInputFields[3].value = selectedCustomer.nic;
-        editCustomerFormInputFields[4].value = selectedCustomer.phoneNo;
-    }
+    loadCartTable();
 });
+
+
+
+
+
 
 
 
