@@ -387,7 +387,7 @@ cashTextField.addEventListener('keyup',function (event) {
 
 //place order
 let placeOrderBtn = $('#placeOrderBtn')[0];
-placeOrderBtn.addEventListener('click',function () {
+placeOrderBtn.addEventListener('click',async function () {
 
     let customerSelect = $('#customerSelect')[0];
     if(!customerSelect.value){
@@ -423,6 +423,11 @@ placeOrderBtn.addEventListener('click',function () {
     }
     let cash = cashField.value;
 
+    let spinner = $('.spinner-border-sm')[0];
+    spinner.style.display = 'inline-block';
+    await sleep(2000);
+    spinner.style.display = 'none';
+
     let orderIdField = $('#orderID')[0];
     let orderId = orderIdField.value;
 
@@ -457,6 +462,11 @@ placeOrderBtn.addEventListener('click',function () {
 });
 
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 //clean after place the order
 function clean() {
 
@@ -474,6 +484,9 @@ function clean() {
 
     let balance = $('#balance')[0];
     balance.value = '';
+
+    let qtySelect = $('#selectQty')[0];
+    qtySelect.value = 1;
 
 }
 
