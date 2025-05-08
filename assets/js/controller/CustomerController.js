@@ -57,6 +57,11 @@ function generateNewCustomerId() {
 
     let customerId = $('#customer-id');
 
+    if(customerDB.length<=0){
+        customerId.val('C-000001');
+        return;
+    }
+    
     let lastCustomerId = customerDB[customerDB.length-1].id;
     let numberPart = lastCustomerId.split("-")[1];
     numberPart = Number(numberPart)+1;
@@ -121,6 +126,11 @@ addNewCustomerBtn.addEventListener('click',(event)=>{
 
     const phoneRegex = /^(?:0|\+94)(7[01245678])\d{7}$/;
     let phoneNoValidation = phoneRegex.test(phoneNo);
+
+    // console.log(nameValidation);
+    // console.log(addressValidation);
+    // console.log(nicValidation);
+    // console.log(phoneNoValidation);
 
     if(!nameValidation || !addressValidation || !nicValidation || !phoneNoValidation){
 
@@ -249,8 +259,9 @@ var selectedCustomerIdToEdit = null;
 $(document).on('click', '.customer-edit-icon', function () {
 
     let parentRow = $(this).closest('tr');
-    let childrens = parentRow[0].childNodes;
-    let customerId = childrens[1].innerHTML;
+    let childrens = parentRow.children();
+    let customerId = childrens[0].innerHTML;
+    // console.log(customerId);
     selectedCustomerIdToEdit = customerId;
     let selectedCustomer = null;
 

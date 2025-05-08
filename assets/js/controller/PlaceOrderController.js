@@ -10,6 +10,11 @@ function generateNewOrderId() {
 
     let orderID = $('#orderID');
 
+    if(orderDB.length<=0){
+        orderID.val('ORD-000001');
+        return;
+    }
+
     let lastOrderId = orderDB[orderDB.length-1].orderId;
     let numberPart = lastOrderId.split("-")[1];
     numberPart = Number(numberPart)+1;
@@ -185,6 +190,10 @@ addCardBtn.addEventListener('click',function () {
 
     let itemSelect = $('#itemSelect')[0];
     let itemId = itemSelect.value;
+
+    if(!itemSelect.value){
+        return;
+    }
 
     let price = 0;
     for (let i = 0; i < itemDB.length; i++) {

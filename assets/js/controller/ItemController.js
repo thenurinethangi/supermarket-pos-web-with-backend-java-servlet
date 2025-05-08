@@ -53,8 +53,13 @@ function loadItemTable() {
 // generate new item id
 function generateNewItemId() {
 
-    let customerId = $('#item-id');
+    let itemId = $('#item-id');
 
+    if(itemDB.length<=0){
+        itemId.val('I-00001');
+        return;
+    }
+    
     let lastCustomerId = itemDB[itemDB.length-1].id;
     let numberPart = lastCustomerId.split("-")[1];
     numberPart = Number(numberPart)+1;
@@ -62,7 +67,7 @@ function generateNewItemId() {
     let newId = lastCustomerId.split("-")[0]+'-' + formattedNumber;
     // console.log(newId);
 
-    customerId.val(newId);
+    itemId.val(newId);
 }
 
 
