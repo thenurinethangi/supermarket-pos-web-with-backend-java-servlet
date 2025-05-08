@@ -158,22 +158,36 @@
   </div>
 </div>
 
-<!-- Modal customer edit-->
-<div class="modal fade" id="staticBackdropTwo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+
+<!-- Modal view order details-->
+<div class="modal fade" id="staticBackdropOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header" id="order-details-modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel-two">Order Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">
+          <i class="bi bi-receipt"></i> Order Details
+        </h5>
+        <div class="header-actions">
+          <button type="button" class="btn btn-sm btn-print" id="print-order-details">
+            <i class="bi bi-printer"></i>
+          </button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
       </div>
       <div class="modal-body" id="order-details-modal-body">
+        <div class="order-section">
+          <h6 class="section-title">Order Information</h6>
+          <div class="order-info-container">
+            <textarea rows="5" cols="50" id="order-details" readonly></textarea>
+          </div>
+        </div>
 
-        <label for="order-details">Order Details:</label>
-        <textarea rows="5" cols="50" id="order-details" readonly></textarea>
-
-        <label for="item-details">Item Details:</label>
-        <textarea rows="5" cols="50" id="item-details" readonly></textarea>
-
+        <div class="order-section">
+          <h6 class="section-title">Items Purchased</h6>
+          <div class="item-info-container">
+            <textarea rows="5" cols="50" id="itemDetails" readonly></textarea>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary close-btn" data-bs-dismiss="modal">Close</button>
