@@ -423,7 +423,7 @@ orderSearchBar.addEventListener('keydown',(event)=> {
         for (let i = 0; i < orderDB.length; i++) {
             let qty = orderDB[i].itemCount;
 
-            if(qty===inputText){
+            if(qty==inputText){
                 order.push(orderDB[i]);
             }
         }
