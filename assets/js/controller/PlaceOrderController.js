@@ -216,6 +216,15 @@ addCardBtn.addEventListener('click',function () {
             cart[i].qty += Number(qty);
             cart[i].total = cart[i].qty*cart[i].price;
             loadCartTable();
+            Swal.fire({
+                title: 'Added to Cart!',
+                text: 'The item has been successfully added to cart.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            let qtySelect = $('#selectQty')[0];
+            qtySelect.value = 1;
             return;
         }
     }
@@ -223,6 +232,16 @@ addCardBtn.addEventListener('click',function () {
     let cartItem = new CartModel(itemId,price,qty,total);
     cart.push(cartItem);
     loadCartTable();
+
+    Swal.fire({
+        title: 'Added to Cart!',
+        text: 'The item has been successfully added to cart.',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
+    });
+    let quantitySelect = $('#selectQty')[0];
+    quantitySelect.value = 1;
 
 });
 
@@ -294,6 +313,13 @@ $(document).on('click', '.cart-item-delete-icon', function () {
     }
 
     loadCartTable();
+    Swal.fire({
+        title: 'Removed From Cart!',
+        text: 'Removed Item ID: '+itemId+", from cart",
+        icon: 'success',
+        timer: 1200,
+        showConfirmButton: false
+    });
 });
 
 
@@ -331,11 +357,12 @@ editCartItemBtn.addEventListener('click',function () {
             cart[i].qty = Number(qty);
             cart[i].total = Number(cart[i].price)*cart[i].qty;
             Swal.fire({
-                title: 'Sucess!',
+                title: 'Updated The Cart!',
                 text: 'Successfully updated the item count in the cart for Item ID: '+itemId,
                 icon: 'success',
-                confirmButtonText: 'Ok'
-            })
+                timer: 1500,
+                showConfirmButton: false
+            });
             break;
         }
     }
@@ -432,6 +459,20 @@ placeOrderBtn.addEventListener('click',async function () {
     }
     let cash = cashField.value;
 
+    let balance = $('#balance')[0];
+    balance = balance.value;
+    balance = Number(balance);
+
+    if(balance<0){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'The cash amount entered is insufficient to place the order',
+            icon: 'warning',
+            confirmButtonText: 'Ok'
+        });
+        return;
+    }
+    
     let spinner = $('.spinner-border-sm')[0];
     spinner.style.display = 'inline-block';
     await sleep(2000);
@@ -448,6 +489,21 @@ placeOrderBtn.addEventListener('click',async function () {
         itemCount+=Number(cart[i].qty);
     }
 
+    for (let i = 0; i < cart.length; i++) {
+        let itemId = cart[i].itemId;
+
+        for (let j = 0; j < itemDB.length; j++) {
+            let id = itemDB[j].id;
+
+            if(id==itemId){
+                let qty = Number(itemDB[j].quntity);
+                qty-=Number(cart[i].qty);
+                itemDB[j].quntity = qty;
+                break;
+            }
+        }
+    }
+    
     let finalPriceTag = $('.final-price')[0];
     let finalPrice = Number(finalPriceTag.innerHTML.split(" ")[1]);
     finalPrice = finalPrice.toFixed(2);
