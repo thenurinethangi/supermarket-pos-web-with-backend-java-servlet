@@ -43,6 +43,8 @@ function setCustomersIds() {
     let customerSelect = $('#customerSelect');
     customerSelect.empty();
 
+    customerSelect.append(`<option value="Select" selected>Select</option>`);
+    
     for (let i = 0; i < customerDB.length; i++) {
         let id = customerDB[i].id;
 
