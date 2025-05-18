@@ -279,6 +279,8 @@ addCardBtn.addEventListener('click',function () {
             cart[i].qty += Number(qty);
             cart[i].total = cart[i].qty*cart[i].price;
             loadCartTable();
+            setItemIds();
+            setItemsDetails();
             Swal.fire({
                 title: 'Added to Cart!',
                 text: 'The item has been successfully added to cart.',
@@ -420,6 +422,26 @@ editCartItemBtn.addEventListener('click',function () {
         let id = cart[i].itemId;
 
         if(id==itemId){
+
+            let totalQtyCount = cart[i].qty + Number(qty);
+
+            for (let j = 0; j < itemDB.length; j++) {
+                let itemIdInDb = itemDB[j].id;
+
+                if(itemIdInDb==id){
+                    let availableQty = itemDB[j].quntity;
+                    if(availableQty<totalQtyCount){
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: 'The available quantity is insufficient!',
+                            icon: 'warning',
+                            confirmButtonText: 'Ok'
+                        });
+                        return;
+                    }
+
+                }
+            }
             cart[i].qty = Number(qty);
             cart[i].total = Number(cart[i].price)*cart[i].qty;
             Swal.fire({
