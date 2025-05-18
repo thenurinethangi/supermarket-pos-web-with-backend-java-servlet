@@ -164,6 +164,10 @@ function setItemsDetails() {
             }
         }
     }
+
+    if(itemSelect[0].value=='Select'){
+        itemDetailsTextArea.innerHTML = "";
+    }
 }
 
 
@@ -191,6 +195,13 @@ itemSelect.addEventListener('change',function () {
             break;
         }
     }
+
+    if(id=='Select'){
+        itemDetailsTextArea.innerHTML = "";
+    }
+
+    let qtySelect = $('#selectQty')[0];
+    qtySelect.value = 1;
 
 });
 
