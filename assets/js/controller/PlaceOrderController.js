@@ -126,6 +126,8 @@ function setItemIds() {
     let itemSelect = $('#itemSelect');
     itemSelect.empty();
 
+    itemSelect.append(`<option value="Select" selected>Select</option>`);
+    
     for (let i = 0; i < itemDB.length; i++) {
         let id = itemDB[i].id;
 
