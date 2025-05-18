@@ -227,16 +227,29 @@ addCardBtn.addEventListener('click',function () {
     }
 
     let price = 0;
+    let availableQty = 0;
     for (let i = 0; i < itemDB.length; i++) {
         let id = itemDB[i].id;
 
         if(id==itemId){
             price = itemDB[i].price;
+            availableQty = itemDB[i].quntity;
+            break;
         }
     }
 
     let qtySelect = $('#selectQty')[0];
     let qty= Number(qtySelect.value);
+
+    if(availableQty<qty){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'The available quantity is insufficient!',
+            icon: 'warning',
+            confirmButtonText: 'Ok'
+        });
+        return;
+    }
 
     let total = Number(price)*Number(qty);
 
@@ -244,6 +257,25 @@ addCardBtn.addEventListener('click',function () {
         let iId = cart[i].itemId;
 
         if(iId==itemId){
+
+            let totalQtyCount = cart[i].qty + Number(qty);
+            for (let j = 0; j < itemDB.length; j++) {
+                let itemIdInDb = itemDB[j].id;
+
+                if(itemIdInDb==iId){
+                    let availableQty = itemDB[j].quntity;
+                    if(availableQty<totalQtyCount){
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: 'The available quantity is insufficient!',
+                            icon: 'warning',
+                            confirmButtonText: 'Ok'
+                        });
+                        return;
+                    }
+                }
+            }
+
             cart[i].qty += Number(qty);
             cart[i].total = cart[i].qty*cart[i].price;
             loadCartTable();
@@ -273,6 +305,9 @@ addCardBtn.addEventListener('click',function () {
     });
     let quantitySelect = $('#selectQty')[0];
     quantitySelect.value = 1;
+
+    setItemIds();
+    setItemsDetails();
 
 });
 
