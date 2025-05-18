@@ -832,6 +832,174 @@ customerSearchBar.addEventListener('keydown',(event)=> {
 
 
 
+//input field validations
+//customer-name validation
+let customerNameField = $('.customer-name');
+customerNameField.on('keyup',function (){
+
+    let input = this.value;
+    input = input.trim();
+
+    const nameRegex = /^(([A-Z]\.)+\s)?([a-zA-Z]+)(\s[a-zA-Z]+)*$/;
+    let nameValidation = nameRegex.test(input);
+
+    let p = document.createElement('p');
+    p.textContent = 'invalid name input for this field'
+    p.className = 'warning-text customer-name-warning-text';
+    p.style.fontSize = '11px';
+    p.style.color = 'red';
+    p.style.padding = '0px';
+    p.style.margin = '0px';
+
+    if(!nameValidation){
+        customerNameField.next('.customer-name-warning-text').remove();
+        customerNameField.after(p);
+    }
+    else{
+        customerNameField.next('.customer-name-warning-text').remove();
+    }
+
+    if(input==''){
+        customerNameField.next('.customer-name-warning-text').remove();
+    }
+});
+
+
+
+//customer-address validation
+let customerAddressField = $('.customer-address');
+customerAddressField.on('keyup',function (){
+
+    let input = this.value;
+    input = input.trim();
+
+    const addressRegex = /^[A-Za-z0-9\s,\/\-]{5,}$/;
+    let addressValidation = addressRegex.test(input);
+
+    let p = document.createElement('p');
+    p.textContent = 'invalid address input for this field'
+    p.className = 'warning-text customer-address-warning-text';
+    p.style.fontSize = '11px';
+    p.style.color = 'red';
+    p.style.padding = '0px';
+    p.style.margin = '0px';
+
+    if(!addressValidation){
+        customerAddressField.next('.customer-address-warning-text').remove();
+        customerAddressField.after(p);
+    }
+    else{
+        customerAddressField.next('.customer-address-warning-text').remove();
+    }
+
+    if(input==''){
+        customerAddressField.next('.customer-address-warning-text').remove();
+    }
+});
+
+
+
+//customer-nic validation
+let customerNicField = $('.customer-nic');
+customerNicField.on('keyup',function (){
+
+    let input = this.value;
+    input = input.trim();
+
+    const nicRegex = /^(\d{9}[vVxX]|\d{12})$/;
+    let nicValidation = nicRegex.test(input);
+
+    let p = document.createElement('p');
+    p.textContent = 'invalid nic input for this field'
+    p.className = 'warning-text customer-nic-warning-text';
+    p.style.fontSize = '11px';
+    p.style.color = 'red';
+    p.style.padding = '0px';
+    p.style.margin = '0px';
+
+    if(!nicValidation){
+        customerNicField.next('.customer-nic-warning-text').remove();
+        customerNicField.after(p);
+    }
+    else{
+        customerNicField.next('.customer-nic-warning-text').remove();
+    }
+
+    if(input==''){
+        customerNicField.next('.customer-nic-warning-text').remove();
+    }
+});
+
+
+
+//customer-phone-no validation
+let customerPhoneNoField = $('.customer-phone-no');
+customerPhoneNoField.on('keyup',function (){
+
+    let input = this.value;
+    input = input.trim();
+
+    const phoneRegex = /^(?:0|\+94)(7[01245678])\d{7}$/;
+    let phoneNoValidation = phoneRegex.test(input);
+
+    let p = document.createElement('p');
+    p.textContent = 'invalid phone no input for this field'
+    p.className = 'warning-text customer-phone-no-warning-text';
+    p.style.fontSize = '11px';
+    p.style.color = 'red';
+    p.style.padding = '0px';
+    p.style.margin = '0px';
+
+    if(!phoneNoValidation){
+        customerPhoneNoField.next('.customer-phone-no-warning-text').remove();
+        customerPhoneNoField.after(p);
+    }
+    else{
+        customerPhoneNoField.next('.customer-phone-no-warning-text').remove();
+    }
+
+    if(input==''){
+        customerPhoneNoField.next('.customer-phone-no-warning-text').remove();
+    }
+});
+
+
+
+//add new customer modal close icon action
+let modalCloseBtn = $('#add-customer-modal-close');
+modalCloseBtn.on('click',()=>{
+
+    let inputFileds = $('#customer-modal-body>input');
+
+    inputFileds[1].value = '';
+    inputFileds[2].value = '';
+    inputFileds[3].value = '';
+    inputFileds[4].value = '';
+
+    let modal = $('#customer-modal-body');
+    modal.children('p').remove();
+
+    let editModal = $('#update-customer-modal-body');
+    editModal.children('p').remove();
+
+    generateNewCustomerId();
+
+});
+
+
+
+//edit customer icon and btn action
+let editModalColse = $('.customer-edit-modal-close');
+editModalColse.on('click',()=>{
+
+    let modal = $('#customer-modal-body');
+    modal.children('p').remove();
+
+    let editModal = $('#update-customer-modal-body');
+    editModal.children('p').remove();
+
+});
+
 
 loadCustomerTable();
 generateNewCustomerId();
