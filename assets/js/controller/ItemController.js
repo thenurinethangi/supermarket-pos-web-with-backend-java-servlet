@@ -740,6 +740,139 @@ itemSearchBar.addEventListener('keydown',(event)=> {
 
 
 
+//input field validations
+//item-name validation
+let itemNameField = $('.description');
+itemNameField.on('keyup',function (){
+
+    let input = this.value;
+    input = input.trim();
+
+    const descriptionRegex = /^[A-Za-z ]+( \d+(\.\d+)?(ml|g|kg|L))?( [A-Za-z ]+)?$/i;
+    let descriptionValidation = descriptionRegex.test(input);
+
+    let p = document.createElement('p');
+    p.textContent = 'invalid description input for this field'
+    p.className = 'warning-text item-name-warning-text';
+    p.style.fontSize = '11px';
+    p.style.color = 'red';
+    p.style.padding = '0px';
+    p.style.margin = '0px';
+
+    if(!descriptionValidation){
+        itemNameField.next('.item-name-warning-text').remove();
+        itemNameField.after(p);
+    }
+    else{
+        itemNameField.next('.item-name-warning-text').remove();
+    }
+
+    if(input==''){
+        itemNameField.next('.item-name-warning-text').remove();
+    }
+});
+
+
+
+//item-price validation
+let itemPriceField = $('.price');
+itemPriceField.on('keyup',function (){
+
+    let input = this.value;
+    input = input.trim();
+
+    const priceRegex = /^\d+\.\d{2}$/;
+    let priceValidation = priceRegex.test(input);
+
+    let p = document.createElement('p');
+    p.textContent = 'invalid price input for this field'
+    p.className = 'warning-text item-price-warning-text';
+    p.style.fontSize = '11px';
+    p.style.color = 'red';
+    p.style.padding = '0px';
+    p.style.margin = '0px';
+
+    if(!priceValidation){
+        itemPriceField.next('.item-price-warning-text').remove();
+        itemPriceField.after(p);
+    }
+    else{
+        itemPriceField.next('.item-price-warning-text').remove();
+    }
+
+    if(input==''){
+        itemPriceField.next('.item-price-warning-text').remove();
+    }
+});
+
+
+
+//item-qty validation
+let itemQtyField = $('.item-qty');
+itemQtyField.on('keyup',function (){
+
+    let input = this.value;
+    input = input.trim();
+
+    const qtyRegex = /^\d+$/;
+    let qtyValidation = qtyRegex.test(input);
+
+    let p = document.createElement('p');
+    p.textContent = 'invalid quantity input for this field'
+    p.className = 'warning-text item-qty-warning-text';
+    p.style.fontSize = '11px';
+    p.style.color = 'red';
+    p.style.padding = '0px';
+    p.style.margin = '0px';
+
+    if(!qtyValidation){
+        itemQtyField.next('.item-qty-warning-text').remove();
+        itemQtyField.after(p);
+    }
+    else{
+        itemQtyField.next('.item-qty-warning-text').remove();
+    }
+
+    if(input==''){
+        itemQtyField.next('.item-qty-warning-text').remove();
+    }
+});
+
+
+
+//add new item modal close icon action
+let itemModalCloseBtn = $('#add-item-modal-close');
+itemModalCloseBtn.on('click',()=>{
+
+    let inputFileds = $('#item-modal-body>input');
+
+    inputFileds[1].value = '';
+    inputFileds[2].value = '';
+    inputFileds[3].value = '';
+
+    let modal = $('#item-modal-body');
+    modal.children('p').remove();
+
+    let editModal = $('#update-item-modal-body');
+    editModal.children('p').remove();
+
+});
+
+
+
+//edit customer icon and btn action
+let itemEditModalColse = $('.item-edit-modal-close');
+itemEditModalColse.on('click',()=>{
+
+    let modal = $('#item-modal-body');
+    modal.children('p').remove();
+
+    let editModal = $('#update-item-modal-body');
+    editModal.children('p').remove();
+
+});
+
+
 
 loadItemTable();
 generateNewItemId();
