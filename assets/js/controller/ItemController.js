@@ -85,6 +85,9 @@ clearFormBtn.addEventListener('click',(event)=>{
 
     generateNewItemId();
 
+    let modal = $('#item-modal-body');
+    modal.children('p').remove();
+
 });
 
 
