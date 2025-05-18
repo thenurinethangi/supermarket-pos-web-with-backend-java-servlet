@@ -219,28 +219,28 @@
         <div class="modal-content">
             <div class="modal-header" id="update-customer-modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel-two">Edit Customer</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close customer-edit-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="update-customer-modal-body">
 
                 <label for="update-customer-id">Customer ID:</label>
-                <input type="text" id="update-customer-id" readonly>
+                <input type="text" id="update-customer-id" class="customer-id" readonly>
 
                 <label for="update-customer-name">Name:</label>
-                <input type="text" id="update-customer-name">
+                <input type="text" id="update-customer-name" class="customer-name">
 
                 <label for="update-customer-address">Address:</label>
-                <input type="text" id="update-customer-address">
+                <input type="text" id="update-customer-address" class="customer-address">
 
                 <label for="update-customer-nic">NIC:</label>
-                <input type="text" id="update-customer-nic">
+                <input type="text" id="update-customer-nic" class="customer-nic">
 
                 <label for="update-customer-phone-no">Phone No:</label>
-                <input type="text" id="update-customer-phone-no">
+                <input type="text" id="update-customer-phone-no" class="customer-phone-no">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary cancel-btn customer-edit-modal-close" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary edit-btn" id="customer-edit-btn">Edit</button>
             </div>
         </div>
