@@ -215,7 +215,14 @@ addCardBtn.addEventListener('click',function () {
     let itemSelect = $('#itemSelect')[0];
     let itemId = itemSelect.value;
 
-    if(!itemSelect.value){
+    if(!itemSelect.value || itemId=='Select'){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Select an item before adding it to the cart.',
+            icon: 'warning',
+            timer: 1500,
+            showConfirmButton: false
+        });
         return;
     }
 
