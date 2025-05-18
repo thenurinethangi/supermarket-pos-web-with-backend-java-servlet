@@ -527,7 +527,7 @@ let placeOrderBtn = $('#placeOrderBtn')[0];
 placeOrderBtn.addEventListener('click',async function () {
 
     let customerSelect = $('#customerSelect')[0];
-    if(!customerSelect.value){
+    if(!customerSelect.value || customerSelect.value=='Select'){
         Swal.fire({
             title: 'Error!',
             text: 'Enter Customer Details First',
