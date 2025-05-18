@@ -463,13 +463,20 @@ editCartItemBtn.addEventListener('click',function () {
 let discountTextField = $('#discount')[0];
 discountTextField.addEventListener('keyup',function (event) {
 
+    let finalPriceTag = $('.final-price')[0];
+    let subTotalTag = $('.total-value')[0];
+
     let value = this.value.toString();
+    value = value.trim();
+    if(value==''){
+        finalPriceTag.innerHTML = "Rs "+subTotalTag.innerHTML;
+
+    }
+
     const discountRegex = /^(100(?:\.0+)?|[1-9]?\d(?:\.\d+)?|0(?:\.0+)?)$/;
     let discountValidation = discountRegex.test(value);
     value = Number(value);
 
-    let finalPriceTag = $('.final-price')[0];
-    let subTotalTag = $('.total-value')[0];
     if(discountValidation){
 
         let subTotal = Number(subTotalTag.innerHTML);
@@ -478,6 +485,12 @@ discountTextField.addEventListener('keyup',function (event) {
         finalTotal = finalTotal.toFixed(2);
 
         finalPriceTag.innerHTML = "Rs "+finalTotal;
+
+        let cashTextField = $('#cash')[0];
+        if(cashTextField.value){
+            let balanceTag = $('#balance')[0];
+            balanceTag.value = Number(cashTextField.value)-finalTotal;
+        }
     }
 
 });
