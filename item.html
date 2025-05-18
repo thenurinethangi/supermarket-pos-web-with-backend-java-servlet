@@ -213,25 +213,25 @@
         <div class="modal-content">
             <div class="modal-header" id="update-item-modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel-two">Edit Item</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close item-edit-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="update-item-modal-body">
 
                 <label for="update-item-id">Item ID:</label>
-                <input type="text" id="update-item-id" readonly>
+                <input type="text" id="update-item-id" class="item-id" readonly>
 
                 <label for="update-item-description">Description:</label>
-                <input type="text" id="update-item-description">
+                <input type="text" id="update-item-description" class="description">
 
                 <label for="update-item-price">Price:</label>
-                <input type="text" id="update-item-price">
+                <input type="text" id="update-item-price" class="price">
 
                 <label for="update-item-qty">Qty:</label>
-                <input type="text" id="update-item-qty">
+                <input type="text" id="update-item-qty" class="item-qty">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary cancel-btn item-edit-modal-close" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary edit-btn" id="item-edit-btn">Edit</button>
             </div>
         </div>
