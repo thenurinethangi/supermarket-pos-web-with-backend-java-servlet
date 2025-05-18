@@ -79,6 +79,10 @@ function setCustomersDetails() {
             }
         }
     }
+
+    if(customerSelect[0].value=='Select'){
+        customerDetailsTextArea.innerHTML = "";
+    }
 }
 
 
@@ -91,6 +95,11 @@ customerSelect.addEventListener('change',function () {
     let customerDetailsTextArea = $('.customer-details')[0];
     console.log(id);
 
+    if(id=='Select'){
+        customerDetailsTextArea.innerHTML = "";
+        return;
+    }
+    
     for (let i = 0; i < customerDB.length; i++) {
         let customerId = customerDB[i].id;
 
