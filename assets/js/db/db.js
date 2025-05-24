@@ -3,17 +3,17 @@ import ItemModel from "../model/ItemModel.js"
 import OrderModel from "../model/OrderModel.js"
 
 export let customerDB = [];
-customerDB.push(new CustomerModel('C-000001','Jungkook','Busan','199512345678','0714235678'));
-customerDB.push(new CustomerModel('C-000002','Taehuyng','Daegu','199512345670','0714235678'));
-customerDB.push(new CustomerModel('C-000003','Kim Namjoon','Seoul','199512345679','0714235678'));
-customerDB.push(new CustomerModel('C-000004','kim Seaok Jin','South Korea','199512345676','0714235678'));
-customerDB.push(new CustomerModel('C-000005','J hope','South Korea','199512345699','0714235678'));
-customerDB.push(new CustomerModel('C-000006','Jimin','Busan','199512345622','0714235678'));
-customerDB.push(new CustomerModel('C-000007','Min Yoongi','Daegu','199512345611','0714235678'));
+customerDB.push(new CustomerModel('C-000001','Saman Silva','Colombo','199512345678','0714235678'));
+customerDB.push(new CustomerModel('C-000002','Kamal Perera','Kottawa','199512345670','0714235678'));
+customerDB.push(new CustomerModel('C-000003','Kamala Gamage','NuwaraEliya','199512345679','0714235678'));
+customerDB.push(new CustomerModel('C-000004','Samanthi','Galle','199512345676','0714235678'));
+customerDB.push(new CustomerModel('C-000005','Nethushi Perera','Galle','199512345699','0714235678'));
+customerDB.push(new CustomerModel('C-000006','Dilsha Silva','Hambanthota','199512345622','0714235678'));
+customerDB.push(new CustomerModel('C-000007','Jayathunaga','Panadura','199512345611','0714235678'));
 customerDB.push(new CustomerModel('C-000008','Thenuri','Matara','199512345633','0714235678'));
-customerDB.push(new CustomerModel('C-000009','Bangtan Sedoyan','South Korea','199512345677','0714235678'));
+customerDB.push(new CustomerModel('C-000009','Kumari Nanayakkara','Matara','199512345677','0714235678'));
 customerDB.push(new CustomerModel('C-000010','W.N. Nethangi','Colombo','200212345678','0714235678'));
-customerDB.push(new CustomerModel('C-000011','Jung Hoseok','South Korea','200212345600','0714235678'));
+customerDB.push(new CustomerModel('C-000011','Janith Kodithuwakku','Homagama','200212345600','0714235678'));
 customerDB.push(new CustomerModel('C-000012','Saman Perera','Galle','200012345678','0714235678'));
 
 export let itemDB = [];
