@@ -9,7 +9,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 public class Customer {
 
@@ -20,6 +19,14 @@ public class Customer {
     private String nic;
     private String phoneNo;
 
-    @ManyToMany(mappedBy = "customer")
-    private List<Orders> orders;
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", nic='" + nic + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                '}';
+    }
 }
