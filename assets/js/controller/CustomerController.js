@@ -9,18 +9,23 @@ function loadCustomerTable() {
 
     customerTbl.empty();
 
-    for (let i = 0; i < customerDB.length; i++) {
-        if(i===4){
-            break;
-        }
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/customer',
+        method: 'GET',
+        success: function (r) {
 
-        let id = customerDB[i].id;
-        let name = customerDB[i].name;
-        let address = customerDB[i].address;
-        let nic = customerDB[i].nic;
-        let phoneNo = customerDB[i].phoneNo;
+            for (let i = 0; i < r.length; i++) {
+                if(i===4){
+                    break;
+                }
 
-        let data = `<tr class="tbl-row">
+                let id = r[i].id;
+                let name = r[i].name;
+                let address = r[i].address;
+                let nic = r[i].nic;
+                let phoneNo = r[i].phoneNo;
+
+                let data = `<tr class="tbl-row">
                           <td>${id}</td>
                           <td>${name}</td>
                           <td>${address}</td>
@@ -38,16 +43,22 @@ function loadCustomerTable() {
                         </td>
                     </tr>`
 
-        customerTbl.append(data);
-    }
+                customerTbl.append(data);
+            }
 
-    let tableLong = Math.ceil(customerDB.length/4);
+            let tableLong = Math.ceil(r.length/4);
 
-    let customerTblTag = $('#customer-tbl-long');
-    customerTblTag[0].innerHTML = '1/'+tableLong;
+            let customerTblTag = $('#customer-tbl-long');
+            customerTblTag[0].innerHTML = '1/'+tableLong;
 
-    let customerSearchBar = $('#customer-search-bar')[0];
-    customerSearchBar.value = '';
+            let customerSearchBar = $('#customer-search-bar')[0];
+            customerSearchBar.value = '';
+        },
+        error: function () {
+            console.log('somthing went wrong with loadin customer table');
+        }
+
+    });
 }
 
 
@@ -57,19 +68,20 @@ function generateNewCustomerId() {
 
     let customerId = $('#customer-id');
 
-    if(customerDB.length<=0){
-        customerId.val('C-000001');
-        return;
-    }
-    
-    let lastCustomerId = customerDB[customerDB.length-1].id;
-    let numberPart = lastCustomerId.split("-")[1];
-    numberPart = Number(numberPart)+1;
-    let formattedNumber = String(numberPart).padStart(6, '0');
-    let newId = lastCustomerId.split("-")[0]+'-' + formattedNumber;
-    // console.log(newId);
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/customer?newid=true',
+        method: 'GET',
+        success: function (res) {
+            console.log(res);
+            customerId.val(res);
+        },
+        error: function (xhr) {
+            customerId.val(xhr.responseText);
+            console.log("something went wrong while generating a new id")
+        }
 
-    customerId.val(newId);
+    });
+
 }
 
 
@@ -147,41 +159,57 @@ addNewCustomerBtn.addEventListener('click',(event)=>{
         return;
     }
 
-    let newCustomer = new CustomerModel(customerId,name,address,nic,phoneNo);
-    customerDB.push(newCustomer);
+    let customer = {
+        "id": customerId,
+        "name": name,
+        "address": address,
+        "nic": nic,
+        "phoneNo": phoneNo
+    };
 
-    if(customerDB[customerDB.length-1].id===customerId){
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/customer',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(customer),
+        success: function (res) {
 
-        Swal.fire({
-            title: 'Success!',
-            text: 'Successfully Added A New Customer',
-            icon: 'success',
-            confirmButtonText: 'Ok'
-        })
+            Swal.fire({
+                title: 'Success!',
+                text: 'Successfully Added A New Customer',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
 
-        inputFileds[1].value = '';
-        inputFileds[2].value = '';
-        inputFileds[3].value = '';
-        inputFileds[4].value = '';
-        generateNewCustomerId();
-        loadCustomerTable();
-    }
-    else{
+            inputFileds[1].value = '';
+            inputFileds[2].value = '';
+            inputFileds[3].value = '';
+            inputFileds[4].value = '';
+            generateNewCustomerId();
+            loadCustomerTable();
 
-        Swal.fire({
-            title: 'Fail!',
-            text: 'Failed To Add A New Customer',
-            icon: 'error',
-            confirmButtonText: 'Ok'
-        })
+        },
+        error: function () {
 
-        inputFileds[1].value = '';
-        inputFileds[2].value = '';
-        inputFileds[3].value = '';
-        inputFileds[4].value = '';
-        generateNewCustomerId();
-        loadCustomerTable();
-    }
+            Swal.fire({
+                title: 'Fail!',
+                text: 'Failed To Add A New Customer',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+
+            inputFileds[1].value = '';
+            inputFileds[2].value = '';
+            inputFileds[3].value = '';
+            inputFileds[4].value = '';
+            generateNewCustomerId();
+            loadCustomerTable();
+
+            console.log("error while adding a new customer");
+
+        }
+
+    });
 
 });
 
@@ -222,35 +250,36 @@ deletCustomerBtn.addEventListener('click',()=>{
         return;
     }
 
-    let bool = false;
-    for (let i = 0; i < customerDB.length; i++) {
-        let id = customerDB[i].id;
+    $.ajax({
+        url: `http://localhost:8080/BackEnd_Web_exploded/customer/${selectedCustomerIdTodelete}`,
+        method: 'DELETE',
+        success: function (res) {
 
-        if(id===selectedCustomerIdTodelete){
-            bool = true;
-            customerDB.splice(i, 1);
+            selectedCustomerIdTodelete = null;
+            loadCustomerTable();
+
             Swal.fire({
                 title: 'Deleted!',
                 text: 'Successfully Deleted Customer ID: '+selectedCustomerIdTodelete,
                 icon: 'success',
                 confirmButtonText: 'Ok'
-            })
-            break;
+            });
+        },
+        error: function () {
+
+            selectedCustomerIdTodelete = null;
+            loadCustomerTable();
+
+            Swal.fire({
+                title: 'Fail!',
+                text: 'Failed To Delete Customer ID: '+selectedCustomerIdTodelete,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            console.log("something went wrong with deleting a customer");
         }
-    }
 
-    if(bool===false){
-        Swal.fire({
-            title: 'Fail!',
-            text: 'Failed To Delete Customer ID: '+selectedCustomerIdTodelete,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-        })
-    }
-
-    // console.log(customerDB);
-    selectedCustomerIdTodelete = null;
-    loadCustomerTable();
+    });
 
 });
 
@@ -266,26 +295,28 @@ $(document).on('click', '.customer-edit-icon', function () {
     let customerId = childrens[0].innerHTML;
     // console.log(customerId);
     selectedCustomerIdToEdit = customerId;
-    let selectedCustomer = null;
 
-    for (let i = 0; i < customerDB.length; i++) {
-        let id = customerDB[i].id;
+    $.ajax({
+        url: `http://localhost:8080/BackEnd_Web_exploded/customer/${selectedCustomerIdToEdit}`,
+        method: 'GET',
+        success: function (res) {
 
-        if(id===selectedCustomerIdToEdit){
-            selectedCustomer = customerDB[i];
-            break;
+            let selectedCustomer = res;
+            let editCustomerFormInputFields = $('#update-customer-modal-body>input');
+
+            if(selectedCustomer!=null) {
+                editCustomerFormInputFields[0].value = selectedCustomer.id;
+                editCustomerFormInputFields[1].value = selectedCustomer.name;
+                editCustomerFormInputFields[2].value = selectedCustomer.address;
+                editCustomerFormInputFields[3].value = selectedCustomer.nic;
+                editCustomerFormInputFields[4].value = selectedCustomer.phoneNo;
+            }
+        },
+        error: function () {
+            console.log("somthing went wrong with when setting a customer to update")
         }
-    }
 
-    let editCustomerFormInputFields = $('#update-customer-modal-body>input');
-
-    if(selectedCustomer!=null) {
-        editCustomerFormInputFields[0].value = selectedCustomer.id;
-        editCustomerFormInputFields[1].value = selectedCustomer.name;
-        editCustomerFormInputFields[2].value = selectedCustomer.address;
-        editCustomerFormInputFields[3].value = selectedCustomer.nic;
-        editCustomerFormInputFields[4].value = selectedCustomer.phoneNo;
-    }
+    });
 });
 
 
@@ -338,45 +369,43 @@ updateCustomerBtn.addEventListener('click',()=>{
         return;
     }
 
-    let selectedCustomer = null;
 
-    for (let i = 0; i < customerDB.length; i++) {
-        let id = customerDB[i].id;
+    let customer = {
+        "id": customerId,
+        "name": name,
+        "address": address,
+        "nic": nic,
+        "phoneNo": phoneNo
+    };
 
-        if(id===customerId){
-            selectedCustomer = customerDB[i];
-            break;
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/customer',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(customer),
+        success: function (res) {
+            loadCustomerTable();
+
+            Swal.fire({
+                title: 'Success!',
+                text: 'Successfully Updated Customer ID: '+customerId,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            });
+        },
+        error: function () {
+            loadCustomerTable();
+
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed To Update Customer ID: '+customerId,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            })
+            console.log("error coure while updating a customer");
         }
-    }
 
-    if(selectedCustomer!=null){
-
-        selectedCustomer.name = name;
-        selectedCustomer.address = address;
-        selectedCustomer.nic = nic;
-        selectedCustomer.phoneNo = phoneNo;
-
-        Swal.fire({
-            title: 'Success!',
-            text: 'Successfully Updated Customer ID: '+customerId,
-            icon: 'success',
-            confirmButtonText: 'Ok'
-        })
-    }
-    else{
-
-        Swal.fire({
-            title: 'Error!',
-            text: 'Failed To Update Customer ID: '+customerId,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-        })
-        return;
-    }
-
-    // console.log(selectedCustomer);
-    // console.log(customerDB);
-    loadCustomerTable();
+    });
 
 });
 
@@ -399,21 +428,29 @@ rightIcon.addEventListener('click',()=>{
     let x = no*4;
     let y = (no+1)*4;
 
-    let customerTbl = $('#customer-table-body');
-    customerTbl.empty();
+    let customerArr = [];
 
-    for (let i = x; i < y; i++) {
-        if(i>=customerDB.length){
-            break;
-        }
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/customer',
+        method: 'GET',
+        success: function (r) {
+            customerArr = r;
 
-        let id = customerDB[i].id;
-        let name = customerDB[i].name;
-        let address = customerDB[i].address;
-        let nic = customerDB[i].nic;
-        let phoneNo = customerDB[i].phoneNo;
+            let customerTbl = $('#customer-table-body');
+            customerTbl.empty();
 
-        let data = `<tr class="tbl-row">
+            for (let i = x; i < y; i++) {
+                if(i>=customerArr.length){
+                    break;
+                }
+
+                let id = customerArr[i].id;
+                let name = customerArr[i].name;
+                let address = customerArr[i].address;
+                let nic = customerArr[i].nic;
+                let phoneNo = customerArr[i].phoneNo;
+
+                let data = `<tr class="tbl-row">
                           <td>${id}</td>
                           <td>${name}</td>
                           <td>${address}</td>
@@ -431,13 +468,18 @@ rightIcon.addEventListener('click',()=>{
                         </td>
                     </tr>`
 
-        customerTbl.append(data);
-    }
+                customerTbl.append(data);
+            }
 
-    let tableLong = Math.ceil(customerDB.length/4);
+            let tableLong = Math.ceil(customerArr.length/4);
 
-    let customerTblTag = $('#customer-tbl-long');
-    customerTblTag[0].innerHTML = (no+1)+'/'+tableLong;
+            let customerTblTag = $('#customer-tbl-long');
+            customerTblTag[0].innerHTML = (no+1)+'/'+tableLong;
+        },
+        error: function () {
+            console.log("something went wrong with loading all customer data");
+        }
+    });
 
 });
 
@@ -460,18 +502,27 @@ leftIcon.addEventListener('click',()=>{
     let x = (no-1)*4;
     let y = x-4;
 
-    let customerTbl = $('#customer-table-body');
-    customerTbl.empty();
+    let customerArr = [];
 
-    for (let i = y; i < x; i++) {
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/customer',
+        method: 'GET',
+        success: function (res) {
 
-        let id = customerDB[i].id;
-        let name = customerDB[i].name;
-        let address = customerDB[i].address;
-        let nic = customerDB[i].nic;
-        let phoneNo = customerDB[i].phoneNo;
+            customerArr = res;
 
-        let data = `<tr class="tbl-row">
+            let customerTbl = $('#customer-table-body');
+            customerTbl.empty();
+
+            for (let i = y; i < x; i++) {
+
+                let id = customerArr[i].id;
+                let name = customerArr[i].name;
+                let address = customerArr[i].address;
+                let nic = customerArr[i].nic;
+                let phoneNo = customerArr[i].phoneNo;
+
+                let data = `<tr class="tbl-row">
                           <td>${id}</td>
                           <td>${name}</td>
                           <td>${address}</td>
@@ -489,13 +540,18 @@ leftIcon.addEventListener('click',()=>{
                         </td>
                     </tr>`
 
-        customerTbl.append(data);
-    }
+                customerTbl.append(data);
+            }
 
-    let tableLong = Math.ceil(customerDB.length/4);
+            let tableLong = Math.ceil(customerArr.length/4);
 
-    let customerTblTag = $('#customer-tbl-long');
-    customerTblTag[0].innerHTML = (no-1)+'/'+tableLong;
+            let customerTblTag = $('#customer-tbl-long');
+            customerTblTag[0].innerHTML = (no-1)+'/'+tableLong;
+        },
+        error: function () {
+            console.log("something wrong with loading all customer data");
+        }
+    });
 
 });
 
@@ -538,105 +594,42 @@ customerSearchBar.addEventListener('keydown',(event)=> {
         return;
     }
 
-    if(customerIdValidation){
+    let customerArr = [];
 
-        // console.log('customer id validate');
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/customer',
+        method: 'GET',
+        success: function (res) {
+            customerArr = res;
 
-        let customer = null;
+            if(customerIdValidation){
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let id = customerDB[i].id;
-            id = id.toLowerCase();
+                // console.log('customer id validate');
 
-            if(id===inputText){
-                customer = customerDB[i];
-                break;
-            }
-        }
+                let customer = null;
 
-        if(customer!==null) {
+                for (let i = 0; i < customerArr.length; i++) {
+                    let id = customerArr[i].id;
+                    id = id.toLowerCase();
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
-
-            let id = customer.id;
-            let name = customer.name;
-            let address = customer.address;
-            let nic = customer.nic;
-            let phoneNo = customer.phoneNo;
-
-            let data = `<tr class="tbl-row">
-                          <td>${id}</td>
-                          <td>${name}</td>
-                          <td>${address}</td>
-                          <td>${nic}</td>
-                          <td>${phoneNo}</td>
-                          <td>
-                               <div class="tbl-action-icons">
-                                    <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
-                                        <i class="fas fa-edit customer-edit-icon"></i>
-                                    </button>
-                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
-                                        <i class="fas fa-trash customer-delete-icon"></i>
-                                    </button>
-                               </div>
-                        </td>
-                    </tr>`
-
-            customerTbl.append(data);
-
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
-    }
-    if(nameValidation){
-
-        // console.log("name valid");
-
-        let customer = [];
-
-        if(inputText.split(' ').length>1){
-
-            for (let i = 0; i < customerDB.length; i++) {
-                let name = customerDB[i].name;
-
-                if(name.toLowerCase()===inputText){
-                    customer.push(customerDB[i]);
-                }
-            }
-        }
-        else if(inputText.split(' ').length===1){
-            for (let i = 0; i < customerDB.length; i++) {
-                let name = customerDB[i].name;
-                let arr = name.split(' ');
-
-                for (let j = 0; j < arr.length; j++) {
-                    if (arr[j].toLowerCase() === inputText) {
-                        customer.push(customerDB[i]);
+                    if(id===inputText){
+                        customer = customerArr[i];
                         break;
                     }
                 }
-            }
-        }
 
-        if(customer.length!=0) {
+                if(customer!==null) {
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+                    let customerTbl = $('#customer-table-body');
+                    customerTbl.empty();
 
-            for (let i = 0; i < customer.length; i++) {
+                    let id = customer.id;
+                    let name = customer.name;
+                    let address = customer.address;
+                    let nic = customer.nic;
+                    let phoneNo = customer.phoneNo;
 
-                // if(i>=4){
-                //     break;
-                // }
-                let id = customer[i].id;
-                let name = customer[i].name;
-                let address = customer[i].address;
-                let nic = customer[i].nic;
-                let phoneNo = customer[i].phoneNo;
-
-                let data = `<tr class="tbl-row">
+                    let data = `<tr class="tbl-row">
                           <td>${id}</td>
                           <td>${name}</td>
                           <td>${address}</td>
@@ -654,48 +647,60 @@ customerSearchBar.addEventListener('keydown',(event)=> {
                         </td>
                     </tr>`
 
-                customerTbl.append(data);
+                    customerTbl.append(data);
+
+                    let customerTblTag = $('#customer-tbl-long');
+                    customerTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
             }
+            if(nameValidation){
 
-            // let tableLong = Math.ceil(customer.length/4);
+                // console.log("name valid");
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
+                let customer = [];
 
-    }
-    if(addressValidation){
+                if(inputText.split(' ').length>1){
 
-        // console.log('address validate');
+                    for (let i = 0; i < customerArr.length; i++) {
+                        let name = customerArr[i].name;
 
-        let customer = [];
+                        if(name.toLowerCase()===inputText){
+                            customer.push(customerArr[i]);
+                        }
+                    }
+                }
+                else if(inputText.split(' ').length===1){
+                    for (let i = 0; i < customerArr.length; i++) {
+                        let name = customerArr[i].name;
+                        let arr = name.split(' ');
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let address = customerDB[i].address;
+                        for (let j = 0; j < arr.length; j++) {
+                            if (arr[j].toLowerCase() === inputText) {
+                                customer.push(customerArr[i]);
+                                break;
+                            }
+                        }
+                    }
+                }
 
-            if(address.toLowerCase()===inputText){
-                customer.push(customerDB[i]);
-            }
-        }
+                if(customer.length!=0) {
 
-        if(customer.length!=0) {
+                    let customerTbl = $('#customer-table-body');
+                    customerTbl.empty();
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+                    for (let i = 0; i < customer.length; i++) {
 
-            for (let i = 0; i < customer.length; i++) {
+                        // if(i>=4){
+                        //     break;
+                        // }
+                        let id = customer[i].id;
+                        let name = customer[i].name;
+                        let address = customer[i].address;
+                        let nic = customer[i].nic;
+                        let phoneNo = customer[i].phoneNo;
 
-                // if(i>=4){
-                //     break;
-                // }
-                let id = customer[i].id;
-                let name = customer[i].name;
-                let address = customer[i].address;
-                let nic = customer[i].nic;
-                let phoneNo = customer[i].phoneNo;
-
-                let data = `<tr class="tbl-row">
+                        let data = `<tr class="tbl-row">
                           <td>${id}</td>
                           <td>${name}</td>
                           <td>${address}</td>
@@ -713,43 +718,48 @@ customerSearchBar.addEventListener('keydown',(event)=> {
                         </td>
                     </tr>`
 
-                customerTbl.append(data);
+                        customerTbl.append(data);
+                    }
+
+                    // let tableLong = Math.ceil(customer.length/4);
+
+                    let customerTblTag = $('#customer-tbl-long');
+                    customerTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+
             }
+            if(addressValidation){
 
-            // let tableLong = Math.ceil(customer.length/4);
+                // console.log('address validate');
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
-    }
-    if(nicValidation){
+                let customer = [];
 
-        // console.log('nic validate');
+                for (let i = 0; i < customerArr.length; i++) {
+                    let address = customerArr[i].address;
 
-        let customer = null;
+                    if(address.toLowerCase()===inputText){
+                        customer.push(customerArr[i]);
+                    }
+                }
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let nic = customerDB[i].nic;
+                if(customer.length!=0) {
 
-            if(nic===inputText){
-                customer = customerDB[i];
-                break;
-            }
-        }
+                    let customerTbl = $('#customer-table-body');
+                    customerTbl.empty();
 
-        if(customer!=null) {
+                    for (let i = 0; i < customer.length; i++) {
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+                        // if(i>=4){
+                        //     break;
+                        // }
+                        let id = customer[i].id;
+                        let name = customer[i].name;
+                        let address = customer[i].address;
+                        let nic = customer[i].nic;
+                        let phoneNo = customer[i].phoneNo;
 
-            let id = customer.id;
-            let name = customer.name;
-            let address = customer.address;
-            let nic = customer.nic;
-            let phoneNo = customer.phoneNo;
-
-            let data = `<tr class="tbl-row">
+                        let data = `<tr class="tbl-row">
                           <td>${id}</td>
                           <td>${name}</td>
                           <td>${address}</td>
@@ -767,40 +777,43 @@ customerSearchBar.addEventListener('keydown',(event)=> {
                         </td>
                     </tr>`
 
-            customerTbl.append(data);
+                        customerTbl.append(data);
+                    }
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
-    }
-    if(phoneNoValidation){
+                    // let tableLong = Math.ceil(customer.length/4);
 
-        // console.log('phone number validate');
-
-        let customer = null;
-
-        for (let i = 0; i < customerDB.length; i++) {
-            let phoneNo = customerDB[i].phoneNo;
-
-            if(phoneNo===inputText){
-                customer = customerDB[i];
-                break;
+                    let customerTblTag = $('#customer-tbl-long');
+                    customerTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
             }
-        }
+            if(nicValidation){
 
-        if(customer!=null) {
+                // console.log('nic validate');
 
-            let customerTbl = $('#customer-table-body');
-            customerTbl.empty();
+                let customer = null;
 
-            let id = customer.id;
-            let name = customer.name;
-            let address = customer.address;
-            let nic = customer.nic;
-            let phoneNo = customer.phoneNo;
+                for (let i = 0; i < customerArr.length; i++) {
+                    let nic = customerArr[i].nic;
 
-            let data = `<tr class="tbl-row">
+                    if(nic===inputText){
+                        customer = customerArr[i];
+                        break;
+                    }
+                }
+
+                if(customer!=null) {
+
+                    let customerTbl = $('#customer-table-body');
+                    customerTbl.empty();
+
+                    let id = customer.id;
+                    let name = customer.name;
+                    let address = customer.address;
+                    let nic = customer.nic;
+                    let phoneNo = customer.phoneNo;
+
+                    let data = `<tr class="tbl-row">
                           <td>${id}</td>
                           <td>${name}</td>
                           <td>${address}</td>
@@ -818,18 +831,74 @@ customerSearchBar.addEventListener('keydown',(event)=> {
                         </td>
                     </tr>`
 
-            customerTbl.append(data);
+                    customerTbl.append(data);
 
-            let customerTblTag = $('#customer-tbl-long');
-            customerTblTag[0].innerHTML = 1+'/'+1;
-            return;
+                    let customerTblTag = $('#customer-tbl-long');
+                    customerTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            }
+            if(phoneNoValidation){
+
+                // console.log('phone number validate');
+
+                let customer = null;
+
+                for (let i = 0; i < customerArr.length; i++) {
+                    let phoneNo = customerArr[i].phoneNo;
+
+                    if(phoneNo===inputText){
+                        customer = customerArr[i];
+                        break;
+                    }
+                }
+
+                if(customer!=null) {
+
+                    let customerTbl = $('#customer-table-body');
+                    customerTbl.empty();
+
+                    let id = customer.id;
+                    let name = customer.name;
+                    let address = customer.address;
+                    let nic = customer.nic;
+                    let phoneNo = customer.phoneNo;
+
+                    let data = `<tr class="tbl-row">
+                          <td>${id}</td>
+                          <td>${name}</td>
+                          <td>${address}</td>
+                          <td>${nic}</td>
+                          <td>${phoneNo}</td>
+                          <td>
+                               <div class="tbl-action-icons">
+                                    <button type="button" class="editCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
+                                        <i class="fas fa-edit customer-edit-icon"></i>
+                                    </button>
+                                    <button type="button" class="deleteCustomerBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">
+                                        <i class="fas fa-trash customer-delete-icon"></i>
+                                    </button>
+                               </div>
+                        </td>
+                    </tr>`
+
+                    customerTbl.append(data);
+
+                    let customerTblTag = $('#customer-tbl-long');
+                    customerTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            }
+            else{
+
+                loadCustomerTable();
+            }
+
+        },
+        error: function () {
+            console.log("something went wrong with loading all customer data");
         }
-    }
-    else{
-
-        loadCustomerTable();
-    }
-
+    });
 
 });
 
