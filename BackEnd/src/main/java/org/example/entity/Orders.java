@@ -9,7 +9,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 public class Orders {
 
@@ -26,4 +25,14 @@ public class Orders {
     @ManyToMany
     private List<Item> items;
 
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "id='" + id + '\'' +
+                ", date='" + date + '\'' +
+                ", total=" + total +
+                ", itemCount=" + itemCount +
+                ", customer=" + customer +
+                '}';
+    }
 }
