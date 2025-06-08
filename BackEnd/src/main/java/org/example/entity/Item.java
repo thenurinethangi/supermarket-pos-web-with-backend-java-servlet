@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -19,8 +20,6 @@ public class Item {
     private String id;
     private String description;
     private double price;
+    @Column(name = "quntity")
     private int qty;
-
-    @ManyToMany(mappedBy = "items")
-    private List<Orders> orders;
 }
