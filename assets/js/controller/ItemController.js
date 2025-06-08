@@ -1,5 +1,5 @@
-import {customerDB,itemDB,orderDB} from "../db/db.js"
-import ItemModel from "../model/ItemModel.js"
+// import {customerDB,itemDB,orderDB} from "../db/db.js"
+// import ItemModel from "../model/ItemModel.js"
 
 
 // load item table
@@ -9,17 +9,24 @@ function loadItemTable() {
 
     itemTbl.empty();
 
-    for (let i = 0; i < itemDB.length; i++) {
-        if(i===4){
-            break;
-        }
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+        method: 'GET',
+        success: function (res) {
 
-        let id = itemDB[i].id;
-        let description = itemDB[i].description;
-        let price = itemDB[i].price;
-        let qty = itemDB[i].quntity;
+            let r = res;
 
-        let data = `<tr class="tbl-row item-page-rows">
+            for (let i = 0; i < r.length; i++) {
+                if(i===4){
+                    break;
+                }
+
+                let id = r[i].id;
+                let description = r[i].description;
+                let price = r[i].price;
+                let qty = r[i].qty;
+
+                let data = `<tr class="tbl-row item-page-rows">
                           <td>${id}</td>
                           <td>${description}</td>
                           <td>${price}</td>
@@ -36,16 +43,22 @@ function loadItemTable() {
                         </td>
                     </tr>`
 
-        itemTbl.append(data);
-    }
+                itemTbl.append(data);
+            }
 
-    let tableLong = Math.ceil(itemDB.length/4);
+            let tableLong = Math.ceil(r.length/4);
 
-    let itemTblTag = $('#item-tbl-long');
-    itemTblTag[0].innerHTML = '1/'+tableLong;
+            let itemTblTag = $('#item-tbl-long');
+            itemTblTag[0].innerHTML = '1/'+tableLong;
 
-    let itemSearchBar = $('#item-search-bar')[0];
-    itemSearchBar.value = '';
+            let itemSearchBar = $('#item-search-bar')[0];
+            itemSearchBar.value = '';
+        },
+        error: function () {
+            console.log("error when loading a item table");
+        }
+
+    });
 }
 
 
@@ -55,19 +68,21 @@ function generateNewItemId() {
 
     let itemId = $('#item-id');
 
-    if(itemDB.length<=0){
-        itemId.val('I-00001');
-        return;
-    }
-    
-    let lastCustomerId = itemDB[itemDB.length-1].id;
-    let numberPart = lastCustomerId.split("-")[1];
-    numberPart = Number(numberPart)+1;
-    let formattedNumber = String(numberPart).padStart(5, '0');
-    let newId = lastCustomerId.split("-")[0]+'-' + formattedNumber;
-    // console.log(newId);
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/item?newid=true',
+        method: 'GET',
+        success: function (res) {
+            console.log(res);
+            itemId.val(res);
+        },
+        error: function (xhr) {
+            itemId.val(xhr.responseText);
 
-    itemId.val(newId);
+            console.log("error while generating a new id");
+        }
+
+    });
+
 }
 
 
@@ -137,40 +152,51 @@ addNewItemBtn.addEventListener('click',(event)=>{
         return;
     }
 
-    let newItem = new ItemModel(itemId,description,price,qty);
-    itemDB.push(newItem);
+    let data = {
+        "id": itemId,
+        "description": description,
+        "price": price,
+        "qty": qty
+    };
 
-    if(itemDB[itemDB.length-1].id===itemId){
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (res) {
 
-        Swal.fire({
-            title: 'Success!',
-            text: 'Successfully Added A New Item',
-            icon: 'success',
-            confirmButtonText: 'Ok'
-        })
+            Swal.fire({
+                title: 'Success!',
+                text: 'Successfully Added A New Item',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
 
-        inputFileds[1].value = '';
-        inputFileds[2].value = '';
-        inputFileds[3].value = '';
-        generateNewItemId();
-        loadItemTable();
-    }
-    else{
+            inputFileds[1].value = '';
+            inputFileds[2].value = '';
+            inputFileds[3].value = '';
+            generateNewItemId();
+            loadItemTable();
+        },
+        error: function () {
+            Swal.fire({
+                title: 'Fail!',
+                text: 'Failed To Add A New Item',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            })
 
-        Swal.fire({
-            title: 'Fail!',
-            text: 'Failed To Add A New Item',
-            icon: 'error',
-            confirmButtonText: 'Ok'
-        })
+            inputFileds[1].value = '';
+            inputFileds[2].value = '';
+            inputFileds[3].value = '';
+            generateNewItemId();
+            loadItemTable();
 
-        inputFileds[1].value = '';
-        inputFileds[2].value = '';
-        inputFileds[3].value = '';
-        generateNewItemId();
-        loadItemTable();
-    }
+            console.log("error while saving a new item");
+        }
 
+    });
 });
 
 
@@ -210,36 +236,34 @@ deleteItemBtn.addEventListener('click',()=>{
         return;
     }
 
-    let bool = false;
-    for (let i = 0; i < itemDB.length; i++) {
-        let id = itemDB[i].id;
+    $.ajax({
+        url: `http://localhost:8080/BackEnd_Web_exploded/item/${selectedItemIdTodelete}`,
+        method: 'DELETE',
+        success: function (res) {
 
-        if(id===selectedItemIdTodelete){
-            bool = true;
-            itemDB.splice(i, 1);
             Swal.fire({
                 title: 'Deleted!',
                 text: 'Successfully Deleted Item ID: '+selectedItemIdTodelete,
                 icon: 'success',
                 confirmButtonText: 'Ok'
-            })
-            break;
+            });
+
+            selectedItemIdTodelete = null;
+            loadItemTable();
+        },
+        error: function () {
+            Swal.fire({
+                title: 'Fail!',
+                text: 'Failed To Delete Item ID: '+selectedItemIdTodelete,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            console.log("an error ocure while delete a item");
+            selectedItemIdTodelete = null;
+            loadItemTable();
         }
-    }
 
-    if(bool===false){
-        Swal.fire({
-            title: 'Fail!',
-            text: 'Failed To Delete Item ID: '+selectedItemIdTodelete,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-        })
-    }
-
-    // console.log(itemDB);
-    selectedItemIdTodelete = null;
-    loadItemTable();
-
+    });
 });
 
 
@@ -255,23 +279,27 @@ $(document).on('click', '.item-edit-icon', function () {
     selectedItemIdToEdit = itemId;
     let selectedItem = null;
 
-    for (let i = 0; i < itemDB.length; i++) {
-        let id = itemDB[i].id;
 
-        if(id===selectedItemIdToEdit){
-            selectedItem = itemDB[i];
-            break;
+    $.ajax({
+        url: `http://localhost:8080/BackEnd_Web_exploded/item/${selectedItemIdToEdit}`,
+        method: 'GET',
+        success: function (res) {
+            selectedItem = res;
+
+            let editItemFormInputFields = $('#update-item-modal-body>input');
+
+            if(selectedItem!=null) {
+                editItemFormInputFields[0].value = selectedItem.id;
+                editItemFormInputFields[1].value = selectedItem.description;
+                editItemFormInputFields[2].value = selectedItem.price;
+                editItemFormInputFields[3].value = selectedItem.qty;
+            }
+        },
+        error: function()  {
+            console.log("an error ocure while selecting updated item");
         }
-    }
 
-    let editItemFormInputFields = $('#update-item-modal-body>input');
-
-    if(selectedItem!=null) {
-        editItemFormInputFields[0].value = selectedItem.id;
-        editItemFormInputFields[1].value = selectedItem.description;
-        editItemFormInputFields[2].value = selectedItem.price;
-        editItemFormInputFields[3].value = selectedItem.quntity;
-    }
+    });
 });
 
 
@@ -320,45 +348,39 @@ updateItemBtn.addEventListener('click',()=>{
         return;
     }
 
-    let selectedItem = null;
+    let data = {
+        "id": itemId,
+        "description": description,
+        "price": price,
+        "qty": qty
+    };
 
-    for (let i = 0; i < itemDB.length; i++) {
-        let id = itemDB[i].id;
-
-        if(id===itemId){
-            selectedItem = itemDB[i];
-            break;
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (res) {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Successfully Updated Item ID: '+itemId,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            });
+            loadItemTable();
+        },
+        error: function () {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed To Update Item ID: '+itemId,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            loadItemTable();
+            console.log("an wweero ocure while updating a item");
         }
-    }
 
-    if(selectedItem!=null){
-
-        selectedItem.description = description;
-        selectedItem.price = price;
-        selectedItem.quntity = qty;
-
-        Swal.fire({
-            title: 'Success!',
-            text: 'Successfully Updated Item ID: '+itemId,
-            icon: 'success',
-            confirmButtonText: 'Ok'
-        })
-    }
-    else{
-
-        Swal.fire({
-            title: 'Error!',
-            text: 'Failed To Update Item ID: '+itemId,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-        })
-        return;
-    }
-
-    // console.log(selectedCustomer);
-    // console.log(customerDB);
-    loadItemTable();
-
+    });
 });
 
 
@@ -383,17 +405,22 @@ rightIcon.addEventListener('click',()=>{
     let itemTbl = $('#item-table-body');
     itemTbl.empty();
 
-    for (let i = x; i < y; i++) {
-        if(i>=itemDB.length){
-            break;
-        }
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+        method: 'GET',
+        success: function (res) {
 
-        let id = itemDB[i].id;
-        let description = itemDB[i].description;
-        let price = itemDB[i].price;
-        let qty = itemDB[i].quntity;
+            for (let i = x; i < y; i++) {
+                if(i>=res.length){
+                    break;
+                }
 
-        let data = `<tr class="tbl-row item-page-rows">
+                let id = res[i].id;
+                let description = res[i].description;
+                let price = res[i].price;
+                let qty = res[i].qty;
+
+                let data = `<tr class="tbl-row item-page-rows">
                           <td>${id}</td>
                           <td>${description}</td>
                           <td>${price}</td>
@@ -410,13 +437,19 @@ rightIcon.addEventListener('click',()=>{
                         </td>
                     </tr>`
 
-        itemTbl.append(data);
-    }
+                itemTbl.append(data);
+            }
 
-    let tableLong = Math.ceil(itemDB.length/4);
+            let tableLong = Math.ceil(res.length/4);
 
-    let itemTblTag = $('#item-tbl-long');
-    itemTblTag[0].innerHTML = (no+1)+'/'+tableLong;
+            let itemTblTag = $('#item-tbl-long');
+            itemTblTag[0].innerHTML = (no+1)+'/'+tableLong;
+        },
+        error: function () {
+            console.log("an error ocure while loading more table data-right");
+        }
+
+    });
 
 });
 
@@ -442,14 +475,18 @@ leftIcon.addEventListener('click',()=>{
     let itemTbl = $('#item-table-body');
     itemTbl.empty();
 
-    for (let i = y; i < x; i++) {
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+        method: 'GET',
+        success: function (res) {
+            for (let i = y; i < x; i++) {
 
-        let id = itemDB[i].id;
-        let description = itemDB[i].description;
-        let price = itemDB[i].price;
-        let qty = itemDB[i].quntity;
+                let id = res[i].id;
+                let description = res[i].description;
+                let price = res[i].price;
+                let qty = res[i].qty;
 
-        let data = `<tr class="tbl-row item-page-rows">
+                let data = `<tr class="tbl-row item-page-rows">
                           <td>${id}</td>
                           <td>${description}</td>
                           <td>${price}</td>
@@ -466,14 +503,18 @@ leftIcon.addEventListener('click',()=>{
                         </td>
                     </tr>`
 
-        itemTbl.append(data);
-    }
+                itemTbl.append(data);
+            }
 
-    let tableLong = Math.ceil(itemDB.length/4);
+            let tableLong = Math.ceil(res.length/4);
 
-    let itemTblTag = $('#item-tbl-long');
-    itemTblTag[0].innerHTML = (no-1)+'/'+tableLong;
-
+            let itemTblTag = $('#item-tbl-long');
+            itemTblTag[0].innerHTML = (no-1)+'/'+tableLong;
+        },
+        error: function () {
+            console.log("an error ocure while loading more table data-left");
+        }
+    });
 });
 
 
@@ -502,7 +543,7 @@ itemSearchBar.addEventListener('keydown',(event)=> {
     const descriptionRegex = /^[A-Za-z ]+( \d+(\.\d+)?(ml|g|kg|L))?( [A-Za-z ]+)?$/i;
     let descriptionValidation = descriptionRegex.test(inputText);
 
-    const priceRegex = /^\d+\.\d{2}$/;
+    const priceRegex = /^\d+(\.\d{1,2})?$/;
     let priceValidation = priceRegex.test(inputText);
 
     const qtyRegex = /^\d+$/;
@@ -514,31 +555,32 @@ itemSearchBar.addEventListener('keydown',(event)=> {
 
     if(itemIdValidation){
 
-        // console.log('item id validate');
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+            method: 'GET',
+            success: function (res) {
+                let item = null;
 
-        let item = null;
+                for (let i = 0; i < res.length; i++) {
+                    let id = res[i].id;
+                    id = id.toLowerCase();
 
-        for (let i = 0; i < itemDB.length; i++) {
-            let id = itemDB[i].id;
-            id = id.toLowerCase();
+                    if(id===inputText){
+                        item = res[i];
+                        break;
+                    }
+                }
+                if(item!==null) {
 
-            if(id===inputText){
-                item = itemDB[i];
-                break;
-            }
-        }
+                    let itemTbl = $('#item-table-body');
+                    itemTbl.empty();
 
-        if(item!==null) {
+                    let id = item.id;
+                    let description = item.description;
+                    let price = item.price;
+                    let qty = item.qty;
 
-            let itemTbl = $('#item-table-body');
-            itemTbl.empty();
-
-            let id = item.id;
-            let description = item.description;
-            let price = item.price;
-            let qty = item.quntity;
-
-            let data = `<tr class="tbl-row item-page-rows">
+                    let data = `<tr class="tbl-row item-page-rows">
                           <td>${id}</td>
                           <td>${description}</td>
                           <td>${price}</td>
@@ -555,45 +597,56 @@ itemSearchBar.addEventListener('keydown',(event)=> {
                         </td>
                     </tr>`
 
-            itemTbl.append(data);
+                    itemTbl.append(data);
 
-            let itemTblTag = $('#item-tbl-long');
-            itemTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
+                    let itemTblTag = $('#item-tbl-long');
+                    itemTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error ocure while getting all items");
+            }
+
+        });
+
     }
     if(descriptionValidation){
 
-        // console.log("description valid");
+        console.log("description valid");
 
         let item = [];
 
-        for (let i = 0; i < itemDB.length; i++) {
-            let description = itemDB[i].description;
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+            method: 'GET',
+            success: function (res) {
+                for (let i = 0; i < res.length; i++) {
+                    let description = res[i].description;
 
-            if(description.toLowerCase().includes(inputText)){
-                // console.log('contain');
-                item.push(itemDB[i]);
-            }
+                    if(description.toLowerCase().includes(inputText)){
+                        // console.log('contain');
+                        item.push(res[i]);
+                    }
 
-        }
+                }
 
-        if(item.length!=0) {
+                if(item.length!=0) {
 
-            let itemTbl = $('#item-table-body');
-            itemTbl.empty();
+                    let itemTbl = $('#item-table-body');
+                    itemTbl.empty();
 
-            for (let i = 0; i < item.length; i++) {
+                    for (let i = 0; i < item.length; i++) {
 
-                // if(i>=4){
-                //     break;
-                // }
-                let id = item[i].id;
-                let description = item[i].description;
-                let price = item[i].price;
-                let qty = item[i].quntity;
+                        // if(i>=4){
+                        //     break;
+                        // }
+                        let id = item[i].id;
+                        let description = item[i].description;
+                        let price = item[i].price;
+                        let qty = item[i].qty;
 
-                let data = `<tr class="tbl-row item-page-rows">
+                        let data = `<tr class="tbl-row item-page-rows">
                           <td>${id}</td>
                           <td>${description}</td>
                           <td>${price}</td>
@@ -610,47 +663,57 @@ itemSearchBar.addEventListener('keydown',(event)=> {
                         </td>
                     </tr>`
 
-                itemTbl.append(data);
+                        itemTbl.append(data);
+                    }
+
+                    // let tableLong = Math.ceil(item.length/4);
+
+                    let itemTblTag = $('#item-tbl-long');
+                    itemTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error while laoding all item data");
             }
-
-            // let tableLong = Math.ceil(item.length/4);
-
-            let itemTblTag = $('#item-tbl-long');
-            itemTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
+        });
 
     }
     if(priceValidation){
 
-        // console.log('price validate');
+        console.log('price validate');
 
         let item = [];
 
-        for (let i = 0; i < itemDB.length; i++) {
-            let price = itemDB[i].price;
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+            method: 'GET',
+            success: function (res) {
+                for (let i = 0; i < res.length; i++) {
+                    let price = res[i].price;
+                    price = price.toString();
 
-            if(price.toLowerCase()===inputText){
-                item.push(itemDB[i]);
-            }
-        }
+                    if(price.toLowerCase()===inputText.split(".")[0]){
+                        item.push(res[i]);
+                    }
+                }
 
-        if(item.length!=0) {
+                if(item.length!=0) {
 
-            let itemTbl = $('#item-table-body');
-            itemTbl.empty();
+                    let itemTbl = $('#item-table-body');
+                    itemTbl.empty();
 
-            for (let i = 0; i < item.length; i++) {
+                    for (let i = 0; i < item.length; i++) {
 
-                // if(i>=4){
-                //     break;
-                // }
-                let id = item[i].id;
-                let description = item[i].description;
-                let price = item[i].price;
-                let qty = item[i].quntity;
+                        // if(i>=4){
+                        //     break;
+                        // }
+                        let id = item[i].id;
+                        let description = item[i].description;
+                        let price = item[i].price;
+                        let qty = item[i].qty;
 
-                let data = `<tr class="tbl-row item-page-rows">
+                        let data = `<tr class="tbl-row item-page-rows">
                           <td>${id}</td>
                           <td>${description}</td>
                           <td>${price}</td>
@@ -667,46 +730,56 @@ itemSearchBar.addEventListener('keydown',(event)=> {
                         </td>
                     </tr>`
 
-                itemTbl.append(data);
+                        itemTbl.append(data);
+                    }
+
+                    // let tableLong = Math.ceil(item.length/4);
+
+                    let itemTblTag = $('#item-tbl-long');
+                    itemTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error while loading all item data");
             }
+        });
 
-            // let tableLong = Math.ceil(item.length/4);
-
-            let itemTblTag = $('#item-tbl-long');
-            itemTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
     }
     if(qtyValidation){
 
-        // console.log('qty validate');
+        console.log('qty validate');
 
         let item = [];
 
-        for (let i = 0; i < itemDB.length; i++) {
-            let qty = itemDB[i].quntity;
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/item',
+            method: 'GET',
+            success: function (res) {
+                for (let i = 0; i < res.length; i++) {
+                    let qty = res[i].qty;
 
-            if(qty===inputText){
-                item.push(itemDB[i]);
-            }
-        }
+                    if(qty==inputText){
+                        item.push(res[i]);
+                    }
+                }
 
-        if(item.length!=0) {
+                if(item.length!=0) {
 
-            let itemTbl = $('#item-table-body');
-            itemTbl.empty();
+                    let itemTbl = $('#item-table-body');
+                    itemTbl.empty();
 
-            for (let i = 0; i < item.length; i++) {
+                    for (let i = 0; i < item.length; i++) {
 
-                // if(i>=4){
-                //     break;
-                // }
-                let id = item[i].id;
-                let description = item[i].description;
-                let price = item[i].price;
-                let qty = item[i].quntity;
+                        // if(i>=4){
+                        //     break;
+                        // }
+                        let id = item[i].id;
+                        let description = item[i].description;
+                        let price = item[i].price;
+                        let qty = item[i].qty;
 
-                let data = `<tr class="tbl-row item-page-rows">
+                        let data = `<tr class="tbl-row item-page-rows">
                           <td>${id}</td>
                           <td>${description}</td>
                           <td>${price}</td>
@@ -723,21 +796,21 @@ itemSearchBar.addEventListener('keydown',(event)=> {
                         </td>
                     </tr>`
 
-                itemTbl.append(data);
+                        itemTbl.append(data);
+                    }
+
+                    // let tableLong = Math.ceil(item.length/4);
+
+                    let itemTblTag = $('#item-tbl-long');
+                    itemTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error ocure while loading all items data");
             }
-
-            // let tableLong = Math.ceil(item.length/4);
-
-            let itemTblTag = $('#item-tbl-long');
-            itemTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
+        });
     }
-    else{
-
-        loadItemTable();
-    }
-
 
 });
 
