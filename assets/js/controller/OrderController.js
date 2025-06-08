@@ -303,41 +303,46 @@ orderSearchBar.addEventListener('keydown',(event)=> {
     const qtyRegex = /^\d+$/;
     let qtyValidation = qtyRegex.test(inputText);
 
-    const totalRegex = /^\d+\.\d{2}$/;
+    const totalRegex = /^\d+(\.\d{1,2})?$/;
     let totalValidation = totalRegex.test(inputText);
 
     if(!orderIdValidation && !customerIdValidation && !dateValidation && !qtyValidation && !totalValidation){
+        loadOrderTable();
         return;
     }
 
     if(orderIdValidation){
 
-        // console.log('order id validate');
+        console.log('order id validate');
 
         let order = null;
 
-        for (let i = 0; i < orderDB.length; i++) {
-            let id = orderDB[i].orderId;
-            id = id.toLowerCase();
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/orders',
+            method: 'GET',
+            success: function (res) {
+                for (let i = 0; i < res.length; i++) {
+                    let id = res[i].id;
+                    id = id.toLowerCase();
 
-            if(id===inputText){
-                order = orderDB[i];
-                break;
-            }
-        }
+                    if(id===inputText){
+                        order = res[i];
+                        break;
+                    }
+                }
 
-        if(order!==null) {
+                if(order!==null) {
 
-            let orderTbl = $('#order-table-body');
-            orderTbl.empty();
+                    let orderTbl = $('#order-table-body');
+                    orderTbl.empty();
 
-            let orderId = order.orderId;
-            let customerId = order.customerId;
-            let date = order.date;
-            let itemCount = order.itemCount;
-            let total = order.total;
+                    let orderId = order.id;
+                    let customerId = order.customer.id;
+                    let date = order.date;
+                    let itemCount = order.itemCount;
+                    let total = order.total;
 
-            let data = `<tr class="tbl-row">
+                    let data = `<tr class="tbl-row">
                           <td>${orderId}</td>
                           <td>${customerId}</td>
                           <td>${date}</td>
@@ -352,44 +357,51 @@ orderSearchBar.addEventListener('keydown',(event)=> {
                           </td>
                     </tr>`
 
-            orderTbl.append(data);
+                    orderTbl.append(data);
 
-            let orderTblTag = $('#order-tbl-long');
-            orderTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
+                    let orderTblTag = $('#order-tbl-long');
+                    orderTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error ocure while loading all orders");
+            }
+
+        });
     }
     if(customerIdValidation){
 
-        // console.log("customer id valid");
+        console.log("customer id valid");
 
         let order = [];
 
-        for (let i = 0; i < orderDB.length; i++) {
-            let customerId = orderDB[i].customerId;
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/orders',
+            method: 'GET',
+            success: function (res) {
+                for (let i = 0; i < res.length; i++) {
+                    let customerId = res[i].customer.id;
 
-            if (customerId.toLowerCase() === inputText) {
-                order.push(orderDB[i]);
-            }
-        }
+                    if (customerId.toLowerCase() == inputText) {
+                        order.push(res[i]);
+                    }
+                }
 
-        if(order.length!=0) {
+                if(order.length!=0) {
 
-            let orderTbl = $('#order-table-body');
-            orderTbl.empty();
+                    let orderTbl = $('#order-table-body');
+                    orderTbl.empty();
 
-            for (let i = 0; i < order.length; i++) {
+                    for (let i = 0; i < order.length; i++) {
 
-                // if(i>=4){
-                //     break;
-                // }
-                let orderId = order[i].orderId;
-                let customerId = order[i].customerId;
-                let date = order[i].date;
-                let itemCount = order[i].itemCount;
-                let total = order[i].total;
+                        let orderId = order[i].id;
+                        let customerId = order[i].customer.id;
+                        let date = order[i].date;
+                        let itemCount = order[i].itemCount;
+                        let total = order[i].total;
 
-                let data = `<tr class="tbl-row">
+                        let data = `<tr class="tbl-row">
                           <td>${orderId}</td>
                           <td>${customerId}</td>
                           <td>${date}</td>
@@ -404,48 +416,53 @@ orderSearchBar.addEventListener('keydown',(event)=> {
                           </td>
                     </tr>`
 
-                orderTbl.append(data);
+                        orderTbl.append(data);
+                    }
+
+                    let tableLong = Math.ceil(order.length/4);
+
+                    let orderTblTag = $('#order-tbl-long');
+                    orderTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error ocure while loading all orders");
             }
-
-            let tableLong = Math.ceil(order.length/4);
-
-            let orderTblTag = $('#order-tbl-long');
-            orderTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
-
+        });
     }
     if(dateValidation){
 
-        // console.log('date validate');
+        console.log('date validate');
 
         let order = [];
 
-        for (let i = 0; i < orderDB.length; i++) {
-            let date = orderDB[i].date;
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/orders',
+            method: 'GET',
+            success: function (res) {
+                for (let i = 0; i < res.length; i++) {
+                    let date = res[i].date;
 
-            if(date===inputText){
-                order.push(orderDB[i]);
-            }
-        }
+                    if(date==inputText){
+                        order.push(res[i]);
+                    }
+                }
 
-        if(order.length!=0) {
+                if(order.length!=0) {
 
-            let orderTbl = $('#order-table-body');
-            orderTbl.empty();
+                    let orderTbl = $('#order-table-body');
+                    orderTbl.empty();
 
-            for (let i = 0; i < order.length; i++) {
+                    for (let i = 0; i < order.length; i++) {
 
-                // if(i>=4){
-                //     break;
-                // }
-                let orderId = order[i].orderId;
-                let customerId = order[i].customerId;
-                let date = order[i].date;
-                let itemCount = order[i].itemCount;
-                let total = order[i].total;
+                        let orderId = order[i].id;
+                        let customerId = order[i].customer.id;
+                        let date = order[i].date;
+                        let itemCount = order[i].itemCount;
+                        let total = order[i].total;
 
-                let data = `<tr class="tbl-row">
+                        let data = `<tr class="tbl-row">
                           <td>${orderId}</td>
                           <td>${customerId}</td>
                           <td>${date}</td>
@@ -460,47 +477,56 @@ orderSearchBar.addEventListener('keydown',(event)=> {
                           </td>
                     </tr>`
 
-                orderTbl.append(data);
+                        orderTbl.append(data);
+                    }
+
+                    // let tableLong = Math.ceil(order.length/4);
+
+                    let orderTblTag = $('#order-tbl-long');
+                    orderTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error ocure while loading all orders");
             }
-
-            // let tableLong = Math.ceil(order.length/4);
-
-            let orderTblTag = $('#order-tbl-long');
-            orderTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
+        });
     }
     if(qtyValidation){
 
-        // console.log('qty validate');
+        console.log('qty validate');
 
         let order = [];
 
-        for (let i = 0; i < orderDB.length; i++) {
-            let qty = orderDB[i].itemCount;
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/orders',
+            method: 'GET',
+            success: function (res) {
+                for (let i = 0; i < res.length; i++) {
+                    let qty = res[i].itemCount;
 
-            if(qty==inputText){
-                order.push(orderDB[i]);
-            }
-        }
+                    if(qty==inputText){
+                        order.push(res[i]);
+                    }
+                }
 
-        if(order.length!=0) {
+                if(order.length!=0) {
 
-            let orderTbl = $('#order-table-body');
-            orderTbl.empty();
+                    let orderTbl = $('#order-table-body');
+                    orderTbl.empty();
 
-            for (let i = 0; i < order.length; i++) {
+                    for (let i = 0; i < order.length; i++) {
 
-                // if(i>=4){
-                //     break;
-                // }
-                let orderId = order[i].orderId;
-                let customerId = order[i].customerId;
-                let date = order[i].date;
-                let itemCount = order[i].itemCount;
-                let total = order[i].total;
+                        // if(i>=4){
+                        //     break;
+                        // }
+                        let orderId = order[i].id;
+                        let customerId = order[i].customer.id;
+                        let date = order[i].date;
+                        let itemCount = order[i].itemCount;
+                        let total = order[i].total;
 
-                let data = `<tr class="tbl-row">
+                        let data = `<tr class="tbl-row">
                           <td>${orderId}</td>
                           <td>${customerId}</td>
                           <td>${date}</td>
@@ -515,47 +541,56 @@ orderSearchBar.addEventListener('keydown',(event)=> {
                           </td>
                     </tr>`
 
-                orderTbl.append(data);
+                        orderTbl.append(data);
+                    }
+
+                    // let tableLong = Math.ceil(order.length/4);
+
+                    let orderTblTag = $('#order-tbl-long');
+                    orderTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error ocure while loading all orders");
             }
-
-            // let tableLong = Math.ceil(order.length/4);
-
-            let orderTblTag = $('#order-tbl-long');
-            orderTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
+        });
     }
     if(totalValidation){
 
-        // console.log('total validate');
+        console.log('total validate');
 
         let order = [];
 
-        for (let i = 0; i < orderDB.length; i++) {
-            let total = orderDB[i].total;
+        $.ajax({
+            url: 'http://localhost:8080/BackEnd_Web_exploded/orders',
+            method: 'GET',
+            success: function (res) {
+                for (let i = 0; i < res.length; i++) {
+                    let total = res[i].total;
 
-            if(total===inputText){
-                order.push(orderDB[i]);
-            }
-        }
+                    if(total==inputText){
+                        order.push(res[i]);
+                    }
+                }
 
-        if(order.length!=0) {
+                if(order.length!=0) {
 
-            let orderTbl = $('#order-table-body');
-            orderTbl.empty();
+                    let orderTbl = $('#order-table-body');
+                    orderTbl.empty();
 
-            for (let i = 0; i < order.length; i++) {
+                    for (let i = 0; i < order.length; i++) {
 
-                // if(i>=4){
-                //     break;
-                // }
-                let orderId = order[i].orderId;
-                let customerId = order[i].customerId;
-                let date = order[i].date;
-                let itemCount = order[i].itemCount;
-                let total = order[i].total;
+                        // if(i>=4){
+                        //     break;
+                        // }
+                        let orderId = order[i].id;
+                        let customerId = order[i].customer.id;
+                        let date = order[i].date;
+                        let itemCount = order[i].itemCount;
+                        let total = order[i].total;
 
-                let data = `<tr class="tbl-row">
+                        let data = `<tr class="tbl-row">
                           <td>${orderId}</td>
                           <td>${customerId}</td>
                           <td>${date}</td>
@@ -570,19 +605,20 @@ orderSearchBar.addEventListener('keydown',(event)=> {
                           </td>
                     </tr>`
 
-                orderTbl.append(data);
+                        orderTbl.append(data);
+                    }
+
+                    // let tableLong = Math.ceil(order.length/4);
+
+                    let orderTblTag = $('#order-tbl-long');
+                    orderTblTag[0].innerHTML = 1+'/'+1;
+                    return;
+                }
+            },
+            error: function () {
+                console.log("an error ocure while loading all orders");
             }
-
-            // let tableLong = Math.ceil(order.length/4);
-
-            let orderTblTag = $('#order-tbl-long');
-            orderTblTag[0].innerHTML = 1+'/'+1;
-            return;
-        }
-    }
-    else{
-
-        loadOrderTable();
+        });
     }
 });
 
