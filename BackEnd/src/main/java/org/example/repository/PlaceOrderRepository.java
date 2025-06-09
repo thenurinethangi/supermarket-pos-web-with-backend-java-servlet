@@ -3,6 +3,7 @@ package org.example.repository;
 import org.example.config.FactoryConfiguration;
 import org.example.entity.Orders;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class PlaceOrderRepository {
 
@@ -30,6 +31,18 @@ public class PlaceOrderRepository {
         }
         finally {
             session.close();
+        }
+    }
+
+    public boolean add(Orders orders,Session session) {
+
+        try{
+            session.persist(orders);
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
