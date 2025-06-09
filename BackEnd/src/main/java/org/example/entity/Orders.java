@@ -25,6 +25,14 @@ public class Orders {
     @ManyToMany
     private List<Item> items;
 
+    public Orders(String id, String date, double total, int itemCount, Customer customer) {
+        this.id = id;
+        this.date = date;
+        this.total = total;
+        this.itemCount = itemCount;
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
         return "Orders{" +
