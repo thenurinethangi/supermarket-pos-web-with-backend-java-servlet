@@ -140,4 +140,16 @@ public class ItemRepository {
             session.close();
         }
     }
+
+    public boolean updateQty(Item item,Session session) {
+
+        try{
+            session.update(item);
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
