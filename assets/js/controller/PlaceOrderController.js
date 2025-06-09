@@ -10,19 +10,18 @@ function generateNewOrderId() {
 
     let orderID = $('#orderID');
 
-    if(orderDB.length<=0){
-        orderID.val('ORD-000001');
-        return;
-    }
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/placeorder?newid=true',
+        method: 'GET',
+        success: function (res) {
+            orderID.val(res);
+        },
+        error: function (xhr) {
+            orderID.val(xhr.responseText);
+            console.log("an error ocure while generating new order id");
+        }
 
-    let lastOrderId = orderDB[orderDB.length-1].orderId;
-    let numberPart = lastOrderId.split("-")[1];
-    numberPart = Number(numberPart)+1;
-    let formattedNumber = String(numberPart).padStart(6, '0');
-    let newId = lastOrderId.split("-")[0]+'-' + formattedNumber;
-    // console.log(newId);
-
-    orderID.val(newId);
+    });
 }
 
 
@@ -44,13 +43,23 @@ function setCustomersIds() {
     customerSelect.empty();
 
     customerSelect.append(`<option value="Select" selected>Select</option>`);
-    
-    for (let i = 0; i < customerDB.length; i++) {
-        let id = customerDB[i].id;
 
-        let data = `<option value=${id}>${id}</option>`;
-        customerSelect.append(data);
-    }
+    $.ajax({
+       url: 'http://localhost:8080/BackEnd_Web_exploded/placeorder?customers=true',
+        method: 'GET',
+        success: function (res) {
+            for (let i = 0; i < res.length; i++) {
+                let id = res[i];
+
+                let data = `<option value=${id}>${id}</option>`;
+                customerSelect.append(data);
+            }
+        },
+        error: function () {
+            console.log("an error while set customer ids");
+        }
+
+    });
 }
 
 
@@ -60,26 +69,29 @@ function setCustomersDetails() {
     let customerSelect = $('#customerSelect');
     let customerDetailsTextArea = $('.customer-details')[0];
 
-    if(customerSelect[0].value){
+    if(customerSelect[0].value && customerSelect[0].value!='Select'){
         let value = customerSelect[0].value;
 
-        for (let i = 0; i < customerDB.length; i++) {
-            let id = customerDB[i].id;
-
-            if(value==id){
-                let data1 = `<p class="mb-1">${customerDB[i].id}</p>`;
-                let data2 = `<p class="mb-1">${customerDB[i].name}</p>`;
-                let data3 = `<p class="mb-0">${customerDB[i].phoneNo}</p>`;
+        $.ajax({
+           url: `http://localhost:8080/BackEnd_Web_exploded/placeorder?customerid=${value}`,
+            method: 'GET',
+            success: function (res) {
+                let data1 = `<p class="mb-1">${res.id}</p>`;
+                let data2 = `<p class="mb-1">${res.name}</p>`;
+                let data3 = `<p class="mb-0">${res.phoneNo}</p>`;
 
                 customerDetailsTextArea.innerHTML = "";
                 customerDetailsTextArea.insertAdjacentHTML("beforeend", data1);
                 customerDetailsTextArea.insertAdjacentHTML("beforeend", data2);
                 customerDetailsTextArea.insertAdjacentHTML("beforeend", data3);
-                break;
-            }
-        }
-    }
 
+            },
+            error: function () {
+                console.log("an error ocure while setting selected customer details");
+            }
+
+        });
+    }
     if(customerSelect[0].value=='Select'){
         customerDetailsTextArea.innerHTML = "";
     }
@@ -99,22 +111,24 @@ customerSelect.addEventListener('change',function () {
         customerDetailsTextArea.innerHTML = "";
         return;
     }
-    
-    for (let i = 0; i < customerDB.length; i++) {
-        let customerId = customerDB[i].id;
 
-        if(id==customerId){
-            let data1 = `<p class="mb-1">${customerDB[i].id}</p>`;
-            let data2 = `<p class="mb-1">${customerDB[i].name}</p>`;
-            let data3 = `<p class="mb-0">${customerDB[i].phoneNo}</p>`;
+    $.ajax({
+        url: `http://localhost:8080/BackEnd_Web_exploded/placeorder?customerid=${id}`,
+        method: 'GET',
+        success: function (res) {
+            let data1 = `<p class="mb-1">${res.id}</p>`;
+            let data2 = `<p class="mb-1">${res.name}</p>`;
+            let data3 = `<p class="mb-0">${res.phoneNo}</p>`;
 
             customerDetailsTextArea.innerHTML = "";
             customerDetailsTextArea.insertAdjacentHTML("beforeend", data1);
             customerDetailsTextArea.insertAdjacentHTML("beforeend", data2);
             customerDetailsTextArea.insertAdjacentHTML("beforeend", data3);
-            break;
+        },
+        error: function () {
+            console.log("an error ocure while setting customer details when selecting a customer ids");
         }
-    }
+    });
 
 });
 
@@ -127,44 +141,56 @@ function setItemIds() {
     itemSelect.empty();
 
     itemSelect.append(`<option value="Select" selected>Select</option>`);
-    
-    for (let i = 0; i < itemDB.length; i++) {
-        let id = itemDB[i].id;
 
-        let data = `<option value=${id}>${id}</option>`;
-        itemSelect.append(data);
-    }
+    $.ajax({
+       url: 'http://localhost:8080/BackEnd_Web_exploded/placeorder?items=true',
+        method: 'GET',
+        success: function (res) {
+            for (let i = 0; i < res.length; i++) {
+                let id = res[i];
+
+                let data = `<option value=${id}>${id}</option>`;
+                itemSelect.append(data);
+            }
+        },
+        error: function () {
+            console.log("an error ocure while setting item ids");
+        }
+
+    });
 }
 
 
-// set customer details by selected id
+// set item details by selected id
 function setItemsDetails() {
 
     let itemSelect = $('#itemSelect');
     let itemDetailsTextArea = $('#item-details')[0];
 
-    if(itemSelect[0].value){
+    if(itemSelect[0].value && itemSelect[0].value!='Select'){
         let value = itemSelect[0].value;
 
-        for (let i = 0; i < itemDB.length; i++) {
-            let id = itemDB[i].id;
-
-            if(value==id){
-                let data1 = `<p class="mb-1">ID: ${itemDB[i].id}</p>`;
-                let data2 = `<p class="mb-1">Description: ${itemDB[i].description}</p>`;
-                let data3 = `<p class="mb-1">Price: ${itemDB[i].price}</p>`;
-                let data4 = `<p class="mb-0">Qty: ${itemDB[i].quntity}</p>`;
+        $.ajax({
+            url: `http://localhost:8080/BackEnd_Web_exploded/placeorder?itemid=${value}`,
+            method: 'GET',
+            success: function (res) {
+                let data1 = `<p class="mb-1">ID: res.id}</p>`;
+                let data2 = `<p class="mb-1">Description: ${res.description}</p>`;
+                let data3 = `<p class="mb-1">Price: ${res.price}</p>`;
+                let data4 = `<p class="mb-0">Qty: ${res.qty}</p>`;
 
                 itemDetailsTextArea.innerHTML = "";
                 itemDetailsTextArea.insertAdjacentHTML("beforeend", data1);
                 itemDetailsTextArea.insertAdjacentHTML("beforeend", data2);
                 itemDetailsTextArea.insertAdjacentHTML("beforeend", data3);
                 itemDetailsTextArea.insertAdjacentHTML("beforeend", data4);
-                break;
+            },
+            error: function () {
+                console.log("an error ocure while getting selected item details");
             }
-        }
-    }
 
+        });
+    }
     if(itemSelect[0].value=='Select'){
         itemDetailsTextArea.innerHTML = "";
     }
@@ -178,31 +204,33 @@ itemSelect.addEventListener('change',function () {
     let id = this.value;
     let itemDetailsTextArea = $('#item-details')[0];
 
-    for (let i = 0; i < itemDB.length; i++) {
-        let itemId = itemDB[i].id;
+    if(id!='Select') {
+        $.ajax({
+            url: `http://localhost:8080/BackEnd_Web_exploded/placeorder?itemid=${id}`,
+            method: 'GET',
+            success: function (res) {
+                let data1 = `<p class="mb-1">ID: ${res.id}</p>`;
+                let data2 = `<p class="mb-1">Description: ${res.description}</p>`;
+                let data3 = `<p class="mb-1">Price: ${res.price}</p>`;
+                let data4 = `<p class="mb-0">Qty: ${res.qty}</p>`;
 
-        if(id==itemId){
-            let data1 = `<p class="mb-1">ID: ${itemDB[i].id}</p>`;
-            let data2 = `<p class="mb-1">Description: ${itemDB[i].description}</p>`;
-            let data3 = `<p class="mb-1">Price: ${itemDB[i].price}</p>`;
-            let data4 = `<p class="mb-0">Qty: ${itemDB[i].quntity}</p>`;
+                itemDetailsTextArea.innerHTML = "";
+                itemDetailsTextArea.insertAdjacentHTML("beforeend", data1);
+                itemDetailsTextArea.insertAdjacentHTML("beforeend", data2);
+                itemDetailsTextArea.insertAdjacentHTML("beforeend", data3);
+                itemDetailsTextArea.insertAdjacentHTML("beforeend", data4);
 
-            itemDetailsTextArea.innerHTML = "";
-            itemDetailsTextArea.insertAdjacentHTML("beforeend", data1);
-            itemDetailsTextArea.insertAdjacentHTML("beforeend", data2);
-            itemDetailsTextArea.insertAdjacentHTML("beforeend", data3);
-            itemDetailsTextArea.insertAdjacentHTML("beforeend", data4);
-            break;
-        }
+                let qtySelect = $('#selectQty')[0];
+                qtySelect.value = 1;
+            },
+            error: function () {
+                console.log("an error ocure while setting customer details when selecting customer ids");
+            }
+        });
     }
-
     if(id=='Select'){
         itemDetailsTextArea.innerHTML = "";
     }
-
-    let qtySelect = $('#selectQty')[0];
-    qtySelect.value = 1;
-
 });
 
 
@@ -612,18 +640,43 @@ placeOrderBtn.addEventListener('click',async function () {
     let itemsList = [];
     for (let i = 0; i < cart.length; i++) {
         itemsList.push(cart[i].itemId);
+        itemsList.push(String(cart[i].qty));
     }
 
-    let order = new OrderModel(orderId,customerId,date,itemCount,finalPrice,itemsList);
-    orderDB.push(order);
+    let data = {
+        "id": orderId,
+        "date": date,
+        "total": String(finalPrice),
+        "itemCount": String(itemCount),
+        "customer": customerId,
+        "itemList": itemsList
+    };
 
-    Swal.fire({
-        title: 'Success!',
-        text: 'Order Placed Successfully',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-    })
-    clean();
+    $.ajax({
+        url: 'http://localhost:8080/BackEnd_Web_exploded/placeorder',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (res) {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Order Placed Successfully',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            });
+            clean();
+        },
+        error: function () {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fail To Place The Order,Try Again Later',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            console.log("an error ocure while placing the order");
+        }
+
+    });
 
 });
 
