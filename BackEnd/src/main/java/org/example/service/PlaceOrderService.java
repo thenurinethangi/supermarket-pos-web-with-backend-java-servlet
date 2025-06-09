@@ -1,10 +1,14 @@
 package org.example.service;
 
+import org.example.config.FactoryConfiguration;
 import org.example.entity.Customer;
 import org.example.entity.Item;
+import org.example.entity.Orders;
 import org.example.repository.CustomerRepository;
 import org.example.repository.ItemRepository;
 import org.example.repository.PlaceOrderRepository;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +54,43 @@ public class PlaceOrderService {
     public Item searchItemById(String itemId) {
 
         return itemRepository.searchById(itemId);
+    }
+
+    public boolean placeOrder(Orders orders,String[] ar) {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try{
+            boolean isSave = placeOrderRepository.add(orders,session);
+            if(!isSave){
+                transaction.rollback();
+                return false;
+            }
+
+            for (int i = 0; i < ar.length; i=i+2) {
+                Item item = itemRepository.searchById(ar[i]);
+                int qty = item.getQty();
+                qty-=Integer.parseInt(ar[i+1]);
+                item.setQty(qty);
+                boolean isUpdate = itemRepository.updateQty(item,session);
+
+                if(!isUpdate){
+                    transaction.rollback();
+                    return false;
+                }
+            }
+
+            transaction.commit();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+            return true;
+        }
+        finally {
+            session.close();
+        }
     }
 }
