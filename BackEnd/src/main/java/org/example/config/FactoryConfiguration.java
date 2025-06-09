@@ -3,6 +3,7 @@ package org.example.config;
 import org.example.entity.Customer;
 import org.example.entity.Item;
 import org.example.entity.Orders;
+import org.example.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -19,6 +20,7 @@ public class FactoryConfiguration {
         configuration.addAnnotatedClass(Customer.class);
         configuration.addAnnotatedClass(Item.class);
         configuration.addAnnotatedClass(Orders.class);
+        configuration.addAnnotatedClass(User.class);
         sessionFactory = configuration.buildSessionFactory();
     }
 
