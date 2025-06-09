@@ -154,7 +154,7 @@ addNewCustomerBtn.addEventListener('click',(event)=>{
             text: 'Invalid Inputs',
             icon: 'error',
             confirmButtonText: 'Ok'
-        })
+        });
 
         return;
     }
