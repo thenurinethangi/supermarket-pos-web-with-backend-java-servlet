@@ -1,3 +1,4 @@
+import CartModel from "../model/CartModel.js"
 
 $(document).ready(function() {
     var username = localStorage.getItem('username');
@@ -7,6 +8,18 @@ $(document).ready(function() {
         //
     }
 });
+
+
+$(document).ready(function() {
+    window.addEventListener('pageshow', function(event) {
+        // Check if page was loaded from browser cache (back/forward button)
+        if (event.persisted) {
+            // Page was loaded from cache, force reload
+            window.location.reload();
+        }
+    });
+});
+
 
 // generate new order id
 function generateNewOrderId() {
@@ -241,12 +254,12 @@ itemSelect.addEventListener('change',function () {
 //add cart
 var cart = [];
 let addCardBtn = $('#add-to-cart-btn')[0];
-addCardBtn.addEventListener('click',function () {
+addCardBtn.addEventListener('click', function () {
 
     let itemSelect = $('#itemSelect')[0];
     let itemId = itemSelect.value;
 
-    if(!itemSelect.value || itemId=='Select'){
+    if (!itemSelect.value || itemId == 'Select') {
         Swal.fire({
             title: 'Warning!',
             text: 'Select an item before adding it to the cart.',
@@ -257,91 +270,92 @@ addCardBtn.addEventListener('click',function () {
         return;
     }
 
-    let price = 0;
-    let availableQty = 0;
-    for (let i = 0; i < itemDB.length; i++) {
-        let id = itemDB[i].id;
-
-        if(id==itemId){
-            price = itemDB[i].price;
-            availableQty = itemDB[i].quntity;
-            break;
-        }
-    }
-
     let qtySelect = $('#selectQty')[0];
-    let qty= Number(qtySelect.value);
+    let qty = Number(qtySelect.value);
 
-    if(availableQty<qty){
-        Swal.fire({
-            title: 'Warning!',
-            text: 'The available quantity is insufficient!',
-            icon: 'warning',
-            confirmButtonText: 'Ok'
-        });
-        return;
-    }
+    // First AJAX call to get item details
+    $.ajax({
+        url: `http://localhost:8080/BackEnd_Web_exploded/placeorder?itemid=${itemId}`,
+        method: "GET",
+        success: function (res) {
+            let price = res.price;
+            let availableQty = res.qty;
 
-    let total = Number(price)*Number(qty);
+            // Check if requested quantity is available
+            if (availableQty < qty) {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'The available quantity is insufficient!',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok'
+                });
+                return;
+            }
 
-    for (let i = 0; i < cart.length; i++) {
-        let iId = cart[i].itemId;
-
-        if(iId==itemId){
-
-            let totalQtyCount = cart[i].qty + Number(qty);
-            for (let j = 0; j < itemDB.length; j++) {
-                let itemIdInDb = itemDB[j].id;
-
-                if(itemIdInDb==iId){
-                    let availableQty = itemDB[j].quntity;
-                    if(availableQty<totalQtyCount){
-                        Swal.fire({
-                            title: 'Warning!',
-                            text: 'The available quantity is insufficient!',
-                            icon: 'warning',
-                            confirmButtonText: 'Ok'
-                        });
-                        return;
-                    }
+            // Check if item already exists in cart
+            let existingItemIndex = -1;
+            for (let i = 0; i < cart.length; i++) {
+                if (cart[i].itemId == itemId) {
+                    existingItemIndex = i;
+                    break;
                 }
             }
 
-            cart[i].qty += Number(qty);
-            cart[i].total = cart[i].qty*cart[i].price;
-            loadCartTable();
-            setItemIds();
-            setItemsDetails();
+            if (existingItemIndex !== -1) {
+                // Item exists in cart - update quantity
+                let totalQtyCount = cart[existingItemIndex].qty + qty;
+
+                if (availableQty < totalQtyCount) {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'The available quantity is insufficient!',
+                        icon: 'warning',
+                        confirmButtonText: 'Ok'
+                    });
+                    return;
+                }
+
+                // Update existing cart item
+                cart[existingItemIndex].qty = totalQtyCount;
+                cart[existingItemIndex].total = cart[existingItemIndex].qty * cart[existingItemIndex].price;
+
+                showSuccessAndUpdate();
+            } else {
+                // New item - add to cart
+                let total = price * qty;
+                let cartItem = new CartModel(itemId, price, qty, total);
+                cart.push(cartItem);
+
+                showSuccessAndUpdate();
+            }
+
+            function showSuccessAndUpdate() {
+                loadCartTable();
+                setItemIds();
+                setItemsDetails();
+
+                Swal.fire({
+                    title: 'Added to Cart!',
+                    text: 'The item has been successfully added to cart.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                // Reset quantity selector
+                qtySelect.value = 1;
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Error occurred while loading item data:", error);
             Swal.fire({
-                title: 'Added to Cart!',
-                text: 'The item has been successfully added to cart.',
-                icon: 'success',
-                timer: 1500,
-                showConfirmButton: false
+                title: 'Error!',
+                text: 'Failed to load item details. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'Ok'
             });
-            let qtySelect = $('#selectQty')[0];
-            qtySelect.value = 1;
-            return;
         }
-    }
-
-    let cartItem = new CartModel(itemId,price,qty,total);
-    cart.push(cartItem);
-    loadCartTable();
-
-    Swal.fire({
-        title: 'Added to Cart!',
-        text: 'The item has been successfully added to cart.',
-        icon: 'success',
-        timer: 1500,
-        showConfirmButton: false
     });
-    let quantitySelect = $('#selectQty')[0];
-    quantitySelect.value = 1;
-
-    setItemIds();
-    setItemsDetails();
-
 });
 
 
@@ -619,21 +633,6 @@ placeOrderBtn.addEventListener('click',async function () {
     let itemCount = 0;
     for (let i = 0; i < cart.length; i++) {
         itemCount+=Number(cart[i].qty);
-    }
-
-    for (let i = 0; i < cart.length; i++) {
-        let itemId = cart[i].itemId;
-
-        for (let j = 0; j < itemDB.length; j++) {
-            let id = itemDB[j].id;
-
-            if(id==itemId){
-                let qty = Number(itemDB[j].quntity);
-                qty-=Number(cart[i].qty);
-                itemDB[j].quntity = qty;
-                break;
-            }
-        }
     }
     
     let finalPriceTag = $('.final-price')[0];
