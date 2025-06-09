@@ -1,3 +1,12 @@
+$(document).ready(function() {
+    var username = localStorage.getItem('username');
+    if (!username) {
+        window.open("http://localhost:63342/supermarket-pos-web-with-backend-javaee/sign-in.html", "_self");
+    }else {
+        //
+    }
+});
+
 function getStatics() {
 
     $.ajax({
