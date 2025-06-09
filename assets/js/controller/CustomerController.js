@@ -8,6 +8,18 @@ $(document).ready(function() {
     }
 });
 
+
+$(document).ready(function() {
+    window.addEventListener('pageshow', function(event) {
+        // Check if page was loaded from browser cache (back/forward button)
+        if (event.persisted) {
+            // Page was loaded from cache, force reload
+            window.location.reload();
+        }
+    });
+});
+
+
 // load customer table
 function loadCustomerTable() {
 
