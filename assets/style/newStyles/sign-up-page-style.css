@@ -80,6 +80,14 @@ h1>span:hover{
     width: 100%;
 }
 
+#inputFieldBox{
+
+    /*background-color: blue;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 @media all and (max-width: 992px) {
 
